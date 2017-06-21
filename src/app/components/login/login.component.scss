@@ -1,0 +1,24 @@
+// component styles are encapsulated and only applied to their components
+@import '../../../style/colors.scss';
+.vertical-center {
+  align-items: center;
+  display: flex;
+}
+md-input-container{
+  width: 90%;
+}
+md-card img {
+  width: 200px;
+  height: auto;
+  margin-top: 20px;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: $blue-grey;
+}
+
+/deep/ .mat-input-ripple{
+  background-color: $blue-grey !important;
+}

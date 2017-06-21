@@ -1,0 +1,24 @@
+<md-card *ngIf="showForm" fxFlex="70%" fxFlexOffset="15%" fxFlex.gt-sm="33%" fxFlexOffset.gt-sm="33%" id="login-card">
+  <img md-card-image src="img/oceanawprksp.png" id="login-image">
+  <md-card-header fxLayoutAlign="center">
+    <md-card-title id="login-title">Login</md-card-title>
+  </md-card-header>
+
+  <form [formGroup]="loginForm" (ngSubmit)="doLogin($event)" fxLayout="column" fxLayoutAlign="space-around center" id="login-form">
+
+    <md-input-container floatPlaceholder="never">
+      <input mdInput formControlName="username" type="text" placeholder="Username" id="login-username-input">
+    </md-input-container>
+    <my-validation [control]="loginForm.controls.username" id="login-username-validation"></my-validation>
+
+    <md-input-container floatPlaceholder="never">
+      <input mdInput formControlName="password" type="password" placeholder="Password" id="login-password-input">
+    </md-input-container>
+    <my-validation [control]="loginForm.controls.password" id="login-password-validation"></my-validation>
+
+    <my-notification></my-notification>
+
+    <button md-raised-button type="submit" id="login-submit" [disabled]="!loginForm.valid">SIGN IN</button>
+
+  </form>
+</md-card>

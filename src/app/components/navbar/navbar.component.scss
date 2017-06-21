@@ -1,0 +1,28 @@
+@import "../../../style/colors.scss";
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  background-color: $mid-orange;
+  color: #fff;
+  padding-bottom: 5px;
+}
+nav {
+  padding-top: 8px;
+  height: 48px;
+  background-color: $blue-grey;
+}
+#navbar-logo {
+  display: inline-block;
+  position: relative;
+  height: 58px;
+  bottom: 12px;
+  left: -5px;
+}
+#navbar-search{
+  display: inline-block;
+  margin-bottom: 6px;
+}

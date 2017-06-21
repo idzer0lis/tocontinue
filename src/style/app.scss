@@ -1,0 +1,51 @@
+// styles in src/style directory are applied to the whole app
+@import "./material.scss";
+@import "./mixins.scss";
+
+
+
+html, body{
+  height:100%;
+  width: 100%;
+}
+body {
+  color: #fff;
+  background-color: $light-grey;
+  font-size: 14px;
+  font-family: Arial;
+}
+a {
+  color: white;
+}
+
+a:hover {
+  color: $off-white;
+}
+
+button {
+  color: $off-white !important;
+  background-color: $blue-grey !important;
+
+}
+/*button:hover, button:focus, button:active {
+  @extend button;
+  background-color: $mid-blue !important;
+}*/
+
+button:disabled {
+  @extend button;
+  background-color: $off-white !important;
+  color: $blue-dark-grey !important;
+  opacity: 40;
+}
+
+i {
+  color: $dark-grey;
+}
+i:hover {
+  color: $mid-blue;
+}
+i:disabled {
+  color: $blue-dark-grey;
+  opacity: 40;
+}

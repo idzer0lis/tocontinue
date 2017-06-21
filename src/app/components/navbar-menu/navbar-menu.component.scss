@@ -1,0 +1,8 @@
+@import "../../../style/colors.scss";
+.mat-menu-content {
+  background-color: $blue-grey !important;
+}
+.cdk-overlay-container .mat-menu-panel  {
+  position: relative;
+  top: 48px !important;
+}

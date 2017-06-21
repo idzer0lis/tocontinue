@@ -1,0 +1,5 @@
+<button md-button [mdMenuTriggerFor]="menu">Menu</button>
+<md-menu #menu="mdMenu">
+  <button md-menu-item>Profile</button>
+  <button md-menu-item (click)="doLogout()">Logout</button>
+</md-menu>

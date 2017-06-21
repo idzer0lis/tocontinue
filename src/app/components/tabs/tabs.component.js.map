@@ -1,0 +1,1 @@
+{"version":3,"sources":["tabs.component.ts"],"names":[],"mappings":";;;;;;AAAA,OAAO,EAAE,SAAA,EAAU,MAAO,eAAA,CAAgB;AAM1C,IAAa,aAAa;IAA1B;IAA4B,CAAC;IAAD,oBAAC;AAAD,CAA5B,AAA6B,IAAA;AAAhB,aAAa;IAJzB,SAAS,CAAC;QACT,QAAQ,EAAE,SAAS;QACnB,WAAW,EAAE,qBAAqB;KACnC,CAAC;GACW,aAAa,CAAG;SAAhB,aAAa","file":"tabs.component.js","sourceRoot":""}
