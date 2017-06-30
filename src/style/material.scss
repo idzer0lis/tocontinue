@@ -1,5 +1,10 @@
 @import '~@angular/material/_theming.scss';
 @import './colors.scss';
+@import '~@covalent/core/theming/all-theme';
+
+// (optional) Additional themes
+@import '~@covalent/highlight/highlight-theme';
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -10,7 +15,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$candy-app-primary: mat-palette($mat-indigo);
+$candy-app-primary: mat-palette($mat-blue-grey);
 $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -24,6 +29,8 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($candy-app-theme);
+@include covalent-theme($candy-app-theme);
+@include covalent-highlight-theme();
 
 .mat-ink-bar {
   background-color: $presence-green;

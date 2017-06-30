@@ -7,16 +7,16 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
-  private usersUrl = 'api/users';  // URL mockup web API
+  private backendData = 'api/users';  // URL mockup web API
   constructor(
     private http: Http,
     private router: Router
   ) {}
-
+  // This will not be the final login method. No unit testing on purpose
   login(username: string, password: string): Observable<User> {
-    return this.http.get(this.usersUrl)
+    return this.http.get(this.backendData)
       .map((response: Response) => {
-        let users = response.json().data || {};
+        let users = response.json().data;
         let found = false;
         if (users.length) {
           // find if any user matches login credentials

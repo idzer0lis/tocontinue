@@ -1,21 +1,43 @@
-<md-sidenav-container class="example-sidenav-fab-container col-md-4 offset-4" style="height: 400px;">
-  <md-sidenav #sidenav mode="side" opened="true">
-    <button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
-      <md-icon>add</md-icon>
-    </button>
-    <div class="example-scrolling-content">
-      Lorem ipsum dolor sit amet, pede a libero aenean phasellus, lectus metus sint ut risus,
-      fusce vel in pellentesque. Nisl rutrum etiam morbi consectetuer tempor magna, aenean nullam
-      nunc id, neque vivamus interdum sociis nulla scelerisque sem, dolor id wisi turpis magna
-      aliquam magna. Risus accumsan hac eget etiam donec sed, senectus erat mattis quam, tempor
-      vel urna occaecat cras, metus urna augue nec at. Et morbi amet dui praesent, nec eu at,
-      ligula ipsum dui sollicitudin, quis nisl massa viverra ligula, mauris fermentum orci arcu
-      enim fringilla. Arcu erat nulla in aenean lacinia ullamcorper, urna ante nam et sagittis,
-      tristique vehicula nibh ipsum vivamus, proin proin. Porta commodo nibh quis libero amet.
-      Taciti dui, sapien consectetuer.
+<md-sidenav-container id="sidenav-container">
+  <md-sidenav id="sidenav-sidenav-primary" mode="side" align="start" opened="{{openNavbar}}">
+    <div id="sidebar-menu" [@initAnimation]>
+      <span id="sidebar-companies"
+            mdTooltip="Companies" mdTooltipPosition="right"
+            (click)="showCompanies = !showCompanies"
+            [ngClass]="{'sidebar-active': showCompanies}">
+        <i class="material-icons" id="sidebar-companies-icon">assignment</i>
+        <p *ngIf="openNavbar"
+           [@initAnimation]
+           i18n
+           id="sidebar-companies-link">Companies</p>
+      </span>
+      <span id="sidebar-settings"
+            mdTooltip="Settings"
+            mdTooltipPosition="right">
+        <i class="material-icons" id="sidebar-settings-icon">settings</i>
+        <p *ngIf="openNavbar"
+           [@initAnimation]
+           i18n
+           id="sidebar-settings-link" >Settings</p>
+      </span>
     </div>
+    <span *ngIf="!openNavbar"
+          mdTooltip="Expand"
+          mdTooltipPosition="right"
+          (click)="openNavbar = !openNavbar"
+          id="sidebar-opener">
+      <i class="material-icons">chevron_right</i>
+    </span>
+    <span *ngIf="openNavbar"
+          mdTooltip="Collapse"
+          mdTooltipPosition="right"
+          (click)="openNavbar = !openNavbar"
+          id="sidebar-closer">
+      <i class="material-icons">chevron_left</i>
+    </span>
   </md-sidenav>
-  <button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
-    <md-icon>add</md-icon>
-  </button>
+  <div id="sidenav-content">
+    <!--TODO : Think about parent/child components instead of hiding/showing-->
+    <my-list *ngIf="showCompanies"></my-list>
+  </div>
 </md-sidenav-container>

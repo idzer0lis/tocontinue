@@ -1,8 +1,30 @@
 @import "../../../style/colors.scss";
-.mat-menu-content {
+
+:host {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+#navbar-menu-button {
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 0;
+  margin: 0 0 0 10px;
+}
+/deep/ .mat-menu-panel {
+  min-width: 192px !important;
+}
+/deep/ .mat-menu-content {
   background-color: $blue-grey !important;
 }
-.cdk-overlay-container .mat-menu-panel  {
-  position: relative;
-  top: 48px !important;
+/deep/ .mat-menu-content .mat-menu-item {
+  display: flex;
+  align-items: center;
+}
+/deep/ .mat-menu-content .mat-menu-item i {
+  padding-right: 6px;
+}
+/deep/ .mat-menu-content .mat-menu-item:hover, .mat-menu-content .mat-menu-item:active {
+  color: $mid-orange !important;
 }

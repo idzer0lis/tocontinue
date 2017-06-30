@@ -1,2 +1,5 @@
 // component styles are encapsulated and only applied to their components
-
+@import '../../../style/colors.scss';
+:host p {
+  color: $mid-orange
+}

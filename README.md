@@ -28,6 +28,10 @@ As an alternative, you can work using Hot Module Replacement (HMR):
 
 You can now modify your components on the fly without having to reload the entire page.
 
+## Run the app on an Avaya server
+You can modify the settings at package.json scripts section
+* `npm run start-ip`
+
 ## Testing
 
 #### 1. Unit Tests
@@ -88,5 +92,3 @@ And in [vendor.ts] add the following:
 import 'bootstrap/dist/css/bootstrap.css';
 ```
 
-# License
-TDB

@@ -1,8 +1,56 @@
-<md-list class="col-md-2 offset-5 containerX">
-  <div flex></div>
-  <h3 md-subheader>Items</h3>
-  <md-list-item>Item 1</md-list-item>
-  <md-list-item>Item 2</md-list-item>
-  <md-list-item>Item 3</md-list-item>
-  <div flex></div>
-</md-list>
+<md-card [@initAnimation]>
+  <div id="list-actions">
+    <md-input-container floatPlaceholder="never">
+      <input mdInput
+             placeholder="Search list"
+             [(ngModel)]="filterText"
+             id="company-search">
+    </md-input-container>
+    <button md-mini-fab
+            *ngIf="!showAddCompany">
+      <i class="material-icons" (click)="showAddCompany = !showAddCompany">playlist_add</i>
+    </button>
+    <md-input-container
+      floatPlaceholder="never"
+      *ngIf="showAddCompany">
+      <input mdInput placeholder="Add a new company..."
+             [(ngModel)]="newCompany.title"
+             (keyup.enter)="addCompany()"
+             id="company-add">
+    </md-input-container>
+  </div>
+  <h4>Companies and tenants </h4>
+  <td-expansion-panel-group *ngFor="let company of companies| myCompanyFilter:filterText; trackBy:company?.id;let i = index;">
+    <md-divider md-inset></md-divider>
+    <td-expansion-panel
+      label="{{ company.title }}"
+      [@initAnimation]
+      >
+      <td-expansion-summary>
+        <div fxLayout="row"
+             fxLayoutAlign="start center">
+          <span fxFlex="5" class="md-subhead">ID</span>
+          <span fxFlex="20"><i class="material-icons">chevron_right</i></span>
+          <span fxFlex="5">{{company.id}}</span>
+        </div>
+        <div fxLayout="row"
+             fxLayoutAlign="start center">
+          <span fxFlex="5" class="md-subhead">Tenants:</span>
+          <span fxFlex="20"><i class="material-icons">chevron_right</i></span>
+          <span fxFlex="5" *ngIf="company.tenants">{{company.tenants.length}}</span>
+        </div>
+      </td-expansion-summary>
+      <md-list *ngFor="let sameCompany of companies; trackBy:sameCompany?.id; let j = index;">
+        <md-list-item *ngFor="let tenant of sameCompany.tenants | myTenantFilter:filterText">
+          <div *ngIf="i === j">
+            <i class="material-icons" md-list-avatar>account_box</i>
+            <h4 md-line >{{tenant.title}}</h4>
+            <p md-line>Tenant ID: {{tenant.id}}</p>
+          </div>
+        </md-list-item>
+        <md-divider md-inset></md-divider>
+      </md-list>
+    </td-expansion-panel>
+    <md-divider md-inset></md-divider>
+  </td-expansion-panel-group>
+</md-card>

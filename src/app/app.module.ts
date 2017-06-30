@@ -1,4 +1,4 @@
-import { NgModule, ApplicationRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -23,11 +23,17 @@ import { NotificationComponent } from './components/notification/notification.co
 import { AuthGuard } from './services/auth.guard/auth.guard.service';
 import { UserService } from './services/user/';
 import { NotificationService } from './services/notification/notification.service';
+import { CompanyService } from './services/company/company.service';
+import { SearchService } from './services/search/search.service';
 import { routing } from './app.routing';
+import { CovalentExpansionPanelModule } from '@covalent/core';
+import { CovalentHighlightModule } from '@covalent/highlight';
+import { CompanyFilter } from './services/filter/companyFilter.component';
+import { TenantFilter } from './services/filter/tenantFilter.component';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { UserData }  from './services/user/in-memory-data.service';
+import { BackendData }  from './services/in-memory-data.service';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
@@ -38,10 +44,12 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
     FormsModule,
     ReactiveFormsModule,
     routing,
-    InMemoryWebApiModule.forRoot(UserData),
+    InMemoryWebApiModule.forRoot(BackendData),
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    CovalentExpansionPanelModule,
+    CovalentHighlightModule
   ],
   declarations: [
     AppComponent,
@@ -54,15 +62,18 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
     ListComponent,
     SearchComponent,
     NavbarMenuComponent,
-    NotificationComponent
+    NotificationComponent,
+    CompanyFilter,
+    TenantFilter
   ],
   providers: [
     UserService,
     ValidationService,
     AuthGuard,
-    NotificationService
+    NotificationService,
+    CompanyService,
+    SearchService
   ],
-  schemas: [ NO_ERRORS_SCHEMA ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

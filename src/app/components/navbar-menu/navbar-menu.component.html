@@ -1,5 +1,14 @@
-<button md-button [mdMenuTriggerFor]="menu">Menu</button>
-<md-menu #menu="mdMenu">
-  <button md-menu-item>Profile</button>
-  <button md-menu-item (click)="doLogout()">Logout</button>
+<button md-button [mdMenuTriggerFor]="menu" id="navbar-menu-button">
+  Menu
+  <i class="material-icons">keyboard_arrow_down</i>
+</button>
+<md-menu #menu="mdMenu" id="navbar-menu-dropdown" [overlapTrigger]="false" xPosition="before">
+  <button md-menu-item>
+    <i class="material-icons">account_box</i>
+    Profile
+  </button>
+  <button md-menu-item (click)="doLogout()" id="navbar-menu-logout">
+    <i class="material-icons">close</i>
+    Logout
+  </button>
 </md-menu>

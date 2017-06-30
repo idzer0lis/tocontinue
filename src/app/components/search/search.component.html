@@ -1,3 +1,8 @@
-<md-input-container>
-  <input mdInput placeholder="Search" >
+<md-input-container floatPlaceholder="never">
+  <input mdInput placeholder="Search list"  (keyup)="searchTerm$.next($event.target.value)" id="company-search">
 </md-input-container>
+<md-list *ngIf="results" id="company-search-container">
+  <md-list-item *ngFor="let result of results; let i = index;" class="company-search-result">
+    <a style="color:black">{{ result }}</a>
+  </md-list-item>
+</md-list>

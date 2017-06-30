@@ -1,0 +1,63 @@
+// component styles are encapsulated and only applied to their components
+@import '../../../style/colors.scss';
+:host {
+  direction: ltr;
+  margin: 0;
+  height: 100%;
+  max-width: 160px;
+}
+/deep/ md-sidenav-container {
+  margin: 0;
+  height: 90%;
+
+}
+//Transitions are hacks to modify the transition of the sidebar, mimicking the sidebar open of Oceana sidebar(the feature is missing in material2)
+/deep/ md-sidenav {
+  background-color: $blue-grey !important;
+  width: 160px;
+  height:100%;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: transform  0.4s cubic-bezier(.25,.8,.25,1) !important;
+  .sidebar-active {
+    background-color: $blue-grey-hover;
+
+    p, .material-icons {
+      color: $mid-orange !important;
+    }
+  }
+  p {
+    margin-left: 20px;
+    font-size: 16px;
+  }
+  p, .material-icons {
+    cursor: pointer;
+    color: white;
+  }
+  #sidebar-settings-icon, #sidebar-companies-icon {
+    margin-left: 20px;
+  }
+  #sidebar-menu {
+    flex:1;
+  }
+  #sidebar-opener, #sidebar-closer {
+    background-color: $blue-grey-hover;
+  }
+  #sidebar-companies, #sidebar-settings {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+  }
+  &.mat-sidenav-closed {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    min-width: 64px !important;
+    width: 64px !important;
+
+    &~ /deep/.mat-sidenav-content {
+      background-color: $light-grey !important;
+      margin-left: 64px !important;
+    }
+  }
+}

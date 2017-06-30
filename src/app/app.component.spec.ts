@@ -7,13 +7,13 @@ import { AppComponent } from './app.component';
 
 import { HttpModule } from '@angular/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { UserData }  from './services/user/in-memory-data.service';
+import { BackendData }  from './services/in-memory-data.service';
 
 describe('App', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpModule, InMemoryWebApiModule.forRoot(UserData)],
+      imports: [RouterTestingModule, HttpModule, InMemoryWebApiModule.forRoot(BackendData)],
       declarations: [AppComponent],
       providers: [UserService, provideRoutes([])]
     });

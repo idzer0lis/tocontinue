@@ -1,9 +1,11 @@
+@import "../../../style/colors.scss";
+
 /deep/ .mat-input-ripple{
-  background-color: #F2F2F2 !important;
+  background-color: $blue-grey !important;
 }
-/*/deep/ label {
-  color: #96A0AA !important;
-}*/
+/deep/ #site-search {
+  min-width: 100px;
+}
 
 /deep/ .mat-input-infix {
    color: #5A646E !important;
