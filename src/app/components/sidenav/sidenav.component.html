@@ -2,14 +2,14 @@
   <md-sidenav id="sidenav-sidenav-primary" mode="side" align="start" opened="{{openNavbar}}">
     <div id="sidebar-menu" [@initAnimation]>
       <span id="sidebar-companies"
-            mdTooltip="Companies" mdTooltipPosition="right"
+            mdTooltip="Multi Tenancy" mdTooltipPosition="right"
             (click)="showCompanies = !showCompanies"
             [ngClass]="{'sidebar-active': showCompanies}">
         <i class="material-icons" id="sidebar-companies-icon">assignment</i>
         <p *ngIf="openNavbar"
            [@initAnimation]
            i18n
-           id="sidebar-companies-link">Companies</p>
+           id="sidebar-companies-link">Multi Tenancy</p>
       </span>
       <span id="sidebar-settings"
             mdTooltip="Settings"

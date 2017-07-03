@@ -14,7 +14,7 @@ import { slideInDownAnimation } from '../../animations/animations';
 export class ListComponent {
   public newCompany: Company = new Company();
   public showAddCompany = false;
-  public filter = '';
+  public filterText = '';
   // public filter: Company = new Company;
 
   constructor(private companyService: CompanyService) {}
@@ -30,14 +30,5 @@ export class ListComponent {
 
   get companies() {
     return this.companyService.getAllcompanies();
-  }
-
-  get tenants() {
-    let tenants = [];
-    this.companyService.getAllcompanies().forEach(company => {
-      tenants.push(company.tenants);
-    });
-    console.log(tenants);
-    return tenants;
   }
 }

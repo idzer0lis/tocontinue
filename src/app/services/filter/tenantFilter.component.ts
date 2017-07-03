@@ -6,6 +6,7 @@ import { Tenant } from '../company/tenant';
   name: 'myTenantFilter',
   pure: false
 })
+
 export class TenantFilter implements PipeTransform {
   transform(items: Tenant[], filter: string): Tenant[] {
     if (!items || !filter) {
@@ -17,8 +18,7 @@ export class TenantFilter implements PipeTransform {
 
   // It does not filter tenants yet. Thinking about a solution
   applyFilter(tenant: Tenant, filter: string): boolean {
-    if (tenant.title.toLowerCase().indexOf(filter.toLowerCase()) === -1 /*||
-     Company.tenants[0].title.toLowerCase().indexOf(filter.toLowerCase()) === -1*/) {
+    if (tenant.title.toLowerCase().indexOf(filter.toLowerCase()) === -1) {
       return false;
     }
     return true;

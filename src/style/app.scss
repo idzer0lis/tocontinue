@@ -46,12 +46,12 @@ button:disabled {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(http://localhost:8080/img/icons/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url('/img/icons/MaterialIcons-Regular.eot'); /* For IE6-8 */
   src: local('Material Icons'),
   local('MaterialIcons-Regular'),
-  url(http://localhost:8080/img/icons/MaterialIcons-Regular.woff2) format('woff2'),
-  url(http://localhost:8080/img/icons/MaterialIcons-Regular.woff) format('woff'),
-  url(http://localhost:8080/img/icons/MaterialIcons-Regular.ttf) format('truetype');
+  url('/img/icons/MaterialIcons-Regular.woff2') format('woff2'),
+  url('/img/icons/MaterialIcons-Regular.woff') format('woff'),
+  url('/img/icons/MaterialIcons-Regular.ttf') format('truetype');
 }
 
 .material-icons {
