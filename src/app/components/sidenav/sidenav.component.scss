@@ -11,6 +11,9 @@
   height: 90%;
 
 }
+/deep/ #sidenav-content {
+  height: 100%;
+}
 //Transitions are hacks to modify the transition of the sidebar, mimicking the sidebar open of Oceana sidebar(the feature is missing in material2)
 /deep/ md-sidenav {
   background-color: $blue-grey !important;

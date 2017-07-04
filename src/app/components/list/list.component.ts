@@ -15,17 +15,12 @@ export class ListComponent {
   public newCompany: Company = new Company();
   public showAddCompany = false;
   public filterText = '';
-  // public filter: Company = new Company;
 
   constructor(private companyService: CompanyService) {}
 
   addCompany() {
     this.companyService.addCompany(this.newCompany);
     this.newCompany = new Company();
-  }
-
-  removeCompany(company) {
-    this.companyService.deleteCompanyById(company.id);
   }
 
   get companies() {

@@ -61,18 +61,4 @@ export class CompanyService {
       .filter(company => company.id === id)
       .pop();
   }
-  /*// Could not parse company object for tenants, maybe because the company definition tenants(Array<object>) or because data is in memory
-  // So I'll make two objects: one with companies, one with tenants; and I'll keep the relationship
-  getAllTenants(): any {
-    let tenants: Array<any> = [];
-    for (let company of this.companies) {
-      if (!this.companies.hasOwnProperty(company)) {
-        console.log(company);
-        tenants[company.id] = company.tenants;
-      }
-    }
-
-    console.log(tenants.length);
-    return tenants;
-  }*/
 }

@@ -1,0 +1,17 @@
+<smd-fab-speed-dial #myFab [direction]="direction"
+                    [animationMode]="animationMode"
+                    [fixed]="fixed"
+                    (mouseenter)="myFab.open = true"
+                    (mouseleave)="myFab.open = false">
+  <smd-fab-trigger [spin]="spin">
+    <button md-mini-fab><i class="material-icons">reply_all</i></button>
+  </smd-fab-trigger>
+  <smd-fab-actions>
+
+    <button md-mini-fab (click)="removeCompany(company);$event.stopPropagation()"><i class="material-icons">delete_forever</i></button>
+    <button md-mini-fab (click)="_click('action disable');$event.stopPropagation()"><i class="material-icons">do_not_disturb_alt</i></button>
+    <button md-mini-fab (click)="_click('action edit');$event.stopPropagation()"><i class="material-icons">edit</i></button>
+    <button md-mini-fab (click)="_click('Add tenant');$event.stopPropagation()" ><i class="material-icons">playlist_add</i></button>
+
+  </smd-fab-actions>
+</smd-fab-speed-dial>

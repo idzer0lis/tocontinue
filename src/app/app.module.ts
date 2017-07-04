@@ -30,6 +30,10 @@ import { CovalentExpansionPanelModule } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CompanyFilter } from './services/filter/companyFilter.component';
 import { TenantFilter } from './services/filter/tenantFilter.component';
+import { FabSpeedDialActionsComponent,
+  FabSpeedDialComponent,
+  FabSpeedDialTriggerComponent } from './components/speed-dial/speed-dial.component';
+import { ListSpeedDialComponent } from './components/list-speed-dial/list-speed-dial.component';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -37,43 +41,51 @@ import { BackendData }  from './services/in-memory-data.service';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
+let IMPORTS = [
+  BrowserModule,
+  HttpModule,
+  FormsModule,
+  ReactiveFormsModule,
+  routing,
+  InMemoryWebApiModule.forRoot(BackendData),
+  BrowserAnimationsModule,
+  MaterialModule,
+  FlexLayoutModule,
+  CovalentExpansionPanelModule,
+  CovalentHighlightModule
+];
+let COMPONENTS = [
+  AppComponent,
+  HomeComponent,
+  LoginComponent,
+  ValidationComponent,
+  NavbarComponent,
+  TabsComponent,
+  SidenavComponent,
+  ListComponent,
+  SearchComponent,
+  NavbarMenuComponent,
+  NotificationComponent,
+  CompanyFilter,
+  TenantFilter,
+  FabSpeedDialActionsComponent,
+  FabSpeedDialComponent,
+  FabSpeedDialTriggerComponent,
+  ListSpeedDialComponent
+];
+let PROVIDERS = [
+  UserService,
+  ValidationService,
+  AuthGuard,
+  NotificationService,
+  CompanyService,
+  SearchService
+];
+
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpModule,
-    FormsModule,
-    ReactiveFormsModule,
-    routing,
-    InMemoryWebApiModule.forRoot(BackendData),
-    BrowserAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    CovalentExpansionPanelModule,
-    CovalentHighlightModule
-  ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent,
-    ValidationComponent,
-    NavbarComponent,
-    TabsComponent,
-    SidenavComponent,
-    ListComponent,
-    SearchComponent,
-    NavbarMenuComponent,
-    NotificationComponent,
-    CompanyFilter,
-    TenantFilter
-  ],
-  providers: [
-    UserService,
-    ValidationService,
-    AuthGuard,
-    NotificationService,
-    CompanyService,
-    SearchService
-  ],
+  imports: IMPORTS,
+  declarations: COMPONENTS,
+  providers: PROVIDERS,
   bootstrap: [AppComponent]
 })
 export class AppModule {

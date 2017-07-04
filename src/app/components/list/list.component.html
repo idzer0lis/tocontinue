@@ -22,64 +22,71 @@
   </div>
   <h4>Companies and tenants </h4>
   <ng-container *ngIf="filterText.length < 1">
+
     <td-expansion-panel-group *ngFor="let company of companies;">
-      <md-divider md-inset></md-divider>
-      <td-expansion-panel
-        label="{{ company.title }}"
-        [@initAnimation]>
-        <td-expansion-summary>
-          <div fxLayout="row"
-               fxLayoutAlign="start center">
-            <span fxFlex="5" class="md-subhead">ID</span>
-            <span fxFlex="20"><i class="material-icons">chevron_right</i></span>
-            <span fxFlex="5">{{company.id}}</span>
+      <td-expansion-panel [@initAnimation] #myPanel [expand]="false">
+        <ng-template td-expansion-panel-header>
+          <div md-line class="company-header">
+            <h4>{{ company.title }}</h4>
+            <my-list-speed-dial [company]="company"></my-list-speed-dial>
           </div>
-          <div fxLayout="row"
-               fxLayoutAlign="start center">
-            <span fxFlex="5" class="md-subhead">Tenants:</span>
-            <span fxFlex="20"><i class="material-icons">chevron_right</i></span>
-            <span fxFlex="5" *ngIf="company.tenants">{{company.tenants.length}}</span>
-          </div>
-        </td-expansion-summary>
-        <md-list>
-          <md-list-item  *ngFor="let tenant of company.tenants;">
-              <h4 md-line >{{tenant.title}}</h4>
-              <p md-line>Tenant ID: {{tenant.id}}</p>
-          </md-list-item>
-          <md-divider md-inset></md-divider>
-        </md-list>
+        </ng-template>
+        <div class="company-content">
+          <td-expansion-panel-group>
+            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
+              <ng-template td-expansion-panel-header>
+                <div md-line class="company-header">
+                  <h4>{{tenant.title}}</h4>
+                  <my-list-speed-dial [company]="company"></my-list-speed-dial>
+                </div>
+              </ng-template>
+              <div class="tenant-content">
+                <p md-line>Tenant ID: {{tenant.id}}</p>
+              </div>
+            </td-expansion-panel>
+          </td-expansion-panel-group>
+        </div>
       </td-expansion-panel>
-      <md-divider md-inset></md-divider>
     </td-expansion-panel-group>
-  </ng-container>
+  </ng-container> <!--END OF NON FILTERING SECTION-->
+
+  <div *ngIf="filterText.length > 0">
+
+    <td-expansion-panel-group *ngFor="let company of companies| myCompanyFilter:filterText;">
+      <td-expansion-panel [@initAnimation]>
+        <ng-template td-expansion-panel-header>
+          <h4 md-line>{{ company.title }}</h4>
+          <my-list-speed-dial [company]="company"></my-list-speed-dial>
+        </ng-template>
+
+        <div class="company-content">
+          <td-expansion-panel-group>
+            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
+              <ng-template td-expansion-panel-header>
+                <h4 md-line >{{tenant.title}}</h4>
+              </ng-template>
+              <div class="tenant-content">
+                <p md-line>Tenant ID: {{tenant.id}}</p>
+              </div>
+            </td-expansion-panel>
+          </td-expansion-panel-group>
+        </div>
+      </td-expansion-panel>
+    </td-expansion-panel-group>
+
+    <div *ngFor="let company of companies">
+      <td-expansion-panel-group *ngFor="let tenant of company.tenants | myTenantFilter:filterText">
+
+        <td-expansion-panel [@initAnimation]>
+          <ng-template td-expansion-panel-header>
+            <h4 md-line>{{ tenant.title }}</h4>
+            <my-list-speed-dial [company]="company"></my-list-speed-dial>
+          </ng-template>
+          <div class="tenant-content">
+            <p md-line>Tenant ID: {{tenant.id}}</p>
+          </div>
+        </td-expansion-panel>
+      </td-expansion-panel-group>
+    </div>
+  </div> <!--END OF FILTERING SECTION-->
 </md-card>
-
-
-<div *ngIf="filterText.length > 0">
-
-  <td-expansion-panel-group *ngFor="let company of companies| myCompanyFilter:filterText;">
-    <td-expansion-panel label="{{ company.title }}"
-                        [@initAnimation]>
-      <md-list>
-        <md-list-item  *ngFor="let tenant of company.tenants;">
-          <h4 md-line >{{tenant.title}}</h4>
-          <p md-line>Tenant ID: {{tenant.id}}</p>
-        </md-list-item>
-        <md-divider md-inset></md-divider>
-      </md-list>
-    </td-expansion-panel>
-  </td-expansion-panel-group>
-
-  <div *ngFor="let company of companies">
-    <td-expansion-panel-group *ngFor="let tenant of company.tenants | myTenantFilter:filterText">
-    <td-expansion-panel label="{{ tenant.title }}"
-                        [@initAnimation]>
-      <div>
-        <p md-line>Tenant ID: {{tenant.id}}</p>
-        <md-divider md-inset></md-divider>
-      </div>
-    </td-expansion-panel>
-    </td-expansion-panel-group>
-  </div>
-
-</div>
