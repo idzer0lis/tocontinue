@@ -1,0 +1,14 @@
+:host, :host smd-fab-speed-dial {
+  width: 100%;
+}
+
+:host smd-fab-actions {
+  margin-left: auto;
+}
+/deep/ .tenant-icon {
+  margin-left: 20px;
+}
+:host smd-fab-trigger h4 {
+  display: flex;
+  align-items: center;
+}

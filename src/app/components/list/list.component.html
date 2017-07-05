@@ -23,11 +23,10 @@
   <h4>Companies and tenants </h4>
   <ng-container *ngIf="filterText.length < 1">
 
-    <td-expansion-panel-group *ngFor="let company of companies;">
+    <td-expansion-panel-group *ngFor="let company of test;">
       <td-expansion-panel [@initAnimation] #myPanel [expand]="false">
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
-            <h4>{{ company.title }}</h4>
             <my-list-speed-dial [company]="company"></my-list-speed-dial>
           </div>
         </ng-template>
@@ -35,9 +34,8 @@
           <td-expansion-panel-group>
             <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
               <ng-template td-expansion-panel-header>
-                <div md-line class="company-header">
-                  <h4>{{tenant.title}}</h4>
-                  <my-list-speed-dial [company]="company"></my-list-speed-dial>
+                <div md-line class="tenant-header">
+                  <my-list-speed-dial [tenant]="tenant"></my-list-speed-dial>
                 </div>
               </ng-template>
               <div class="tenant-content">
@@ -56,7 +54,7 @@
       <td-expansion-panel [@initAnimation]>
         <ng-template td-expansion-panel-header>
           <h4 md-line>{{ company.title }}</h4>
-          <my-list-speed-dial [company]="company"></my-list-speed-dial>
+          <my-list-speed-dial></my-list-speed-dial>
         </ng-template>
 
         <div class="company-content">
@@ -80,7 +78,7 @@
         <td-expansion-panel [@initAnimation]>
           <ng-template td-expansion-panel-header>
             <h4 md-line>{{ tenant.title }}</h4>
-            <my-list-speed-dial [company]="company"></my-list-speed-dial>
+            <my-list-speed-dial></my-list-speed-dial>
           </ng-template>
           <div class="tenant-content">
             <p md-line>Tenant ID: {{tenant.id}}</p>

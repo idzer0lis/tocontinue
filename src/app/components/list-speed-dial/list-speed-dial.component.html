@@ -2,9 +2,18 @@
                     [animationMode]="animationMode"
                     [fixed]="fixed"
                     (mouseenter)="myFab.open = true"
-                    (mouseleave)="myFab.open = false">
+                    (mouseleave)="myFab.open = false" (click)="collapse = !collapse">
   <smd-fab-trigger [spin]="spin">
-    <button md-mini-fab><i class="material-icons">reply_all</i></button>
+    <h4 md-mini-fab *ngIf="company">
+      <i *ngIf="collapse" class="material-icons">keyboard_arrow_up</i>
+      <i *ngIf="!collapse" class="material-icons">keyboard_arrow_down</i>
+      {{company.title}}
+    </h4>
+    <h4 md-mini-fab *ngIf="tenant">
+      <i *ngIf="collapse" class="material-icons tenant-icon">keyboard_arrow_up</i>
+      <i *ngIf="!collapse" class="material-icons tenant-icon">keyboard_arrow_down</i>
+      {{tenant.title}}
+    </h4>
   </smd-fab-trigger>
   <smd-fab-actions>
 
@@ -15,3 +24,4 @@
 
   </smd-fab-actions>
 </smd-fab-speed-dial>
+
