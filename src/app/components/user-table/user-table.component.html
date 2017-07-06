@@ -1,0 +1,10 @@
+<table td-data-table>
+  <th td-data-table-column *ngFor="let column of columns">
+    {{column.label}}
+  </th>
+  <tr td-data-table-row *ngFor="let row of tableData">
+    <td td-data-table-cell *ngFor="let column of columns">
+      {{column.format ? column.format(row[column.name]) : row[column.name]}}
+    </td>
+  </tr>
+</table>

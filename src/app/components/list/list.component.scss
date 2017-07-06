@@ -1,12 +1,13 @@
 @import '../../../style/colors.scss';
 :host {
   height: 100%;
-  width: 30%;
+  width: 60%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 /deep/ md-card {
   height: 100%;
+  width: 100%;
 }
 /deep/ #list-actions {
   width: 100%;

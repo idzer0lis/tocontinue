@@ -16,7 +16,6 @@ export class CompanyService {
   // URL mockup web API
   private backendData = 'api/companies';
   constructor ( private http: Http ) {
-    // Populate the companies variable on instantiation
     this.http.get(this.backendData)
       .map( (response: Response) => response.json().data )
       .subscribe((data) => {

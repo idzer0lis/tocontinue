@@ -1,0 +1,23 @@
+<md-card>
+  <md-card-header fxLayoutAlign="center">
+    <md-card-title>Company Edit</md-card-title> <p *ngIf="company"> {{ company.title}}</p>
+  </md-card-header>
+
+  <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
+
+    <md-input-container class="licences">
+      <label>Voice licences</label>
+      <input mdInput formControlName="voice-licences" type="text" id="company-voice-licences-input">
+      <my-validation [control]="editForm.controls.voice-licences" id="company-voice-licences-validation"></my-validation>
+    </md-input-container>
+
+
+    <md-input-container class="licences">
+      <label>Digital licences</label>
+      <input mdInput formControlName="digital-licences" type="text" id="company-digital-licences-input">
+      <my-validation [control]="editForm.controls.voice-licences" id="company-digital-licences-validation"></my-validation>
+    </md-input-container>
+  </form>
+  <my-user-table></my-user-table>
+  <button md-raised-button type="submit" id="company-edit-submit" [disabled]="!editForm.valid">Submit changes</button>
+</md-card>

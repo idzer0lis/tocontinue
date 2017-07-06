@@ -8,10 +8,22 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UserService {
   private backendData = 'api/users';  // URL mockup web API
+  private users: User[] = [];
   constructor(
     private http: Http,
     private router: Router
-  ) {}
+  ) {
+    this.http.get(this.backendData)
+      .map( (response: Response) => response.json().data )
+      .subscribe((data) => {
+        data.forEach(user => {
+          this.users.push(user);
+        });
+      });
+  }
+  getAllUsers(): User[] {
+    return this.users;
+  }
   // This will not be the final login method. No unit testing on purpose
   login(username: string, password: string): Observable<User> {
     return this.http.get(this.backendData)

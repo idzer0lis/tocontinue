@@ -3,11 +3,11 @@
   <i class="material-icons">keyboard_arrow_down</i>
 </button>
 <md-menu #menu="mdMenu" id="navbar-menu-dropdown" [overlapTrigger]="false" xPosition="before">
-  <button md-menu-item>
+  <button md-menu-item i18n>
     <i class="material-icons">account_box</i>
     Profile
   </button>
-  <button md-menu-item (click)="doLogout()" id="navbar-menu-logout">
+  <button md-menu-item (click)="doLogout()" id="navbar-menu-logout" i18n>
     <i class="material-icons">close</i>
     Logout
   </button>

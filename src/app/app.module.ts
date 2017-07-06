@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -26,14 +26,18 @@ import { NotificationService } from './services/notification/notification.servic
 import { CompanyService } from './services/company/company.service';
 import { SearchService } from './services/search/search.service';
 import { routing } from './app.routing';
-import { CovalentExpansionPanelModule } from '@covalent/core';
+import { CovalentExpansionPanelModule, CovalentDataTableModule } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CompanyFilter } from './services/filter/companyFilter.component';
 import { TenantFilter } from './services/filter/tenantFilter.component';
-import { FabSpeedDialActionsComponent,
+import {
+  FabSpeedDialActionsComponent,
   FabSpeedDialComponent,
   FabSpeedDialTriggerComponent } from './components/speed-dial/speed-dial.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { ListSpeedDialComponent } from './components/list-speed-dial/list-speed-dial.component';
+import { CompanyEditComponent } from './components/company-edit-form/company-edit-form.component';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -52,7 +56,9 @@ let IMPORTS = [
   MaterialModule,
   FlexLayoutModule,
   CovalentExpansionPanelModule,
-  CovalentHighlightModule
+  CovalentHighlightModule,
+  MdDialogModule,
+  CovalentDataTableModule
 ];
 let COMPONENTS = [
   AppComponent,
@@ -71,7 +77,10 @@ let COMPONENTS = [
   FabSpeedDialActionsComponent,
   FabSpeedDialComponent,
   FabSpeedDialTriggerComponent,
-  ListSpeedDialComponent
+  ListSpeedDialComponent,
+  DialogComponent,
+  CompanyEditComponent,
+  UserTableComponent
 ];
 let PROVIDERS = [
   UserService,
@@ -87,7 +96,8 @@ let PROVIDERS = [
   declarations: COMPONENTS,
   providers: PROVIDERS,
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  entryComponents: [DialogComponent]
 })
 export class AppModule {
   constructor(public appRef: ApplicationRef) {}

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Company } from '../../services/company/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
-import { Observable } from 'rxjs/Observable';
-
 
 @Component({
   selector: 'my-list',
@@ -28,7 +26,9 @@ export class ListComponent {
     this.companyService.addCompany(this.newCompany);
     this.newCompany = new Company();
   }
-
+  handleCompany(company) {
+    console.log(company);
+  }
   /*get companies() {
     return this.companyService.getAllcompanies()
       .subscribe(companies => this.companies = companies );
