@@ -1,0 +1,20 @@
+@import "../../../style/colors.scss";
+
+:host /deep/ td-search-input button{
+  display: none !important;
+}
+:host /deep/ td-paging-bar > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+:host /deep/ table[td-data-table].mat-selectable tbody > tr.td-data-table-row.mat-selected {
+  background-color: $light-grey !important;
+}
+
+:host /deep/ .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+:host /deep/ .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+:host /deep/ md-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background-color: $blue-grey !important;
+}

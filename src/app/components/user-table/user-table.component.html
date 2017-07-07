@@ -1,10 +1,33 @@
-<table td-data-table>
-  <th td-data-table-column *ngFor="let column of columns">
-    {{column.label}}
-  </th>
-  <tr td-data-table-row *ngFor="let row of tableData">
-    <td td-data-table-cell *ngFor="let column of columns">
-      {{column.format ? column.format(row[column.name]) : row[column.name]}}
-    </td>
-  </tr>
-</table>
+<div layout="row" fxLayoutAlign="start center">
+  <span *ngIf="!searchBox.searchVisible">
+    <span class="md-title">All users</span>
+  </span>
+  <span *ngIf="!searchBox.searchVisible">
+    <span *ngIf="(selectable && !selectedRows.length) || !selectable">What is this?</span>
+    <span *ngIf="selectedRows.length && selectable">0 item(s) selected</span>
+  </span>
+  <td-search-input #searchBox placeholder="Search second" [showUnderline]="false" (searchDebounce)="search($event)">
+  </td-search-input>
+
+</div>
+<md-divider></md-divider>
+<td-data-table
+       #dataTable
+       [data]="filteredData"
+       [columns]="columns"
+       [selectable]="true"
+       [clickable]="true"
+       [multiple]="true"
+       [sortable]="true"
+       [sortBy]="sortBy"
+       [(ngModel)]="selectedRows"
+       [sortOrder]="sortOrder"
+       (sortChange)="sort($event)">
+</td-data-table>
+<div class="md-padding" *ngIf="!dataTable.hasData" fxLayout="row" fxLayoutAlign="center center">
+<h3>No results to display.</h3>
+</div>
+<td-paging-bar #pagingBar [pageSizes]="[5, 10, 15, 20]" [total]="filteredTotal" (change)="page($event)">
+  <span td-paging-bar-label hide-xs>Row per page:</span>
+  {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+</td-paging-bar>

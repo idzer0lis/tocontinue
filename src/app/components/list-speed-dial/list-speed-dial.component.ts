@@ -15,7 +15,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class ListSpeedDialComponent {
   @Input()company: Company;
   @Input()tenant: Tenant;
-  @Output() selectedCompany: EventEmitter<Company> = new EventEmitter<Company>();
+  @Output() selectedCompany = new EventEmitter();
   public open = false;
   public fixed = false;
   public spin = false;
@@ -34,9 +34,9 @@ export class ListSpeedDialComponent {
   _click(event: any) {
     console.log(event);
   }
-  editCompany(company: Company) {
-    // console.log(company);
-    this.selectedCompany.emit(company);
+  test() {
+    console.log('list emit');
+    this.selectedCompany.emit('test');
   }
   removeCompany(company: Company): CompanyService {
     console.log(company);

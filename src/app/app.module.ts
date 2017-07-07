@@ -26,7 +26,13 @@ import { NotificationService } from './services/notification/notification.servic
 import { CompanyService } from './services/company/company.service';
 import { SearchService } from './services/search/search.service';
 import { routing } from './app.routing';
-import { CovalentExpansionPanelModule, CovalentDataTableModule } from '@covalent/core';
+import {
+  CovalentExpansionPanelModule,
+  CovalentDataTableModule,
+  TdDataTableService,
+  CovalentPagingModule,
+  CovalentSearchModule
+ } from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CompanyFilter } from './services/filter/companyFilter.component';
 import { TenantFilter } from './services/filter/tenantFilter.component';
@@ -58,7 +64,9 @@ let IMPORTS = [
   CovalentExpansionPanelModule,
   CovalentHighlightModule,
   MdDialogModule,
-  CovalentDataTableModule
+  CovalentDataTableModule,
+  CovalentPagingModule,
+  CovalentSearchModule
 ];
 let COMPONENTS = [
   AppComponent,
@@ -88,7 +96,8 @@ let PROVIDERS = [
   AuthGuard,
   NotificationService,
   CompanyService,
-  SearchService
+  SearchService,
+  TdDataTableService
 ];
 
 @NgModule({

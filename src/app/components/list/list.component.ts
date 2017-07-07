@@ -26,9 +26,6 @@ export class ListComponent {
     this.companyService.addCompany(this.newCompany);
     this.newCompany = new Company();
   }
-  handleCompany(company) {
-    console.log(company);
-  }
   /*get companies() {
     return this.companyService.getAllcompanies()
       .subscribe(companies => this.companies = companies );

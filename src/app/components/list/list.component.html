@@ -24,7 +24,7 @@
   <ng-container *ngIf="filterText.length < 1">
 
     <td-expansion-panel-group *ngFor="let company of test;">
-      <td-expansion-panel [@initAnimation] #myPanel [expand]="false">
+      <td-expansion-panel [@initAnimation] [expand]="false">
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
             <my-list-speed-dial [company]="company"></my-list-speed-dial>

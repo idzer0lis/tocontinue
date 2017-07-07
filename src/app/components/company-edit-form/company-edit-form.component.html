@@ -1,6 +1,6 @@
-<md-card>
+<md-card (selectedCompany)="editCompany($event)">
   <md-card-header fxLayoutAlign="center">
-    <md-card-title>Company Edit</md-card-title> <p *ngIf="company"> {{ company.title}}</p>
+    <md-card-title>Company Edit</md-card-title> <p *ngIf="company"> {{ company.title }}</p>
   </md-card-header>
 
   <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">

@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../user/user';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UserService {
   private backendData = 'api/users';  // URL mockup web API
-  private users: User[] = [];
+  private users = new BehaviorSubject<User[]>([]);
   constructor(
     private http: Http,
     private router: Router
@@ -17,11 +18,11 @@ export class UserService {
       .map( (response: Response) => response.json().data )
       .subscribe((data) => {
         data.forEach(user => {
-          this.users.push(user);
+          this.users.next([...this.users.value, user]);
         });
       });
   }
-  getAllUsers(): User[] {
+  getAllUsers(): Observable<User[]> {
     return this.users;
   }
   // This will not be the final login method. No unit testing on purpose

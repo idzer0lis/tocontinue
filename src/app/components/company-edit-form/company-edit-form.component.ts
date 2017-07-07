@@ -12,10 +12,10 @@ import { Company } from '../../services/company/company';
 export class CompanyEditComponent implements OnInit {
   editForm: FormGroup;
   public company: Company;
+  public test: string;
 
-  handleCompany(company) {
-    console.log(company);
-    this.company = company;
+  editCompany(any?) {
+    console.log('invoked');
   }
   constructor(
     private fb: FormBuilder
