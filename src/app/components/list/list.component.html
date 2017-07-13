@@ -1,4 +1,4 @@
-<md-card [@initAnimation]>
+<md-card [@initAnimation] fxFlex="50%">
   <div id="list-actions">
     <md-input-container floatPlaceholder="never">
       <input mdInput
@@ -23,11 +23,11 @@
   <h4 i18n>Companies and tenants </h4>
   <ng-container *ngIf="filterText.length < 1">
 
-    <td-expansion-panel-group *ngFor="let company of test;">
+    <td-expansion-panel-group *ngFor="let company of companies;">
       <td-expansion-panel [@initAnimation] [expand]="false">
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
-            <my-list-speed-dial [company]="company"></my-list-speed-dial>
+            <my-list-speed-dial [company]="company" (selectedCompany)="selectedCompany($event)"></my-list-speed-dial>
           </div>
         </ng-template>
         <div class="company-content">
@@ -90,4 +90,4 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<my-company-edit></my-company-edit>
+<my-company-edit *ngIf="currentCompany" [company]="currentCompany"></my-company-edit>

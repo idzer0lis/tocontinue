@@ -4,23 +4,19 @@
                     (mouseenter)="myFab.open = true"
                     (mouseleave)="myFab.open = false" (click)="collapse = !collapse">
   <smd-fab-trigger [spin]="spin">
-    <h4 md-mini-fab *ngIf="company">
-      <i *ngIf="collapse" class="material-icons">keyboard_arrow_up</i>
-      <i *ngIf="!collapse" class="material-icons">keyboard_arrow_down</i>
-      {{company.title}}
-    </h4>
-    <h4 md-mini-fab *ngIf="tenant">
-      <i *ngIf="collapse" class="material-icons tenant-icon">keyboard_arrow_up</i>
-      <i *ngIf="!collapse" class="material-icons tenant-icon">keyboard_arrow_down</i>
-      {{tenant.title}}
+    <h4 md-mini-fab>
+      <i *ngIf="collapse" class="material-icons list-arrow">keyboard_arrow_up</i>
+      <i *ngIf="!collapse" class="material-icons list-arrow">keyboard_arrow_down</i>
+      <span *ngIf="company">{{company.title }} </span>
+      <span *ngIf="tenant">{{tenant.title}}</span>
     </h4>
   </smd-fab-trigger>
   <smd-fab-actions>
 
-    <button md-mini-fab (click)="openDialog('to delete this item?');$event.stopPropagation()"><i class="material-icons">delete_forever</i></button>
-    <button md-mini-fab (click)="openDialog('to disable this item?');$event.stopPropagation()"><i class="material-icons">do_not_disturb_alt</i></button>
-    <button md-mini-fab (click)="test();$event.stopPropagation()"><i class="material-icons">edit</i></button>
-    <button md-mini-fab (click)="_click('action add');$event.stopPropagation()" ><i class="material-icons">playlist_add</i></button>
+    <button md-mini-fab id="company-list-delete" (click)="openDialog({action: 'delete', text: 'to delete this item?', company: company});$event.stopPropagation()"><i class="material-icons">delete_forever</i></button>
+    <button md-mini-fab id="company-list-disable" (click)="openDialog({action: 'disable', text: 'to disable this item?', company: company});$event.stopPropagation()"><i class="material-icons">do_not_disturb_alt</i></button>
+    <button md-mini-fab id="company-list-edit" (click)="openDialog({action: 'edit', text: 'to edit this item?', company: company});$event.stopPropagation()"><i class="material-icons">edit</i></button>
+    <button md-mini-fab id="company-list-add" (click)="openDialog({action: 'add', text: 'to add a tenant?', company: company});$event.stopPropagation()" ><i class="material-icons">playlist_add</i></button>
 
   </smd-fab-actions>
 </smd-fab-speed-dial>

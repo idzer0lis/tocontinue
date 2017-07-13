@@ -3,6 +3,7 @@ import { Http , Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../user/user';
+import { Role } from '../role/role';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -24,6 +25,80 @@ export class UserService {
   }
   getAllUsers(): Observable<User[]> {
     return this.users;
+  }
+  getUserById(id: number): User {
+    return this.users.value
+      .filter( (user: User) => user.id === id)
+      .pop();
+  }
+  getRoleById(id: number): Observable<Array<string>> {
+    let roles = new BehaviorSubject<Array<string>>([]);
+    this.http.get('api/companyRoles')
+      .map( (response: Response) => response.json().data )
+      .subscribe((data) => {
+        data.forEach(row => {
+          if (row.id === id) {
+           roles.next([...roles.value, row.name]);
+          }
+        });
+      });
+    return roles;
+  }
+  setUsersInCompany(companyId: number, values: Object = {}): object {
+    let companyUsers = new BehaviorSubject<Object[]>([]);
+    this.http.get('api/companyUserRoles')
+      .map( (response: Response) => response.json().data )
+      .subscribe(data => {
+         console.log(data);
+        /*data.forEach(company => {
+          if (company.companyId === companyId) {
+            Object.assign(company, values);
+            console.log(company);
+            // Filter for unique ID's
+           /!* if (company.userId.length > 1) {
+              company.userId.filter((item, i, ar) => ar.indexOf(item) === i);
+            }*!/
+            // After assigning the new values, get the usernames and role names
+           /!* company.userId.forEach(id => {
+              let username = this.getUserById(id).username;
+              let roles: any = {};
+              this.getRoleById(id).subscribe(role => {
+                roles = role.join(',');
+              });
+              companyUsers.next([...companyUsers.value, {username: username, role: roles}]);
+            });*!/
+          }
+        });*/
+      });
+    return companyUsers;
+  }
+  getUsersByCompany(companyId: number): Observable<Object[]> {
+    let companyUsers = new BehaviorSubject<Object[]>([]);
+    this.http.get('api/companyUserRoles')
+      .map( (response: Response) => response.json().data )
+      .subscribe((data) => {
+        data.forEach(row => {
+          if (row.companyId === companyId) {
+            let username: string = this.getUserById(row.userId).username;
+            this.getRoleById(row.userId).subscribe(role => {
+              companyUsers.next([{username: username, role: role.join(',')}]);
+            });
+          }
+        });
+      });
+    return companyUsers;
+  }
+  // Most likely I will move 'role related' methods into a role service
+  getAllRoles(): Observable<Role[]> {
+    let companyRoles = new BehaviorSubject<Role[]>([]);
+    this.http.get('api/roles')
+      .map( (response: Response) => response.json().data )
+      .subscribe((data) => {
+        data.forEach(role => {
+          companyRoles.next([...companyRoles.value, role]);
+        });
+      });
+    return companyRoles;
   }
   // This will not be the final login method. No unit testing on purpose
   login(username: string, password: string): Observable<User> {

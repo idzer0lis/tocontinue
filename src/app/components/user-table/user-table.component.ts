@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../services/user/user';
 import {
@@ -16,6 +16,8 @@ import {
 })
 
 export class UserTableComponent implements OnInit {
+  @Output()selectedUsers = new EventEmitter<User[]>();
+  public selectedRows: User[] = [];
   public tableData: User[] = [];
   public columns: ITdDataTableColumn[] = [
     { name: 'username', label: 'Username'},
@@ -23,13 +25,11 @@ export class UserTableComponent implements OnInit {
   ];
   public filteredData: User[];
   public filteredTotal = 0;
-
   public searchTerm = '';
   public fromRow = 1;
   public currentPage = 1;
   public pageSize = 5;
   public sortBy = 'username';
-  public selectedRows: any[] = [];
   public sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Ascending;
 
   constructor(private userService: UserService, private _dataTableService: TdDataTableService) {
@@ -42,6 +42,9 @@ export class UserTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter();
+  }
+  selectUsers(users: User[]) {
+    this.selectedUsers.emit(users);
   }
 
   sort(sortEvent: ITdDataTableSortChangeEvent): void {

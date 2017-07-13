@@ -5,6 +5,8 @@ export class Company {
   title: string;
   tenants: Array<Tenant>;
   users: Array<User>;
+  voiceLicences: number;
+  digitalLicences: number;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

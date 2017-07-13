@@ -1,0 +1,23 @@
+<!--
+Avaya Inc. - Proprietary (Restricted)
+Solely for authorized persons having a need to know pursuant to Company instructions.
+
+Copyright © Avaya Inc. All rights reserved.
+
+THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+The copyright notice above does not evidence any actual or intended publication of such source code.
+-->
+
+<td-data-table
+  #dataTable
+  [data]="tableData"
+  [columns]="columns"
+  [selectable]="true"
+  [clickable]="true"
+  [multiple]="true"
+  [sortable]="true"
+  [(ngModel)]="selectedRows" (ngModelChange)="selectRoles(selectedRows)">
+</td-data-table>
+<div *ngIf="!dataTable.hasData" fxLayout="row" fxLayoutAlign="center center">
+  <p>No roles defined or found.</p>
+</div>

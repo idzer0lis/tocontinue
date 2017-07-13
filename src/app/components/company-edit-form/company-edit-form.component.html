@@ -1,23 +1,27 @@
-<md-card (selectedCompany)="editCompany($event)">
+<md-card>
   <md-card-header fxLayoutAlign="center">
-    <md-card-title>Company Edit</md-card-title> <p *ngIf="company"> {{ company.title }}</p>
+    <md-card-title i18n> {{ company.title }} Edit</md-card-title>
   </md-card-header>
 
   <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
-
+    <div class="company-edit-licences">
     <md-input-container class="licences">
-      <label>Voice licences</label>
-      <input mdInput formControlName="voice-licences" type="text" id="company-voice-licences-input">
-      <my-validation [control]="editForm.controls.voice-licences" id="company-voice-licences-validation"></my-validation>
-    </md-input-container>
+        <label i18n>Voice licences</label>
+        <input mdInput formControlName="voice-licences" type="text" id="company-voice-licences-input">
+        <my-validation [control]="editForm.controls.voice-licences" id="company-voice-licences-validation"></my-validation>
+      </md-input-container>
 
 
-    <md-input-container class="licences">
-      <label>Digital licences</label>
-      <input mdInput formControlName="digital-licences" type="text" id="company-digital-licences-input">
-      <my-validation [control]="editForm.controls.voice-licences" id="company-digital-licences-validation"></my-validation>
-    </md-input-container>
+      <md-input-container class="licences">
+        <label i18n>Digital licences</label>
+        <input mdInput formControlName="digital-licences" type="text" id="company-digital-licences-input">
+        <my-validation [control]="editForm.controls.voice-licences" id="company-digital-licences-validation"></my-validation>
+      </md-input-container>
+    </div>
   </form>
-  <my-user-table></my-user-table>
-  <button md-raised-button type="submit" id="company-edit-submit" [disabled]="!editForm.valid">Submit changes</button>
+  <my-company-user-table [company]="company" [newUsers]="newUsers"></my-company-user-table>
+  <button *ngIf="selectedUsers && selectedRoles" (click)="addToCompany()"> Add to company </button>
+  <my-user-table (selectedUsers)="getSelectedUsers($event)"></my-user-table>
+  <my-company-role-table (selectedRoles)="getSelectedRoles($event)"></my-company-role-table>
+  <button md-raised-button type="submit" id="company-edit-submit" [disabled]="!editForm.valid" i18n>Submit changes</button>
 </md-card>

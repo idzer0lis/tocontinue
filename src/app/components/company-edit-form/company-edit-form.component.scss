@@ -2,4 +2,12 @@
   height:100%;
   width: 100%;
 }
-
+#company-edit-submit {
+  margin-top: 50px;
+}
+:host .company-edit-licences {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

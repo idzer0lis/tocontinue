@@ -32,7 +32,7 @@ import {
   TdDataTableService,
   CovalentPagingModule,
   CovalentSearchModule
- } from '@covalent/core';
+} from '@covalent/core';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CompanyFilter } from './services/filter/companyFilter.component';
 import { TenantFilter } from './services/filter/tenantFilter.component';
@@ -44,6 +44,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { ListSpeedDialComponent } from './components/list-speed-dial/list-speed-dial.component';
 import { CompanyEditComponent } from './components/company-edit-form/company-edit-form.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { CompanyUserTableComponent } from './components/company-user-table/company-user-table.component';
+import { CompanyRoleTableComponent } from './components/company-role-table/company-role-table.component';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -88,7 +90,9 @@ let COMPONENTS = [
   ListSpeedDialComponent,
   DialogComponent,
   CompanyEditComponent,
-  UserTableComponent
+  UserTableComponent,
+  CompanyUserTableComponent,
+  CompanyRoleTableComponent
 ];
 let PROVIDERS = [
   UserService,

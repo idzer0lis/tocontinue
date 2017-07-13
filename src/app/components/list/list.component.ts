@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Company } from '../../services/company/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
@@ -10,24 +10,26 @@ import { slideInDownAnimation } from '../../animations/animations';
   providers: [CompanyService],
   animations: [slideInDownAnimation]
 })
-export class ListComponent {
-  private test: Company[];
+export class ListComponent implements OnInit {
+  private companies: Company[];
+  private currentCompany: Company;
   public newCompany: Company = new Company();
   public showAddCompany = false;
   public filterText = '';
-  public toggle = false;
 
-  constructor(private companyService: CompanyService) {
-    this.companyService.getAllcompanies()
-      .subscribe(companies => this.test = companies );
+  constructor(private companyService: CompanyService) {}
+  ngOnInit() {
+    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
   }
 
   addCompany() {
     this.companyService.addCompany(this.newCompany);
     this.newCompany = new Company();
   }
-  /*get companies() {
-    return this.companyService.getAllcompanies()
-      .subscribe(companies => this.companies = companies );
-  }*/
+  removeCompany(company: Company): void {
+    this.companyService.deleteCompanyById(company.id);
+  }
+  selectedCompany(company: Company) {
+    this.currentCompany = company;
+  }
 }
