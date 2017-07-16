@@ -20,8 +20,10 @@
     </div>
   </form>
   <my-company-user-table [company]="company" [newUsers]="newUsers"></my-company-user-table>
-  <button *ngIf="selectedUsers && selectedRoles" (click)="addToCompany()"> Add to company </button>
-  <my-user-table (selectedUsers)="getSelectedUsers($event)"></my-user-table>
-  <my-company-role-table (selectedRoles)="getSelectedRoles($event)"></my-company-role-table>
-  <button md-raised-button type="submit" id="company-edit-submit" [disabled]="!editForm.valid" i18n>Submit changes</button>
+  <div class="company-tables" fxLayout="row" fxLayoutAlign="center space-around">
+    <my-user-table (selectedUsers)="getSelectedUsers($event)"></my-user-table>
+    <my-company-role-table (selectedRoles)="getSelectedRoles($event)"></my-company-role-table>
+  </div>
+  <button md-raised-button *ngIf="selectedUsers.length && selectedRoles.length" (click)="addToCompany()" i18n id="add-to-company"> Add to company </button>
+
 </md-card>

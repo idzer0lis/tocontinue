@@ -5,7 +5,6 @@ import { UserService } from '../../services/user/user.service';
 import { Company } from '../../services/company/company';
 import { Role } from '../../services/role/role';
 import { User } from '../../services/user/user';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'my-company-edit',
@@ -16,7 +15,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class CompanyEditComponent implements OnInit, OnChanges {
   private editForm: FormGroup;
   @Input()company: Company;
-  public newUsers = new BehaviorSubject<Object[]>([]);
+  public newUsers: Object;
   public selectedRoles: Array<number> = [];
   public selectedUsers: Array<number> = [];
   constructor(
@@ -44,19 +43,21 @@ export class CompanyEditComponent implements OnInit, OnChanges {
       {'digital-licences': [this.company.digitalLicences]});
   }
   addToCompany() {
-    let newUsers = this.userService.setUsersInCompany(1, {userId: this.selectedUsers});
-    this.newUsers.next([...this.newUsers.value, newUsers]);
-    // this.newUsers.emit(users);
+    this.newUsers = this.userService.setUsersInCompany(this.company.id, {userId: this.selectedUsers, companyRole: this.selectedRoles});
   }
   getSelectedUsers(users: User[]) {
-     users.forEach((user: User) => this.selectedUsers.push(user.id));
-     // Filter for unique ID's
-    /*if (this.selectedUsers.length > 1) {
-      this.selectedUsers.filter((item, i, ar) => ar.indexOf(item) === i);
-    }*/
+     users.forEach((user: User) => {
+       // filter only unique id's
+       if (this.selectedUsers.indexOf(user.id) === -1) {
+         this.selectedUsers.push(user.id);
+       }
+     });
   }
   getSelectedRoles(roles: Role[]) {
-    console.log(roles);
-    roles.forEach((role: Role) => this.selectedRoles.push(role.id));
+    roles.forEach((role: Role) => {
+      if (this.selectedRoles.indexOf(role.id) === -1) {
+        this.selectedRoles.push(role.id);
+      }
+    });
   }
 }

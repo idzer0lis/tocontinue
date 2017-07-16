@@ -8,6 +8,7 @@ THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
 The copyright notice above does not evidence any actual or intended publication of such source code.
 -->
 
+<!--
 <td-data-table
   #dataTable
   [data]="tableData"
@@ -18,7 +19,45 @@ The copyright notice above does not evidence any actual or intended publication 
   [sortable]="true"
   [sortOrder]="sortOrder"
   (sortChange)="sort($event)">
+  <template tdDataTableTemplate="username" let-value="value" let-row="row" let-column="column">
+    <div layout="row">
+      <span flex>{{value}}</span> // or <span flex>{{row[column]}}</span>
+      <md-icon>star</md-icon>
+    </div>
+  </template>
 </td-data-table>
 <div *ngIf="!dataTable.hasData" fxLayout="row" fxLayoutAlign="center center">
   <p>Company has no users.</p>
 </div>
+-->
+<!--<table td-data-table>
+
+  <th td-data-table-column *ngFor="let column of columns" [selectable]="false">{{column.name}}</th>
+
+  <tr td-data-table-row *ngFor="let catalog of tableData">
+    <td td-data-table-cell>{{catalog.username}}</td>
+    <td td-data-table-cell>{{catalog.role}}</td>
+    <td td-data-table-cell>
+      <button type="button" class="btn btn-info">detail</button>
+      <button type="button" class="btn btn-danger">delete</button>
+    </td>
+  </tr>
+</table>-->
+<table td-data-table #dataTable>
+  <th td-data-table-column
+      [sortable]="true"
+      [sortOrder]="sortOrder"
+      (sortChange)="sort($event)"
+      [active]="false"
+      [numeric]="false"
+      *ngFor="let column of columns">
+    {{column.label}}
+  </th>
+  <tr td-data-table-row *ngFor="let data of tableData">
+    <td td-data-table-cell [numeric]="false">{{data.username}}</td>
+    <td td-data-table-cell [numeric]="false">{{data.role}}</td>
+    <td td-data-table-cell [numeric]="false">
+      <button md-mini-fab id="company-user-remove" (click)="openDialog({action: 'delete', text: 'to remove this user?', userId: data.id, roleId: data.roleId});$event.stopPropagation()"><i class="material-icons">delete_forever</i></button>
+    </td>
+  </tr>
+</table>

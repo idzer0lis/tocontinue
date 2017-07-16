@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../user/user';
 import { Role } from '../role/role';
+import { CompanyUserRole } from '../role/company-user-role';
+import { CompanyUserTable } from '../role/company-user-table';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -11,6 +13,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class UserService {
   private backendData = 'api/users';  // URL mockup web API
   private users = new BehaviorSubject<User[]>([]);
+  private companyUsers = new BehaviorSubject<object[]>([]);
   constructor(
     private http: Http,
     private router: Router
@@ -31,46 +34,81 @@ export class UserService {
       .filter( (user: User) => user.id === id)
       .pop();
   }
-  getRoleById(id: number): Observable<Array<string>> {
-    let roles = new BehaviorSubject<Array<string>>([]);
+  getCompanyRoleById(id: number): Observable<string> {
+    let roles = new BehaviorSubject<string>('');
     this.http.get('api/companyRoles')
       .map( (response: Response) => response.json().data )
       .subscribe((data) => {
         data.forEach(row => {
           if (row.id === id) {
-           roles.next([...roles.value, row.name]);
+           roles.next(row.name);
           }
         });
       });
     return roles;
   }
-  setUsersInCompany(companyId: number, values: Object = {}): object {
-    let companyUsers = new BehaviorSubject<Object[]>([]);
+  removeUserRoleInCompany(companyId?: number, userId: number, roleId: number): object[] {
+  }
+  // NEEDS REFACTORING
+  setUsersInCompany(companyId: number, values: CompanyUserTable): object {
+    if (!values.companyRole || !values.userId) { return; }
+    let newUsers = [];
+    // get all rows(user-role combination within a company), filtering only the current company user-roles;
     this.http.get('api/companyUserRoles')
       .map( (response: Response) => response.json().data )
       .subscribe(data => {
-         console.log(data);
-        /*data.forEach(company => {
-          if (company.companyId === companyId) {
-            Object.assign(company, values);
-            console.log(company);
-            // Filter for unique ID's
-           /!* if (company.userId.length > 1) {
-              company.userId.filter((item, i, ar) => ar.indexOf(item) === i);
-            }*!/
-            // After assigning the new values, get the usernames and role names
-           /!* company.userId.forEach(id => {
-              let username = this.getUserById(id).username;
-              let roles: any = {};
-              this.getRoleById(id).subscribe(role => {
-                roles = role.join(',');
+        data.forEach((row: CompanyUserRole) => {
+          if (row.companyId === companyId) {
+            // Add the users-role that already exist
+            row.companyRole.forEach(roleId => {
+              // let test = this.getUsernameAndRoles(newUserId, roleId);
+              let username = this.getUserById(row.userId).username;
+              this.getCompanyRoleById(roleId).subscribe(roleName => {
+                if (roleName.length) {
+                  this.companyUsers.next([...this.companyUsers.value,
+                    {id: row.userId, username: username, roleId: roleId, role: roleName}]);
+                }
               });
-              companyUsers.next([...companyUsers.value, {username: username, role: roles}]);
-            });*!/
+              // check if there is the user has the role, insert it otherwise
+              if (values.userId.indexOf(row.userId) !== -1) {
+                values.companyRole.forEach(roleId => {
+                  if (row.companyRole.indexOf(roleId) === -1) {
+                    let username = this.getUserById(row.userId).username;
+                    this.getCompanyRoleById(roleId).subscribe(roleName => {
+                      if (roleName.length) {
+                        this.companyUsers.next([...this.companyUsers.value,
+                          {id: row.userId, username: username, roleId: roleId, role: roleName}]);
+                      }
+                    });
+                  }
+                });
+              }
+            });
+            newUsers = values.userId.filter(id => id !== row.userId);
           }
-        });*/
+        }); // end of company user-role looping; we know which users are new; Insert them
+        newUsers.forEach(newUserId => {
+          values.companyRole.forEach(roleId => {
+            let username = this.getUserById(newUserId).username;
+            this.getCompanyRoleById(roleId).subscribe(roleName => {
+              if (roleName.length) {
+                this.companyUsers.next([...this.companyUsers.value,
+                  {id: newUserId, username: username, roleId: roleId, role: roleName}]);
+              }
+            });
+          });
+        });
       });
-    return companyUsers;
+    return this.companyUsers;
+  }
+  private getUsernameAndRoles(userId: number, roleId: number): Object {
+    let username = this.getUserById(userId).username;
+    this.getCompanyRoleById(roleId).subscribe(roleName => {
+      if (roleName.length) {
+        return {username: username, role: roleName};
+      }
+    });
+    return null;
   }
   getUsersByCompany(companyId: number): Observable<Object[]> {
     let companyUsers = new BehaviorSubject<Object[]>([]);
@@ -80,8 +118,10 @@ export class UserService {
         data.forEach(row => {
           if (row.companyId === companyId) {
             let username: string = this.getUserById(row.userId).username;
-            this.getRoleById(row.userId).subscribe(role => {
-              companyUsers.next([{username: username, role: role.join(',')}]);
+            this.getCompanyRoleById(row.userId).subscribe(roles => {
+              if (roles.length) {
+                companyUsers.next([...companyUsers.value, {username: username, role: roles, id: row.userId}]);
+              }
             });
           }
         });
@@ -89,9 +129,21 @@ export class UserService {
     return companyUsers;
   }
   // Most likely I will move 'role related' methods into a role service
-  getAllRoles(): Observable<Role[]> {
-    let companyRoles = new BehaviorSubject<Role[]>([]);
+  getAllRoles(): Observable<Role[]> { // tslint: disable-line
+    let roles = new BehaviorSubject<Role[]>([]);
     this.http.get('api/roles')
+      .map( (response: Response) => response.json().data )
+      .subscribe((data) => {
+        data.forEach(role => {
+          roles.next([...roles.value, role]);
+        });
+      });
+    return roles;
+  }
+  // Most likely I will move 'role related' methods into a role service
+  getAllCompanyRoles(): Observable<CompanyUserRole[]> {
+    let companyRoles = new BehaviorSubject<CompanyUserRole[]>([]);
+    this.http.get('api/companyRoles')
       .map( (response: Response) => response.json().data )
       .subscribe((data) => {
         data.forEach(role => {

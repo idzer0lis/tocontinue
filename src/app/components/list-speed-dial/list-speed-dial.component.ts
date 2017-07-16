@@ -32,7 +32,7 @@ export class ListSpeedDialComponent {
       data: data.text
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (parseInt (result, 10)) {
         switch (data.action) {
           case 'add':
             console.log('add tenant');

@@ -2,12 +2,21 @@
   height:100%;
   width: 100%;
 }
-#company-edit-submit {
-  margin-top: 50px;
+#add-to-company {
+  margin-top: 30px;
 }
 :host .company-edit-licences {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+:host my-company-role-table{
+  margin-top: 74px;
+}
+:host .mat-table-container{
+  width: 50%;
+  max-width: 50%;
+  margin: auto;
+  border: dotted;
 }

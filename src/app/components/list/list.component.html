@@ -1,4 +1,4 @@
-<md-card [@initAnimation] fxFlex="50%">
+<md-card [@initAnimation] fxFlex="30%">
   <div id="list-actions">
     <md-input-container floatPlaceholder="never">
       <input mdInput
@@ -8,7 +8,7 @@
     </md-input-container>
     <button md-mini-fab
             *ngIf="!showAddCompany">
-      <i class="material-icons" (click)="showAddCompany = !showAddCompany">playlist_add</i>
+      <i class="material-icons" (click)="showAddCompany = !showAddCompany" id="add-company">playlist_add</i>
     </button>
     <md-input-container
       floatPlaceholder="never"
@@ -90,4 +90,4 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<my-company-edit *ngIf="currentCompany" [company]="currentCompany"></my-company-edit>
+<my-company-edit *ngIf="currentCompany" [company]="currentCompany" fxFlex="50%"></my-company-edit>

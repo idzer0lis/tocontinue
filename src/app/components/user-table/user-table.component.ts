@@ -20,8 +20,7 @@ export class UserTableComponent implements OnInit {
   public selectedRows: User[] = [];
   public tableData: User[] = [];
   public columns: ITdDataTableColumn[] = [
-    { name: 'username', label: 'Username'},
-    { name: 'role', label: 'User role' },
+    { name: 'username', label: 'Username'}
   ];
   public filteredData: User[];
   public filteredTotal = 0;

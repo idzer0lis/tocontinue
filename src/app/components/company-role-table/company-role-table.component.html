@@ -15,8 +15,8 @@ The copyright notice above does not evidence any actual or intended publication 
   [selectable]="true"
   [clickable]="true"
   [multiple]="true"
-  [sortable]="true"
-  [(ngModel)]="selectedRows" (ngModelChange)="selectRoles(selectedRows)">
+  [sortable]="false"
+  [(ngModel)]="selectedRows" (ngModelChange)="setRoles(selectedRows)">
 </td-data-table>
 <div *ngIf="!dataTable.hasData" fxLayout="row" fxLayoutAlign="center center">
   <p>No roles defined or found.</p>
