@@ -8,7 +8,7 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { Company } from '../../services/company/company';
 import { ITdDataTableColumn, TdDataTableSortingOrder, ITdDataTableSortChangeEvent } from '@covalent/core';
@@ -23,7 +23,7 @@ import { DialogComponent } from '../dialog/dialog.component';
   providers: [UserService]
 })
 
-export class CompanyUserTableComponent implements OnChanges, OnInit {
+export class CompanyUserTableComponent implements OnChanges{
   @Input() company: Company;
   @Input() newUsers: Observable<Object[]>;
   public tableData: Object[];
@@ -36,10 +36,6 @@ export class CompanyUserTableComponent implements OnChanges, OnInit {
   public sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Ascending;
 
   constructor(private userService: UserService,  public dialog: MdDialog) {
-  }
-
-  ngOnInit() {
-    this.userService.getUsersByCompany(this.company.id).subscribe(users => this.tableData = users);
   }
 
   ngOnChanges(changes: any) {

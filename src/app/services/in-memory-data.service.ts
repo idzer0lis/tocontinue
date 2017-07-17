@@ -51,7 +51,13 @@ export class BackendData implements InMemoryDbService {
         userId: 2,
         companyId: 2,
         companyRole: [2],
-      }
+      },
+      {
+        id: 3,
+        userId: 2,
+        companyId: 1,
+        companyRole: [1],
+      },
     ];
     let companies = [
       {
