@@ -5,10 +5,16 @@
 :host smd-fab-actions {
   margin-left: auto;
 }
-/deep/ .tenant-header .list-arrow {
+::ng-deep .tenant-header h4{
   margin-left: 20px;
+}
+::ng-deep .tenant-header .list-arrow {
+  display: none !important;
+}
+:host smd-fab-trigger {
+  display: flex;
+  align-items: center;
 }
 :host smd-fab-trigger h4 {
   display: flex;
-  align-items: center;
 }

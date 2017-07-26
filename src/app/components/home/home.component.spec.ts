@@ -17,7 +17,7 @@ import { NotificationComponent } from '../notification/notification.component';
 import { provideRoutes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../services/user/user.service';
-import { ListComponent } from '../list/list.component';
+import { ListComponent } from '../company-listing/company-listing.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { SearchComponent } from '../search/search.component';
 

@@ -1,9 +1,9 @@
 import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { Company } from '../../services/company/company';
+import { Company } from '../../models/company';
 import { Tenant } from '../../services/company/tenant';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
-import { ListComponent } from '../list/list.component';
+import { ListComponent } from '../company-listing/company-listing.component';
 
 
 @Component({
@@ -27,6 +27,9 @@ export class ListSpeedDialComponent {
     private listComponent: ListComponent
   ) {}
 
+  public editCompany(company: Company): void {
+    this.selectedCompany.emit(company);
+  }
   openDialog(data) {
     let dialogRef = this.dialog.open(DialogComponent, {
       data: data.text
@@ -36,10 +39,6 @@ export class ListSpeedDialComponent {
         switch (data.action) {
           case 'add':
             console.log('add tenant');
-            break;
-          case 'edit':
-            // Emit the company to another component(company-edit-form component in this case)
-            this.selectedCompany.emit(data.company);
             break;
           case 'delete':
             this.listComponent.removeCompany(data.company);

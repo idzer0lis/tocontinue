@@ -53,14 +53,23 @@ button:disabled {
   url('/img/icons/MaterialIcons-Regular.woff') format('woff'),
   url('/img/icons/MaterialIcons-Regular.ttf') format('truetype');
 }
-
+.mat-mini-fab {
+  height: 30px !important;
+  width: 30px !important;
+  padding: 0 !important;
+  line-height: 40px !important;
+}
+.mat-mini-fab .mat-icon, .mat-mini-fab i {
+  padding: 3px 0 !important;
+  line-height: 20px;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
   display: inline-block;
   line-height: 1;
+  font-size: 24px;
   text-transform: none;
   letter-spacing: normal;
   word-wrap: normal;

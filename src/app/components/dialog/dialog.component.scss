@@ -1,3 +1,6 @@
+:host ::ng-deep .mat-dialog-actions {
+  justify-content: center !important;
+}
 :host button:first-child{
   margin-right: 10px;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Company } from './company';
+import { Company } from '../../models/company';
 import { Http , Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -63,5 +63,8 @@ export class CompanyService {
     return this.companies.value
       .filter(company => company.id === id)
       .pop();
+  }
+  getLastCompanyId(): number {
+    return this.lastId;
   }
 }

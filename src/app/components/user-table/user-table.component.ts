@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
-import { User } from '../../services/user/user';
+import { User } from '../../models/user';
 import {
   ITdDataTableColumn,
   TdDataTableService,
@@ -78,5 +78,8 @@ export class UserTableComponent implements OnInit {
     newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
     newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
     this.filteredData = newData;
+  }
+  showAddCompanyButton(): boolean {
+    return !!this.selectedRows.length;
   }
 }

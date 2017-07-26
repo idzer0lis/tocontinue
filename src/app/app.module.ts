@@ -13,7 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { ListComponent } from './components/list/list.component';
+import { ListComponent } from './components/company-listing/company-listing.component';
 import { SearchComponent } from './components/search/search.component';
 import { ValidationComponent } from './components/validation/validation.component';
 import { ValidationService } from './services/validation/validation.service';
@@ -46,6 +46,7 @@ import { CompanyEditComponent } from './components/company-edit-form/company-edi
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { CompanyUserTableComponent } from './components/company-user-table/company-user-table.component';
 import { CompanyRoleTableComponent } from './components/company-role-table/company-role-table.component';
+import { CompanyAddComponent } from './components/company-add-form/company-add-form.component';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -92,7 +93,8 @@ let COMPONENTS = [
   CompanyEditComponent,
   UserTableComponent,
   CompanyUserTableComponent,
-  CompanyRoleTableComponent
+  CompanyRoleTableComponent,
+  CompanyAddComponent
 ];
 let PROVIDERS = [
   UserService,

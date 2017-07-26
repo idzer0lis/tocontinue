@@ -10,8 +10,8 @@
 
 import { Component, Input, Output, EventEmitter,  OnInit  } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
-import { CompanyUserRole } from '../../services/role/company-user-role';
-import { Company } from '../../services/company/company';
+import { CompanyRoleTable } from '../../models/company-role-table';
+import { Company } from '../../models/company';
 import { ITdDataTableColumn } from '@covalent/core';
 
 @Component({
@@ -22,18 +22,20 @@ import { ITdDataTableColumn } from '@covalent/core';
 
 export class CompanyRoleTableComponent implements OnInit {
   @Input()company: Company;
-  @Output()selectedRoles = new EventEmitter<CompanyUserRole[]>();
-  public tableData: CompanyUserRole[] = [];
-  public selectedRows: CompanyUserRole[] = [];
+  @Output()selectedRoles = new EventEmitter<CompanyRoleTable[]>();
+  public tableData: CompanyRoleTable[] = [];
+  public selectedRows: CompanyRoleTable[] = [];
   public columns: ITdDataTableColumn[] = [
     { name: 'name', label: 'Role'}
   ];
-
   constructor(private userService: UserService) {}
   ngOnInit() {
     this.userService.getAllCompanyRoles().subscribe(roles => this.tableData = roles);
   }
-  setRoles(roles: CompanyUserRole[]) {
+  setRoles(roles: CompanyRoleTable[]) {
     this.selectedRoles.emit(roles);
+  }
+  showAddCompanyButton(): boolean {
+   return !!this.selectedRows.length;
   }
 }

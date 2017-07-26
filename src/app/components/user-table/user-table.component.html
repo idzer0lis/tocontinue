@@ -1,10 +1,6 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutAlign="center center">
   <td-search-input #searchBox placeholder="Filter users" [showUnderline]="true" (searchDebounce)="search($event)" id="user-table-search">
   </td-search-input>
-  <span>
-    <span *ngIf="(selectable && !selectedRows.length) || !selectable" i18n>{{selectedRows.length}} user(s) selected</span>
-    <span *ngIf="selectedRows.length && selectable">0 </span>
-  </span>
 </div>
 <td-data-table
        #dataTable
@@ -16,7 +12,7 @@
        [sortable]="true"
        [sortBy]="sortBy"
        [(ngModel)]="selectedRows"
-       (ngModelChange)="selectUsers(selectedRows)"
+       (ngModelChange)="selectUsers(selectedRows); showAddCompanyButton()"
        [sortOrder]="sortOrder"
        (sortChange)="sort($event)">
 </td-data-table>

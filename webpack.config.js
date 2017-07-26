@@ -8,6 +8,7 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var ZipPlugin = require('zip-webpack-plugin');
 
 /**
  * Env
@@ -58,7 +59,7 @@ module.exports = function makeWebpackConfig() {
    * Reference: http://webpack.github.io/docs/configuration.html#output
    */
   config.output = isTest ? {} : {
-    path: root('dist'),
+    path: root('target'),
     publicPath: isProd ? '/' : 'http://localhost:8080/',
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
     chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
@@ -231,7 +232,16 @@ module.exports = function makeWebpackConfig() {
       // Extract css files
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd})
+      new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd}),
+      new ZipPlugin({
+        filename: 'omnichannel-ui.zip',
+        fileOptions: {
+          mtime: new Date(),
+          mode: 0o100664,
+          compress: true,
+          forceZip64Format: false
+        }
+      })
     );
   }
 

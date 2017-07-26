@@ -12,19 +12,19 @@
   border-radius: 0;
   margin: 0 0 0 10px;
 }
-/deep/ .mat-menu-panel {
+::ng-deep .mat-menu-panel {
   min-width: 192px !important;
 }
-/deep/ .mat-menu-content {
+::ng-deep .mat-menu-content {
   background-color: $blue-grey !important;
 }
-/deep/ .mat-menu-content .mat-menu-item {
+::ng-deep .mat-menu-content .mat-menu-item {
   display: flex;
   align-items: center;
 }
-/deep/ .mat-menu-content .mat-menu-item i {
+::ng-deep .mat-menu-content .mat-menu-item i {
   padding-right: 6px;
 }
-/deep/ .mat-menu-content .mat-menu-item:hover, .mat-menu-content .mat-menu-item:active {
+::ng-deep .mat-menu-content .mat-menu-item:hover, .mat-menu-content .mat-menu-item:active {
   color: $mid-orange !important;
 }

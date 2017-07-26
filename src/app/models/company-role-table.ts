@@ -7,7 +7,7 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
-export class CompanyRole {
+export class CompanyRoleTable {
   id: number;
   name: string;
 }

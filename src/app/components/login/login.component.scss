@@ -7,7 +7,7 @@
   align-items: center;
 
 }
-/deep/ md-input-container{
+::ng-deep md-input-container{
   width: 90%;
 }
 md-card {
@@ -23,6 +23,6 @@ md-card img {
   font-weight: 600;
   color: $blue-grey;
 }
-/deep/ .mat-input-ripple{
+::ng-deep .mat-input-ripple{
   background-color: $blue-grey !important;
 }

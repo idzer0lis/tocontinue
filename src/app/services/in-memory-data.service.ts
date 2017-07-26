@@ -10,15 +10,13 @@ export class BackendData implements InMemoryDbService {
         password: 'admin12',
         role: 1,
         token: 'fake-token',
-        companyId: [1],
       },
       {
         id: 2,
-        username: 'user',
+        username: 'user', // add firstname, secondname
         password: 'user12',
         role: 2,
         token: 'fake-token',
-        companyId: [2],
       }];
     let roles = [
       {

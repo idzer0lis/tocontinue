@@ -6,19 +6,9 @@
              [(ngModel)]="filterText"
              id="company-search">
     </md-input-container>
-    <button md-mini-fab
-            *ngIf="!showAddCompany">
+    <button md-mini-fab>
       <i class="material-icons" (click)="showAddCompany = !showAddCompany" id="add-company">playlist_add</i>
     </button>
-    <md-input-container
-      floatPlaceholder="never"
-      *ngIf="showAddCompany">
-      <input mdInput placeholder="Add a new company..."
-             [@initAnimation]
-             [(ngModel)]="newCompany.title"
-             (keyup.enter)="addCompany()"
-             id="company-add">
-    </md-input-container>
   </div>
   <h4 i18n>Companies and tenants </h4>
   <ng-container *ngIf="filterText.length < 1">
@@ -38,9 +28,6 @@
                   <my-list-speed-dial [tenant]="tenant"></my-list-speed-dial>
                 </div>
               </ng-template>
-              <div class="tenant-content">
-                <p md-line>Tenant ID: {{tenant.id}}</p>
-              </div>
             </td-expansion-panel>
           </td-expansion-panel-group>
         </div>
@@ -54,7 +41,7 @@
       <td-expansion-panel [@initAnimation]>
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
-            <my-list-speed-dial [company]="company"></my-list-speed-dial>
+            <my-list-speed-dial [company]="company" (selectedCompany)="selectedCompany($event)"></my-list-speed-dial>
           </div>
         </ng-template>
 
@@ -64,9 +51,6 @@
               <ng-template td-expansion-panel-header>
                 <h4 md-line >{{tenant.title}}</h4>
               </ng-template>
-              <div class="tenant-content">
-                <p md-line>Tenant ID: {{tenant.id}}</p>
-              </div>
             </td-expansion-panel>
           </td-expansion-panel-group>
         </div>
@@ -82,12 +66,10 @@
               <my-list-speed-dial [tenant]="tenant"></my-list-speed-dial>
             </div>
           </ng-template>
-          <div class="tenant-content">
-            <p md-line>Tenant ID: {{tenant.id}}</p>
-          </div>
         </td-expansion-panel>
       </td-expansion-panel-group>
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<my-company-edit *ngIf="currentCompany" [company]="currentCompany" fxFlex="50%"></my-company-edit>
+<my-company-add *ngIf="showAddCompany" [newUsers]="newUsers"></my-company-add>
+<my-company-edit *ngIf="currentCompany && !showAddCompany" [company]="currentCompany"></my-company-edit>

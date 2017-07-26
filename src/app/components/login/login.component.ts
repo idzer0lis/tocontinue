@@ -13,10 +13,6 @@ import { NotificationService } from '../../services/notification/notification.se
 export class LoginComponent implements OnInit {
   showForm = true;
   loginForm: FormGroup;
-  formErrors: object = {
-    'name': '',
-    'password': ''
-  };
 
   constructor(
     private fb: FormBuilder,
@@ -32,12 +28,10 @@ export class LoginComponent implements OnInit {
   buildForm(): void {
     this.loginForm = this.fb.group({
       'username': ['', [
-        Validators.required,
-        Validators.maxLength(24)
+        Validators.required
       ]],
       'password': ['', [
-        Validators.required,
-        Validators.maxLength(24)
+        Validators.required
       ]]
     });
   }

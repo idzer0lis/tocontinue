@@ -13,7 +13,7 @@ var ListComponent = (function () {
 ListComponent = __decorate([
     Component({
         selector: 'my-list',
-        templateUrl: './list.component.html',
+        templateUrl: './company-listing.component.html',
     })
 ], ListComponent);
 export { ListComponent };

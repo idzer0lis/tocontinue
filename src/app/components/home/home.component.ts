@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { User } from '../../services/user/user';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'my-home',

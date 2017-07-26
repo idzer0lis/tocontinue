@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification/notification.service';
 import { MdDialog } from '@angular/material';
@@ -12,15 +12,15 @@ import { ValidationService } from '../../services/validation/validation.service'
 import { slideInDownAnimation } from '../../animations/animations';
 
 @Component({
-  selector: 'my-company-edit',
-  templateUrl: './company-edit-form.component.html',
-  styleUrls: ['./company-edit-form.component.scss'],
+  selector: 'my-company-add',
+  templateUrl: './company-add-form.component.html',
+  styleUrls: ['./company-add-form.component.scss'],
   providers: [NotificationService, ValidationService],
   animations: [slideInDownAnimation]
 })
-export class CompanyEditComponent implements OnInit, OnChanges {
+export class CompanyAddComponent implements OnInit {
   private editForm: FormGroup;
-  @Input()company: Company;
+  public newCompany: Company = new Company();
   public newUsers: Object;
   public selectedRoles: Array<number> = [];
   public selectedUsers: Array<number> = [];
@@ -36,23 +36,25 @@ export class CompanyEditComponent implements OnInit, OnChanges {
   }
   buildForm(): void {
     this.editForm = this.fb.group({
-      'voiceLicences': [this.company.voiceLicences, [
+      'name': ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
+      'voiceLicences': ['', [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
       ]],
-      'digitalLicences': [this.company.digitalLicences, [
+      'digitalLicences': ['', [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
       ]]
     });
   }
-  ngOnChanges() {
-    this.buildForm();
-  }
-  addToCompany(): void {
-    this.newUsers = this.userService.setUsersInCompany(this.company.id, {userId: this.selectedUsers, companyRole: this.selectedRoles});
+  addToCompany() {
+    let newCompanyId = this.companyService.getLastCompanyId() + 1;
+    this.newUsers = this.userService.setUsersInCompany(newCompanyId, {userId: this.selectedUsers, companyRole: this.selectedRoles});
   }
   getSelectedUsers(users: User[]) {
      users.forEach((user: User) => {
@@ -70,15 +72,19 @@ export class CompanyEditComponent implements OnInit, OnChanges {
       }
     });
   }
-  editCompany(data): void {
+  addCompany(data) {
+    if (this.editForm.controls.name.invalid ||
+        this.editForm.controls.voiceLicences.invalid ||
+        this.editForm.controls.digitalLicences.invalid ) { return; }
+    console.log(this.newCompany);
     let dialogRef = this.dialog.open(DialogComponent, {
       data: data.text
     });
-    let nrVoiceLicences = this.editForm.controls.voiceLicences.value;
-    let nrDigitalLicences = this.editForm.controls.digitalLicences.value;
+    // No error handling for now, validation will come in
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
-        this.companyService.updateCompanyById(this.company.id, {voiceLicences: nrVoiceLicences, digitalLicences: nrDigitalLicences});
+        this.addToCompany();
+        this.companyService.addCompany(this.newCompany);
       }
     });
   }

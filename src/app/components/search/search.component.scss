@@ -1,12 +1,12 @@
 @import "../../../style/colors.scss";
 
-/deep/ .mat-input-ripple{
+::ng-deep .mat-input-ripple{
   background-color: $blue-grey !important;
 }
-/deep/ #site-search {
+::ng-deep #site-search {
   min-width: 100px;
 }
 
-/deep/ .mat-input-infix {
+::ng-deep .mat-input-infix {
    color: #5A646E !important;
 }
