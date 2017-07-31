@@ -6,18 +6,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CompanyService {
-
-  // Placeholder for last id so we can simulate
-  // automatic incrementing of id's
-  private lastId = 0;
-  // variable for holding companies
+  private companiesURI = 'api/companies';
   private companies = new BehaviorSubject<Company[]>([]);
-
-  // URL mockup web API
-  private backendData = 'api/companies';
+  private lastId = 0;
   constructor ( private http: Http ) {
-    // Populate the companies variable on instantiation
-    this.http.get(this.backendData)
+    this.http.get(this.companiesURI)
       .map( (response: Response) => response.json().data )
       .subscribe((data) => {
         data.forEach(company => {
@@ -26,7 +19,6 @@ export class CompanyService {
         });
       });
   }
-
   // Simulate POST /companies
   addCompany(company: Company): CompanyService {
     if (!company.id) {

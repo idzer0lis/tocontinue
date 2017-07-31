@@ -53,11 +53,11 @@ button:disabled {
   url('/img/icons/MaterialIcons-Regular.woff') format('woff'),
   url('/img/icons/MaterialIcons-Regular.ttf') format('truetype');
 }
-.mat-mini-fab {
+.mat-mini-fab, .mat-icon-button  {
   height: 30px !important;
   width: 30px !important;
   padding: 0 !important;
-  line-height: 40px !important;
+  line-height: 30px !important;
 }
 .mat-mini-fab .mat-icon, .mat-mini-fab i {
   padding: 3px 0 !important;

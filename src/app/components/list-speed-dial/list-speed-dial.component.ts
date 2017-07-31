@@ -1,6 +1,6 @@
 import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { Company } from '../../models/company';
-import { Tenant } from '../../services/company/tenant';
+import { Tenant } from '../../models/tenant';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { ListComponent } from '../company-listing/company-listing.component';

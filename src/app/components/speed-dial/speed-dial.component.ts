@@ -1,5 +1,6 @@
-/*Code from https://github.com/jefersonestevo/angular-smd/tree/master/src/app/shared/component/smd-fab-speed-dial*/
+/*Code MODIFIED from https://github.com/jefersonestevo/angular-smd/tree/master/src/app/shared/component/smd-fab-speed-dial*/
 /* tslint:disable */
+
 import {
   Component,
   Input,
@@ -35,17 +36,7 @@ export class FabSpeedDialTriggerComponent {
   @HostBinding('class.smd-spin')
   @Input() spin = false;
 
-  constructor(@Inject(forwardRef(() => FabSpeedDialComponent)) private _parent: FabSpeedDialComponent) {
-  }
-
-  @HostListener('click', ['$event'])
-  _onClick(event: any) {
-    if (!this._parent.fixed) {
-      this._parent.toggle();
-      event.stopPropagation();
-    }
-  }
-
+  constructor() {}
 }
 
 @Component({
@@ -229,6 +220,7 @@ export class FabSpeedDialComponent implements AfterContentInit {
    * Toggle the open state of this speed dial
    */
   public toggle() {
+    console.log('clicked');
     this.open = !this.open;
   }
 

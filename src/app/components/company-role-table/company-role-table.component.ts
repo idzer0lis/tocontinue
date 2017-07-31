@@ -9,7 +9,7 @@
  */
 
 import { Component, Input, Output, EventEmitter,  OnInit  } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
+import { CompanyRoleService } from '../../services/company-role/company-role.service';
 import { CompanyRoleTable } from '../../models/company-role-table';
 import { Company } from '../../models/company';
 import { ITdDataTableColumn } from '@covalent/core';
@@ -17,7 +17,7 @@ import { ITdDataTableColumn } from '@covalent/core';
 @Component({
   selector: 'my-company-role-table',
   templateUrl: './company-role-table.component.html',
-  providers: [UserService]
+  providers: [CompanyRoleService]
 })
 
 export class CompanyRoleTableComponent implements OnInit {
@@ -28,9 +28,9 @@ export class CompanyRoleTableComponent implements OnInit {
   public columns: ITdDataTableColumn[] = [
     { name: 'name', label: 'Role'}
   ];
-  constructor(private userService: UserService) {}
+  constructor(private companyRoleService: CompanyRoleService) {}
   ngOnInit() {
-    this.userService.getAllCompanyRoles().subscribe(roles => this.tableData = roles);
+    this.companyRoleService.getAllCompanyRoles().subscribe(roles => this.tableData = roles);
   }
   setRoles(roles: CompanyRoleTable[]) {
     this.selectedRoles.emit(roles);

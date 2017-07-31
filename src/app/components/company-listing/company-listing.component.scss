@@ -1,29 +1,39 @@
 @import '../../../style/colors.scss';
-:host {
+:host, :host my-company-add, :host my-company-edit {
   height: 100%;
+  min-height: 100%;
   width: 100%;
+}
+:host {
   display: flex;
   flex-direction: row;
 }
-::ng-deep #list-actions {
+// fix for quirck resizing in chrome
+@media all and (max-width: 1279px) {
+  :host ::ng-deep md-card {
+    height: 100%;
+    min-height: 100%;
+  }
+}
+:host #list-actions {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
-:host ::ng-deep md-list-item .mat-list-item-content {
+:host md-list-item .mat-list-item-content {
   flex-direction: column !important;
   height: 100% !important;
   overflow: hidden;
 }
-:host ::ng-deep .mat-line {
+:host .mat-line {
   height: 60px;
   display: flex !important;
   align-items: center;
   justify-content: space-around;
 }
-:host ::ng-deep .company-actions {
+:host .company-actions {
   display: flex;
   flex-direction: row;
 }
@@ -31,6 +41,32 @@
   display: flex;
   flex-direction: column;
 }
-::ng-deep .tenant-item {
+:host .tenant-item {
   overflow: hidden !important;
+}
+
+:host ::ng-deep my-company-role-table{
+  margin-top: 58px;
+}
+
+:host ::ng-deep table[td-data-table].mat-selectable tbody > tr.td-data-table-row.mat-selected {
+  background-color: $light-grey !important;
+}
+
+:host .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+:host .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+:host md-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background-color: $blue-grey !important;
+}
+:host ::ng-deep .td-data-table-row {
+  height: 34px !important;
+}
+:host ::ng-deep td-paging-bar > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+:host ::ng-deep my-validation {
+  text-align: center;
 }

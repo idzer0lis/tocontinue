@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Tenant } from '../company/tenant';
+import { Tenant } from '../../models/tenant';
 
 @Pipe({
   name: 'myTenantFilter',

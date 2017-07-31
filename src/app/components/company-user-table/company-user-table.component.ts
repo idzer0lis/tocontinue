@@ -9,8 +9,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
-import { Company } from '../../models/company';
+
 import {
   ITdDataTableColumn,
   TdDataTableSortingOrder,
@@ -19,19 +18,22 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
+
+import { CompanyUserService } from '../../services/company-user/company-user.service';
+import { Company } from '../../models/company';
 import { CompanyUserRoleTable } from '../../models/company-user-role-table';
 
 @Component({
   selector: 'my-company-user-table',
   templateUrl: './company-user-table.component.html',
   styleUrls: ['./company-user-table.component.scss'],
-  providers: [UserService]
+  providers: [CompanyUserService]
 })
 
 export class CompanyUserTableComponent implements OnChanges {
   @Input() company: Company;
   @Input() newUsers: Observable<CompanyUserRoleTable[]>;
-  public tableData: Object[] = [];
+  public tableData: CompanyUserRoleTable[] = [];
   public columns: ITdDataTableColumn[] = [
     {name: 'username', label: 'Username'},
     {name: 'role', label: 'User role'},
@@ -43,12 +45,12 @@ export class CompanyUserTableComponent implements OnChanges {
   public sortBy = 'username';
   public sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Ascending;
   constructor(
-    private userService: UserService,
+    private companyUserService: CompanyUserService,
     public dialog: MdDialog) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.company) {
-      this.tableData = this.userService.getUsersByCompany(this.company.id); // .subscribe(users => console.log(users)/*this.tableData = users*/);
+      this.companyUserService.getUsersByCompany(this.company.id).subscribe( (users: CompanyUserRoleTable[]) => this.tableData = users);
     } else {
       if (this.newUsers !== undefined) {
         this.newUsers.subscribe((users: CompanyUserRoleTable[]) => {
@@ -64,7 +66,7 @@ export class CompanyUserTableComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       // console.log(data);
       if ( parseInt (result, 10) ) {
-        this.userService
+        this.companyUserService
           .removeUserRoleInCompany(data.userId, data.roleId)
           .subscribe(newUsers => this.tableData = newUsers);
       }

@@ -1,4 +1,4 @@
-import { Tenant } from '../services/company/tenant';
+import { Tenant } from './tenant';
 import { User } from './user';
 export class Company {
   id: number;

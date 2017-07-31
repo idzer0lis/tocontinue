@@ -38,6 +38,6 @@
   </md-sidenav>
   <div id="sidenav-content">
     <!--TODO : Think about parent/child components instead of hiding/showing-->
-    <my-list *ngIf="showCompanies" (selectedCompany)="handleCompany($event)"></my-list>
+    <my-list *ngIf="showCompanies" (selectedCompany)="handleCompany($event)" fxLayout="row" fxLayout.lt-lg="column"></my-list>
   </div>
 </md-sidenav-container>

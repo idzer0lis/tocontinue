@@ -6,17 +6,23 @@
   height: 100%;
   max-width: 160px;
 }
-::ng-deep md-sidenav-container {
+:host md-sidenav-container {
   margin: 0;
   height: 90%;
+  min-height: 90%;
   margin-top: 21px;
 
 }
-::ng-deep #sidenav-content {
-  height: 100%;
+:host #sidenav-content {
+    height: 100%;
+    overflow: auto;
+  & my-list {
+    height: 100%;
+    overflow: auto;
+  }
 }
 //Transitions are hacks to modify the transition of the sidebar, mimicking the sidebar open of Oceana sidebar(the feature is missing in material2)
-::ng-deep md-sidenav {
+:host md-sidenav {
   background-color: $blue-grey !important;
   width: 160px;
   height:100%;

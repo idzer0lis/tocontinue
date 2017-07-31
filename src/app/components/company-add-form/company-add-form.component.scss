@@ -1,11 +1,11 @@
 @import "../../../style/colors.scss";
 :host {
   height:100%;
+  min-height: 100%;
   width: 100%;
   display: flex;
 }
-:host ::ng-deep md-card {
-  flex: 1;
+:host  md-card {
   width: 100%;
 }
 #add-to-company, #submit-add-to-company {
@@ -17,43 +17,12 @@
   justify-content: center;
   align-items: center;
 }
-:host ::ng-deep #company-voice-licences-input, :host ::ng-deep #company-digital-licences-input {
+:host #company-voice-licences-input, :host #company-digital-licences-input {
   width: 50px;
   max-width: 50px;
 }
+
 :host md-card-title{
   font-weight: bold;
   font-size: 18px;
-}
-:host my-company-role-table{
-  margin-top: 58px;
-}
-
-:host .mat-table-container{
-  width: 50%;
-  max-width: 50%;
-  margin: auto;
-  border: dotted;
-}
-
-:host ::ng-deep table[td-data-table].mat-selectable tbody > tr.td-data-table-row.mat-selected {
-  background-color: $light-grey !important;
-}
-
-:host ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
-:host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-:host ::ng-deep md-pseudo-checkbox.mat-pseudo-checkbox-checked {
-  background-color: $blue-grey !important;
-}
-:host ::ng-deep .td-data-table-row {
-  height: 34px !important;
-}
-:host ::ng-deep td-paging-bar > div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-:host my-validation {
-  text-align: center;
 }

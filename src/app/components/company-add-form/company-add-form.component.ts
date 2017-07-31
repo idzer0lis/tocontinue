@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification/notification.service';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
-import { UserService } from '../../services/user/user.service';
+import { CompanyUserService } from '../../services/company-user/company-user.service';
 import { CompanyService } from '../../services/company/company.service';
 import { Company } from '../../models/company';
+import { CompanyUserRole } from '../../models/company-user-role';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { ValidationService } from '../../services/validation/validation.service';
@@ -15,7 +16,7 @@ import { slideInDownAnimation } from '../../animations/animations';
   selector: 'my-company-add',
   templateUrl: './company-add-form.component.html',
   styleUrls: ['./company-add-form.component.scss'],
-  providers: [NotificationService, ValidationService],
+  providers: [CompanyService, CompanyUserService, NotificationService, ValidationService],
   animations: [slideInDownAnimation]
 })
 export class CompanyAddComponent implements OnInit {
@@ -28,7 +29,7 @@ export class CompanyAddComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     private fb: FormBuilder,
-    private userService: UserService,
+    private companyUserService: CompanyUserService,
     private companyService: CompanyService,
   ) {}
   ngOnInit(): void {
@@ -52,9 +53,19 @@ export class CompanyAddComponent implements OnInit {
       ]]
     });
   }
-  addToCompany() {
-    let newCompanyId = this.companyService.getLastCompanyId() + 1;
-    this.newUsers = this.userService.setUsersInCompany(newCompanyId, {userId: this.selectedUsers, companyRole: this.selectedRoles});
+  addToCompany(): void {
+    this.selectedUsers.forEach((newUser: number) => {
+      let newTableId: number = this.companyUserService.getLastUserCompanyId() + 1;
+      let newCompanyId: number = this.companyService.getLastCompanyId() + 1;
+      let newValue: CompanyUserRole = {
+        id: newTableId,
+        userId: newUser,
+        companyId: newCompanyId,
+        companyRole: this.selectedRoles
+      };
+      this.newUsers = this.companyUserService
+        .setUsersInCompany(newCompanyId, newValue);
+    });
   }
   getSelectedUsers(users: User[]) {
      users.forEach((user: User) => {

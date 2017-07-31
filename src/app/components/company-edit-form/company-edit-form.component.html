@@ -9,15 +9,13 @@
         <label i18n>Voice licences</label>
         <input mdInput
                formControlName="voiceLicences"
-               id="company-voice-licences-input"
-               (change)="openDialog({type: 'voice', text: 'to change the number of voice licenses?', licences: editForm.value.voiceLicences})">
+               id="company-voice-licences-input">
       </md-input-container>
       <md-input-container class="licences" fxFlexOffset="10">
         <label i18n>Digital licences</label>
         <input mdInput
                formControlName="digitalLicences"
-               id="company-digital-licences-input"
-               (change)="openDialog({type: 'digital', text: 'to change the number of digital licenses?', licences: editForm.value.digitalLicences})">
+               id="company-digital-licences-input">
       </md-input-container>
     </div>
     <my-validation [control]="editForm.controls.voiceLicences" id="company-voice-licences-validation"></my-validation>
