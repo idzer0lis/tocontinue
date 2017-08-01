@@ -14,7 +14,8 @@ import {
   ITdDataTableColumn,
   TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent,
-  IPageChangeEvent } from '@covalent/core';
+  IPageChangeEvent,
+  TdDataTableService } from '@covalent/core';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -46,7 +47,10 @@ export class CompanyUserTableComponent implements OnChanges {
   public sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Ascending;
   constructor(
     private companyUserService: CompanyUserService,
-    public dialog: MdDialog) {}
+    public dialog: MdDialog,
+    private _dataTableService: TdDataTableService) {
+    this.filter();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.company) {
@@ -80,5 +84,9 @@ export class CompanyUserTableComponent implements OnChanges {
     this.fromRow = pagingEvent.fromRow;
     this.currentPage = pagingEvent.page;
     this.pageSize = pagingEvent.pageSize;
+  }
+  filter(): void {
+    let newData: any[] = this.tableData;
+    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
   }
 }

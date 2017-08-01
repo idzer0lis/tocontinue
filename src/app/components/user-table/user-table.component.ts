@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../models/user';
 import {
@@ -15,7 +15,7 @@ import {
   providers: [UserService]
 })
 
-export class UserTableComponent implements OnInit {
+export class UserTableComponent {
   @Output()selectedUsers = new EventEmitter<User[]>();
   public selectedRows: User[] = [];
   public tableData: User[] = [];
@@ -36,11 +36,8 @@ export class UserTableComponent implements OnInit {
       this.tableData = users;
       this.filteredData = this.tableData;
       this.filteredTotal = this.tableData.length;
+      this.filter();
     });
-  }
-
-  ngOnInit(): void {
-    this.filter();
   }
   selectUsers(users: User[]) {
     this.selectedUsers.emit(users);

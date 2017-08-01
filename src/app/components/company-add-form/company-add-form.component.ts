@@ -87,15 +87,14 @@ export class CompanyAddComponent implements OnInit {
     if (this.editForm.controls.name.invalid ||
         this.editForm.controls.voiceLicences.invalid ||
         this.editForm.controls.digitalLicences.invalid ) { return; }
-    console.log(this.newCompany);
     let dialogRef = this.dialog.open(DialogComponent, {
       data: data.text
     });
     // No error handling for now, validation will come in
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
-        this.addToCompany();
-        this.companyService.addCompany(this.newCompany);
+        console.log('adding company');
+        return this.companyService.addCompany(this.newCompany);
       }
     });
   }

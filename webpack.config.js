@@ -232,16 +232,7 @@ module.exports = function makeWebpackConfig() {
       // Extract css files
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd}),
-      new ZipPlugin({
-        filename: 'omnichannel-ui.zip',
-        fileOptions: {
-          mtime: new Date(),
-          mode: 0o100664,
-          compress: true,
-          forceZip64Format: false
-        }
-      })
+      new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd})
     );
   }
 
@@ -264,7 +255,17 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/kevlened/copy-webpack-plugin
       new CopyWebpackPlugin([{
         from: root('src/public')
-      }])
+      }]),
+
+      new ZipPlugin({
+        filename: 'omnichannel-ui.zip',
+        fileOptions: {
+          mtime: new Date(),
+          mode: 0o100664,
+          compress: true,
+          forceZip64Format: false
+        }
+      })
     );
   }
 

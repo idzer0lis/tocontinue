@@ -22,8 +22,6 @@ build/Release
 # Compiled files( .map, .js)
 /src/*.map
 /src/*.js
-/src/app/*.map
-/src/app/*.js
 /src/services/*/*.map
 /src/services/*/*.js
 /src/components/*/*.map
@@ -49,10 +47,7 @@ Thumbs.db
 /tsd_typings/
 
 # Dist #
-/dist
-/public/__build__/
-/src/*/__build__/
-__build__/**
+/target
 .webpack.json
 
 # Doc #
@@ -64,4 +59,3 @@ __build__/**
 
 # Maven #
 /node
-/target

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Company } from '../../models/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
@@ -10,7 +10,7 @@ import { slideInDownAnimation } from '../../animations/animations';
   providers: [CompanyService],
   animations: [slideInDownAnimation]
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
   private companies: Company[];
   private currentCompany: Company;
   public showAddCompany = false;
@@ -18,6 +18,9 @@ export class ListComponent implements OnInit {
 
   constructor(private companyService: CompanyService) {}
   ngOnInit() {
+    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
+  }
+  ngOnChanges() {
     this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
   }
   removeCompany(company: Company): void {

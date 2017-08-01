@@ -50,15 +50,6 @@ export class CompanyUserService {
     this.http.post('api/companyUserRoles', values).subscribe();
     return this.getUsersByCompany(companyId);
   }
-  setRoleInCompany(companyId: number, values: CompanyUserRole): Observable<CompanyUserRoleTable[]> {
-    if (!values.companyRole || !values.userId || !values.id) { return; }
-    let company = this.getUsersByCompany(companyId);
-    if (!company) {
-      return null;
-    }
-    Object.assign(company, values);
-    return company;
-  }
 
   public getUsersByCompany(companyId: number): Observable<CompanyUserRoleTable[]> {
     this.companyUsers = new BehaviorSubject<CompanyUserRoleTable[]>([]);

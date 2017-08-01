@@ -19,7 +19,7 @@
 <div *ngIf="!dataTable.hasData" fxLayout="row" fxLayoutAlign="center center">
   <p  i18n>No results to display.</p>
 </div>
-<td-paging-bar #pagingBar [pageSizes]="[5, 10, 15, 20]" [total]="filteredTotal" (change)="page($event)">
+<td-paging-bar #pagingBar [pageSize]="pageSize" [pageSizes]="[5, 10, 15, 20]" [total]="filteredTotal" (change)="page($event)">
   <span td-paging-bar-label  i18n>Row per page:</span>
   {{pagingBar.range}} <span i18n>of {{pagingBar.total}}</span>
 </td-paging-bar>

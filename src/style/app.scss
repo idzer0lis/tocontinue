@@ -3,6 +3,22 @@
 @import "./mixins.scss";
 
 
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/img/icons/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url('/img/icons/MaterialIcons-Regular.woff2') format('woff2'),
+  url('/img/icons/MaterialIcons-Regular.woff') format('woff'),
+  url('/img/icons/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+}
 
 html, body{
   height:100%;
@@ -14,7 +30,7 @@ body {
   color: #fff;
   background-color: $light-grey;
   font-size: 14px;
-  font-family: Arial;
+  font-family: 'Roboto', sans-serif;
 }
 a {
   color: white;
@@ -41,18 +57,6 @@ button:disabled {
   opacity: 40;
 }
 
-
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/img/icons/MaterialIcons-Regular.eot'); /* For IE6-8 */
-  src: local('Material Icons'),
-  local('MaterialIcons-Regular'),
-  url('/img/icons/MaterialIcons-Regular.woff2') format('woff2'),
-  url('/img/icons/MaterialIcons-Regular.woff') format('woff'),
-  url('/img/icons/MaterialIcons-Regular.ttf') format('truetype');
-}
 .mat-mini-fab, .mat-icon-button  {
   height: 30px !important;
   width: 30px !important;
@@ -107,4 +111,11 @@ button:disabled {
   /* IE 10+ */
   color: $blue-grey-hover;
   background-color: transparent;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

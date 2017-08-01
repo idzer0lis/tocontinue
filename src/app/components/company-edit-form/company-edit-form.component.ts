@@ -40,6 +40,10 @@ export class CompanyEditComponent implements OnInit, OnChanges {
   }
   buildForm(): void {
     this.editForm = this.fb.group({
+      'companyName': [this.company.title, [
+        Validators.required,
+        Validators.minLength(4),
+      ]],
       'voiceLicences': [this.company.voiceLicences, [
         Validators.required,
         Validators.min(0),
@@ -57,6 +61,7 @@ export class CompanyEditComponent implements OnInit, OnChanges {
     this.companyUserService
       .getUsersByCompany(this.company.id)
       .subscribe(((data: CompanyUserRoleTable[]) =>  this.companyUsers = data));
+    this.notificationService.error(null);
   }
   addToCompany(): void {
     let userIds: Array<number> = [];

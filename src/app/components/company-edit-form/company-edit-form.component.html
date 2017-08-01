@@ -1,35 +1,64 @@
 <md-card [@initAnimation]>
-  <md-card-header fxLayoutAlign="center">
-    <md-card-title i18n> {{ company.title }} Edit</md-card-title>
+  <md-card-header>
+    <md-card-title i18n> {{ company.title }}</md-card-title>
+    <button md-mini-fab
+            [disabled]="editForm.pristine"
+            (click)="editCompany({text: 'you want to edit the company?'})"
+            i18n
+            id="submit-edit-to-company">
+      <i class="material-icons">done</i>
+    </button>
   </md-card-header>
-
+  <hr />
   <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
-    <div class="company-edit-licences">
-    <md-input-container class="licences" fxFlexOffset="10">
-        <label i18n>Voice licences</label>
-        <input mdInput
-               formControlName="voiceLicences"
-               id="company-voice-licences-input">
-      </md-input-container>
-      <md-input-container class="licences" fxFlexOffset="10">
-        <label i18n>Digital licences</label>
-        <input mdInput
-               formControlName="digitalLicences"
-               id="company-digital-licences-input">
-      </md-input-container>
+    <div class="company-details-edit">
+
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Company name</label>
+          <input mdInput
+                 formControlName="companyName"
+                 id="company-name-input">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.companyName" id="company-name-validation"></my-validation>
+      </div>
+
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Voice licences</label>
+          <input mdInput
+                 formControlName="voiceLicences"
+                 id="company-voice-licences-input">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.voiceLicences" id="company-voice-licences-validation"></my-validation>
+      </div>
+
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Digital licences</label>
+          <input mdInput
+                 formControlName="digitalLicences"
+                 id="company-digital-licences-input">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.digitalLicences" id="company-digital-licences-validation"></my-validation>
+      </div>
     </div>
-    <my-validation [control]="editForm.controls.voiceLicences" id="company-voice-licences-validation"></my-validation>
-    <my-validation [control]="editForm.controls.digitalLicences" id="company-digital-licences-validation"></my-validation>
   </form>
+
   <my-company-user-table [company]="company" [newUsers]="newUsers"></my-company-user-table>
-  <button md-raised-button [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()" (click)="addToCompany()" i18n id="add-to-company"> Add to company </button>
+  <span mdTooltip="Select users & roles from the tables below to add it to a company"
+                    mdTooltipPosition="above">
+    <button md-raised-button
+            [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()"
+            (click)="addToCompany()"
+            i18n
+            id="edit-form-add-to-company">Add users/roles to company
+    </button>
+    <my-notification></my-notification>
+  </span>
   <div class="company-tables" fxLayout="row" fxLayoutAlign="center space-around">
     <my-user-table (selectedUsers)="getSelectedUsers($event)" #myUserTable></my-user-table>
     <my-company-role-table (selectedRoles)="getSelectedRoles($event)" #myRoleTable></my-company-role-table>
   </div>
-  <button md-raised-button
-          [disabled]="editForm.pristine"
-          (click)="editCompany({text: 'you want to edit the company?'})"
-          i18n
-          id="submit-edit-to-company"> Submit changes </button>
+
 </md-card>

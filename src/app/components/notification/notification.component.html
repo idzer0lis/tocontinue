@@ -1,1 +1,5 @@
-<div *ngIf="message" [ngClass]="{'md-accent': message.type === 'success', 'mat-input-error': message.type === 'error' }" id="notification-container">{{message.text}}</div>
+<div *ngIf="message"
+     [ngClass]="{'md-accent': message.type === 'success', 'mat-input-error': message.type === 'error' }"
+     id="notification-container">
+  {{message.text}}
+</div>
