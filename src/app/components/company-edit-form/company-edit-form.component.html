@@ -1,8 +1,17 @@
+<!--
+* Avaya Inc. - Proprietary (Restricted)
+* Solely for authorized persons having a need to know pursuant to Company instructions.
+*
+* Copyright © Avaya Inc. All rights reserved.
+*
+* THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+* The copyright notice above does not evidence any actual or intended publication of such source code.
+-->
 <md-card [@initAnimation]>
   <md-card-header>
     <md-card-title i18n> {{ company.title }}</md-card-title>
     <button md-mini-fab
-            [disabled]="editForm.pristine"
+            [disabled]="editForm.pristine || editForm.status === 'INVALID'"
             (click)="editCompany({text: 'you want to edit the company?'})"
             i18n
             id="submit-edit-to-company">

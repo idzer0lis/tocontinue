@@ -1,3 +1,12 @@
+/**
+ * Avaya Inc. - Proprietary (Restricted)
+ * Solely for authorized persons having a need to know pursuant to Company instructions.
+ *
+ * Copyright © Avaya Inc. All rights reserved.
+ *
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

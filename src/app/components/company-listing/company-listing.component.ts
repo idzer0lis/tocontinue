@@ -1,3 +1,12 @@
+/**
+ * Avaya Inc. - Proprietary (Restricted)
+ * Solely for authorized persons having a need to know pursuant to Company instructions.
+ *
+ * Copyright © Avaya Inc. All rights reserved.
+ *
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Company } from '../../models/company';
 import { CompanyService } from '../../services/company/company.service';
@@ -14,6 +23,8 @@ export class ListComponent implements OnInit, OnChanges {
   private companies: Company[];
   private currentCompany: Company;
   public showAddCompany = false;
+  public AddTenant = false;
+  public EditTenant = false;
   public filterText = '';
 
   constructor(private companyService: CompanyService) {}
@@ -29,5 +40,17 @@ export class ListComponent implements OnInit, OnChanges {
   selectedCompany(company: Company) {
     this.currentCompany = company;
     this.showAddCompany = false;
+    this.AddTenant = false;
+    this.EditTenant = false;
+  }
+  showAddTenant(company: Company) {
+    this.currentCompany = company;
+    this.AddTenant = true;
+    this.EditTenant = false;
+  }
+  showEditTenant(company: Company) {
+    console.log(company);
+    this.currentCompany = company;
+    this.EditTenant = true;
   }
 }

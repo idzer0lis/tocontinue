@@ -1,3 +1,12 @@
+/**
+ * Avaya Inc. - Proprietary (Restricted)
+ * Solely for authorized persons having a need to know pursuant to Company instructions.
+ *
+ * Copyright © Avaya Inc. All rights reserved.
+ *
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
 import { NgModule, ApplicationRef, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -37,6 +46,8 @@ import { UserTableComponent } from './components/user-table/user-table.component
 import { CompanyUserTableComponent } from './components/company-user-table/company-user-table.component';
 import { CompanyRoleTableComponent } from './components/company-role-table/company-role-table.component';
 import { CompanyAddComponent } from './components/company-add-form/company-add-form.component';
+import { TenantAddComponent } from './components/tenant-add-form/tenant-add-form.component';
+import { TenantEditComponent } from './components/tenant-edit-form/tenant-edit-form.component';
 
 // Filters
 import { CompanyFilter } from './services/filter/companyFilter.component';
@@ -51,6 +62,7 @@ import { CompanyUserService } from './services/company-user/company-user.service
 import { ValidationService } from './services/validation/validation.service';
 import { NotificationService } from './services/notification/notification.service';
 import { SearchService } from './services/search/search.service';
+import { TenantService } from './services/tenant/tenant.service';
 
 // Routing
 import { routing } from './app.routing';
@@ -102,7 +114,9 @@ let COMPONENTS = [
   UserTableComponent,
   CompanyUserTableComponent,
   CompanyRoleTableComponent,
-  CompanyAddComponent
+  CompanyAddComponent,
+  TenantAddComponent,
+  TenantEditComponent
 ];
 let PROVIDERS = [
   UserService,
@@ -114,7 +128,8 @@ let PROVIDERS = [
   AuthGuard,
   NotificationService,
   SearchService,
-  TdDataTableService
+  TdDataTableService,
+  TenantService
 ];
 
 @NgModule({

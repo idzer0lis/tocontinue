@@ -1,3 +1,12 @@
+<!--
+* Avaya Inc. - Proprietary (Restricted)
+* Solely for authorized persons having a need to know pursuant to Company instructions.
+*
+* Copyright © Avaya Inc. All rights reserved.
+*
+* THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+* The copyright notice above does not evidence any actual or intended publication of such source code.
+-->
 <smd-fab-speed-dial #myFab [direction]="direction"
                     [animationMode]="animationMode"
                     [fixed]="fixed"
@@ -15,10 +24,33 @@
   </smd-fab-trigger>
   <smd-fab-actions>
 
-    <button md-mini-fab id="company-list-delete" (click)="openDialog({action: 'delete', text: 'to delete this item?', company: company});$event.stopPropagation()"><i class="material-icons">delete_forever</i></button>
-    <button md-mini-fab id="company-list-disable" (click)="openDialog({action: 'disable', text: 'to disable this item?', company: company});$event.stopPropagation()"><i class="material-icons">do_not_disturb_alt</i></button>
-    <button md-mini-fab id="company-list-edit" (click)="editCompany(company);$event.stopPropagation()"><i class="material-icons">edit</i></button>
-    <button md-mini-fab id="company-list-add" (click)="openDialog({action: 'add', text: 'to add a tenant?', company: company});$event.stopPropagation()" ><i class="material-icons">playlist_add</i></button>
+      <button md-mini-fab
+              id="company-list-delete"
+              (click)="openDialog({action: 'delete', text: 'to delete this item?', company: company});$event.stopPropagation()">
+        <i class="material-icons">delete_forever</i>
+      </button>
+      <button md-mini-fab
+              id="company-list-disable"
+              (click)="openDialog({action: 'disable', text: 'to disable this item?', company: company});$event.stopPropagation()">
+        <i class="material-icons">do_not_disturb_alt</i>
+      </button>
+      <button md-mini-fab
+              *ngIf="!tenant"
+              id="company-list-edit"
+              (click)="editCompany(company);$event.stopPropagation()">
+        <i class="material-icons">edit</i>
+      </button>
+    <button md-mini-fab
+            *ngIf="tenant"
+            (click)="editTenant(tenant);$event.stopPropagation()">
+      <i class="material-icons">edit</i>
+    </button>
+      <button md-mini-fab
+              *ngIf="!tenant"
+              id="company-list-add"
+              (click)="addTenant(company);$event.stopPropagation()">
+        <i class="material-icons">playlist_add</i>
+      </button>
 
   </smd-fab-actions>
 </smd-fab-speed-dial>

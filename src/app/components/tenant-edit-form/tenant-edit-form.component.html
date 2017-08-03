@@ -1,0 +1,57 @@
+<!--
+* Avaya Inc. - Proprietary (Restricted)
+* Solely for authorized persons having a need to know pursuant to Company instructions.
+*
+* Copyright © Avaya Inc. All rights reserved.
+*
+* THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+* The copyright notice above does not evidence any actual or intended publication of such source code.
+-->
+<md-card [@initAnimation]>
+  <md-card-header>
+    <md-card-title i18n>{{company.title}}</md-card-title>
+    <button md-mini-fab
+            [disabled]="editForm.pristine || editForm.status === 'INVALID'"
+            (click)="editTenant({text: 'you want to edit the tenant?'})"
+            i18n
+            id="submit-edit-to-company">
+      <i class="material-icons">done</i>
+    </button>
+  </md-card-header>
+  <hr />
+  <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
+    <div class="company-details-edit">
+
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Tenant name</label>
+          <input mdInput
+                 formControlName="name"
+                 id="company-name-input">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.name" id="company-name-validation"></my-validation>
+      </div>
+
+    </div>
+  </form>
+
+  <my-company-user-table [newUsers]="newUsers"></my-company-user-table>
+
+  <span mdTooltip="Select users & roles from the tables below to add it to a company"
+        mdTooltipPosition="above">
+    <button md-raised-button
+            [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()"
+            (click)="addToCompany()"
+            i18n
+            id="add-form-add-to-company">Add users/roles to company
+    </button>
+    <my-notification></my-notification>
+  </span>
+
+  <div class="company-tables" fxLayout="row" fxLayoutAlign="center space-around">
+    <my-user-table (selectedUsers)="getSelectedUsers($event)" #myUserTable></my-user-table>
+    <my-company-role-table (selectedRoles)="getSelectedRoles($event)" #myRoleTable></my-company-role-table>
+  </div>
+
+</md-card>
+

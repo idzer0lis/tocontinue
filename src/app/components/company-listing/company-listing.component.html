@@ -1,3 +1,12 @@
+<!--
+* Avaya Inc. - Proprietary (Restricted)
+* Solely for authorized persons having a need to know pursuant to Company instructions.
+*
+* Copyright © Avaya Inc. All rights reserved.
+*
+* THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
+* The copyright notice above does not evidence any actual or intended publication of such source code.
+-->
 <md-card [@initAnimation] fxFlex="100%" fxFlex.gt-md="30%">
   <div id="list-actions">
     <md-input-container floatPlaceholder="never">
@@ -7,7 +16,7 @@
              id="company-search">
     </md-input-container>
     <button md-mini-fab>
-      <i class="material-icons" (click)="showAddCompany = !showAddCompany" id="add-company">playlist_add</i>
+      <i class="material-icons" (click)="showAddCompany = !showAddCompany; AddTenant= false; EditTenant = false;" id="add-company">playlist_add</i>
     </button>
   </div>
   <h4 i18n>Companies and tenants </h4>
@@ -17,7 +26,10 @@
       <td-expansion-panel [@initAnimation] [expand]="false">
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
-            <my-list-speed-dial [company]="company" (selectedCompany)="selectedCompany($event)"></my-list-speed-dial>
+            <my-list-speed-dial [company]="company"
+                                (selectedCompany)="selectedCompany($event)"
+                                (showAddTenant)="showAddTenant($event)">
+            </my-list-speed-dial>
           </div>
         </ng-template>
         <div class="company-content">
@@ -25,7 +37,8 @@
             <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
               <ng-template td-expansion-panel-header>
                 <div md-line class="tenant-header">
-                  <my-list-speed-dial [tenant]="tenant"></my-list-speed-dial>
+                  <my-list-speed-dial [tenant]="tenant"
+                                      (selectedCompany)="showEditTenant($event)"></my-list-speed-dial>
                 </div>
               </ng-template>
             </td-expansion-panel>
@@ -41,7 +54,11 @@
       <td-expansion-panel [@initAnimation]>
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
-            <my-list-speed-dial [company]="company" (selectedCompany)="selectedCompany($event)"></my-list-speed-dial>
+            <my-list-speed-dial [company]="company"
+                                (selectedCompany)="selectedCompany($event)"
+                                (showAddTenant)="showAddTenant($event)">
+
+            </my-list-speed-dial>
           </div>
         </ng-template>
 
@@ -71,5 +88,7 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<my-company-add *ngIf="showAddCompany" [newUsers]="newUsers"></my-company-add>
-<my-company-edit *ngIf="currentCompany && !showAddCompany" [company]="currentCompany"></my-company-edit>
+<my-company-add *ngIf="showAddCompany && !AddTenant" [newUsers]="newUsers"></my-company-add>
+<my-company-edit *ngIf="currentCompany && !showAddCompany && !AddTenant && !EditTenant" [company]="currentCompany"></my-company-edit>
+<my-tenant-add *ngIf="AddTenant" [company]="currentCompany"></my-tenant-add>
+<my-tenant-edit *ngIf="EditTenant" [company]="currentCompany"></my-tenant-edit>
