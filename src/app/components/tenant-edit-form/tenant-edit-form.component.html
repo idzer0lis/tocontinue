@@ -14,13 +14,13 @@
             [disabled]="editForm.pristine || editForm.status === 'INVALID'"
             (click)="editTenant({text: 'you want to edit the tenant?'})"
             i18n
-            id="submit-edit-to-company">
+            id="submit-edit-to-tenant">
       <i class="material-icons">done</i>
     </button>
   </md-card-header>
   <hr />
   <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
-    <div class="company-details-edit">
+    <div class="tenant-details-edit">
 
       <div fxFlexLayout="column">
         <md-input-container class="licences" fxFlexOffset="10">
@@ -29,16 +29,38 @@
                  formControlName="name"
                  id="company-name-input">
         </md-input-container>
-        <my-validation [control]="editForm.controls.name" id="company-name-validation"></my-validation>
+        <my-validation [control]="editForm.controls.name" id="tenant-name-validation"></my-validation>
       </div>
 
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Voice licences</label>
+          <input mdInput
+                 formControlName="voiceLicences"
+                 [(ngModel)]="company.voiceLicences"
+                 id="tenant-voice-licences-add">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.voiceLicences" id="tenant-voice-licences-validation"></my-validation>
+      </div>
+
+      <div fxFlexLayout="column">
+        <md-input-container class="licences" fxFlexOffset="10">
+          <label i18n>Digital licences</label>
+          <input mdInput
+                 formControlName="digitalLicences"
+                 [(ngModel)]="company.digitalLicences"
+                 id="tenant-digital-licences-add">
+        </md-input-container>
+        <my-validation [control]="editForm.controls.digitalLicences" id="tenant-digital-licences-validation"></my-validation>
+      </div>
     </div>
   </form>
 
   <my-company-user-table [newUsers]="newUsers"></my-company-user-table>
 
-  <span mdTooltip="Select users & roles from the tables below to add it to a company"
-        mdTooltipPosition="above">
+  <span mdTooltip="Select users & roles from the tables below to add it to a tenant"
+        mdTooltipPosition="above"
+        mdTooltipShowDelay="1000">
     <button md-raised-button
             [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()"
             (click)="addToCompany()"

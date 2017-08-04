@@ -24,33 +24,69 @@
   </smd-fab-trigger>
   <smd-fab-actions>
 
-      <button md-mini-fab
-              id="company-list-delete"
-              (click)="openDialog({action: 'delete', text: 'to delete this item?', company: company});$event.stopPropagation()">
-        <i class="material-icons">delete_forever</i>
-      </button>
-      <button md-mini-fab
-              id="company-list-disable"
-              (click)="openDialog({action: 'disable', text: 'to disable this item?', company: company});$event.stopPropagation()">
-        <i class="material-icons">do_not_disturb_alt</i>
-      </button>
-      <button md-mini-fab
-              *ngIf="!tenant"
-              id="company-list-edit"
-              (click)="editCompany(company);$event.stopPropagation()">
-        <i class="material-icons">edit</i>
-      </button>
+    <button md-mini-fab
+            *ngIf="!tenant"
+            mdTooltip="Delete company"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="openDialog({action: 'delete', text: 'you want to delete this company?', company: company});$event.stopPropagation()"
+            id="company-list-delete">
+      <i class="material-icons">delete_forever</i>
+    </button>
     <button md-mini-fab
             *ngIf="tenant"
-            (click)="editTenant(tenant);$event.stopPropagation()">
+            mdTooltip="Delete tenant"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="openDialog({action: 'delete', text: 'you want to delete this tenant?', company: company});$event.stopPropagation()"
+            id="tenant-list-delete">
+      <i class="material-icons">delete_forever</i>
+    </button>
+    <button md-mini-fab
+            *ngIf="!tenant"
+            mdTooltip="Disable company"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="openDialog({action: 'disable', text: 'you want to disable this company?', company: company});$event.stopPropagation()"
+            id="company-list-disable">
+      <i class="material-icons">do_not_disturb_alt</i>
+    </button>
+    <button md-mini-fab
+            *ngIf="tenant"
+            mdTooltip="Disable tenant"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="openDialog({action: 'disable', text: 'you want to disable this tenant?', company: company});$event.stopPropagation()"
+            id="tenant-list-disable">
+      <i class="material-icons">do_not_disturb_alt</i>
+    </button>
+    <button md-mini-fab
+            *ngIf="!tenant"
+            mdTooltip="Edit company"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="editCompany(company);$event.stopPropagation()"
+            id="company-list-edit">
       <i class="material-icons">edit</i>
     </button>
-      <button md-mini-fab
-              *ngIf="!tenant"
-              id="company-list-add"
-              (click)="addTenant(company);$event.stopPropagation()">
-        <i class="material-icons">playlist_add</i>
-      </button>
+    <button md-mini-fab
+            *ngIf="tenant"
+            mdTooltip="Edit tenant"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="editTenant(tenant);$event.stopPropagation()"
+            id="tenant-list-edit">
+      <i class="material-icons">edit</i>
+    </button>
+    <button md-mini-fab
+            *ngIf="!tenant"
+            mdTooltip="Add tenant"
+            mdTooltipPosition="above"
+            mdTooltipShowDelay="1000"
+            (click)="addTenant(company);$event.stopPropagation()"
+            id="company-list-add">
+      <i class="material-icons">playlist_add</i>
+    </button>
 
   </smd-fab-actions>
 </smd-fab-speed-dial>

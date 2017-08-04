@@ -14,8 +14,7 @@ import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { TenantService } from '../../services/tenant/tenant.service';
 import { Company } from '../../models/company';
-import { CompanyUserRole } from '../../models/company-user-role';
-import { CompanyUserRoleTable } from '../../models/company-user-role-table';
+import { CompanyService } from '../../services/company/company.service';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { ValidationService } from '../../services/validation/validation.service';
@@ -37,6 +36,7 @@ export class TenantEditComponent implements OnInit, OnChanges {
   constructor(
     public dialog: MdDialog,
     private fb: FormBuilder,
+    private companyService: CompanyService,
     private tenantService: TenantService,
     private notificationService: NotificationService,
   ) {}
@@ -64,6 +64,8 @@ export class TenantEditComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.buildForm();
     this.notificationService.error(null);
+    this.selectedUsers = [];
+    this.selectedRoles = [];
   }
   editTenant(data): void {
     let dialogRef = this.dialog.open(DialogComponent, {
@@ -92,7 +94,7 @@ export class TenantEditComponent implements OnInit, OnChanges {
       }
     });
   }
-  addCompany(data) {
+  addToCompany(data) {
     if (this.editForm.controls.name.invalid ||
       this.editForm.controls.voiceLicences.invalid ||
       this.editForm.controls.digitalLicences.invalid ) { return; }
@@ -103,7 +105,7 @@ export class TenantEditComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
         console.log('adding company');
-        return this.companyService.addCompany(this.newCompany);
+        return this.companyService.addCompany(this.company);
       }
     });
   }

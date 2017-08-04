@@ -9,5 +9,7 @@
  */
 export class Tenant {
   id: number;
-  title: string;
+  name: string;
+  current_voice_licences: number;
+  digital_licences_per_day: number;
 }

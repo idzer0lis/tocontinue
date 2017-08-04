@@ -22,9 +22,9 @@ import { slideInDownAnimation } from '../../animations/animations';
 export class ListComponent implements OnInit, OnChanges {
   private companies: Company[];
   private currentCompany: Company;
-  public showAddCompany = false;
-  public AddTenant = false;
-  public EditTenant = false;
+  public showAddCompanyComponent = false;
+  public showAddTenantComponent = false;
+  public showEditTenantComponent = false;
   public filterText = '';
 
   constructor(private companyService: CompanyService) {}
@@ -39,18 +39,20 @@ export class ListComponent implements OnInit, OnChanges {
   }
   selectedCompany(company: Company) {
     this.currentCompany = company;
-    this.showAddCompany = false;
-    this.AddTenant = false;
-    this.EditTenant = false;
+    this.showAddCompanyComponent = false;
+    this.showAddTenantComponent = false;
+    this.showEditTenantComponent = false;
   }
   showAddTenant(company: Company) {
     this.currentCompany = company;
-    this.AddTenant = true;
-    this.EditTenant = false;
+    this.showAddTenantComponent = true;
+    this.showEditTenantComponent = false;
+    this.showAddCompanyComponent = false;
   }
   showEditTenant(company: Company) {
-    console.log(company);
     this.currentCompany = company;
-    this.EditTenant = true;
+    this.showEditTenantComponent = true;
+    this.showAddTenantComponent = false;
+    this.showAddCompanyComponent = false;
   }
 }

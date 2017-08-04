@@ -21,7 +21,7 @@
   <hr />
 
   <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
-    <div class="company-details-edit">
+    <div class="company-details-add">
 
       <div fxFlexLayout="column">
         <md-input-container class="licences" fxFlexOffset="10">
@@ -61,7 +61,8 @@
   <my-company-user-table [newUsers]="newUsers"></my-company-user-table>
 
   <span mdTooltip="Select users & roles from the tables below to add it to a company"
-        mdTooltipPosition="above">
+        mdTooltipPosition="above"
+        mdTooltipShowDelay="1000">
     <button md-raised-button
             [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()"
             (click)="addToCompany()"

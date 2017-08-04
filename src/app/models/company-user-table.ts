@@ -7,6 +7,7 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
+// Model used in Company User Table( company-user component)
 export class CompanyUserTable {
   companyRole: number[];
   userId: number[];

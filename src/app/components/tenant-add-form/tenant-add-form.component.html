@@ -14,14 +14,14 @@
             [disabled]="editForm.pristine || editForm.status === 'INVALID'"
             (click)="addTenant({text: 'you want to add the tenant?'})"
             i18n
-            id="submit-edit-to-company">
+            id="submit-edit-to-tenant">
       <i class="material-icons">done</i>
     </button>
   </md-card-header>
   <hr />
 
-  <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="company-edit-form">
-    <div class="company-details-edit">
+  <form [formGroup]="editForm" fxLayout="column" fxLayoutAlign="space-around center" id="tenant-edit-form">
+    <div class="tenant-details-add">
 
       <div fxFlexLayout="column">
         <md-input-container class="licences" fxFlexOffset="10">
@@ -31,7 +31,7 @@
                  [(ngModel)]="newTenant.title"
                  id="company-add">
         </md-input-container>
-        <my-validation [control]="editForm.controls.name" id="company-name-validation"></my-validation>
+        <my-validation [control]="editForm.controls.name" id="tenant-name-validation"></my-validation>
       </div>
 
       <div fxFlexLayout="column">
@@ -42,7 +42,7 @@
                  [(ngModel)]="newTenant.voiceLicences"
                  id="company-voice-licences-add">
         </md-input-container>
-        <my-validation [control]="editForm.controls.voiceLicences" id="company-voice-licences-validation"></my-validation>
+        <my-validation [control]="editForm.controls.voiceLicences" id="tenant-voice-licences-validation"></my-validation>
       </div>
 
       <div fxFlexLayout="column">
@@ -53,7 +53,7 @@
                  [(ngModel)]="newTenant.digitalLicences"
                  id="company-digital-licences-add">
         </md-input-container>
-        <my-validation [control]="editForm.controls.digitalLicences" id="company-digital-licences-validation"></my-validation>
+        <my-validation [control]="editForm.controls.digitalLicences" id="tenant-digital-licences-validation"></my-validation>
       </div>
 
     </div>
@@ -61,13 +61,14 @@
 
   <my-company-user-table [newUsers]="newUsers"></my-company-user-table>
 
-  <span mdTooltip="Select users & roles from the tables below to add it to a company"
-        mdTooltipPosition="above">
+  <span mdTooltip="Select users & roles from the tables below to add it to a tenant"
+        mdTooltipPosition="above"
+        mdTooltipShowDelay="1000">
     <button md-raised-button
             [disabled]="!myUserTable.showAddCompanyButton() || !myRoleTable.showAddCompanyButton()"
             (click)="addToCompany()"
             i18n
-            id="add-form-add-to-company">Add users/roles to company
+            id="add-form-add-to-company">Add users/roles to tenant
     </button>
     <my-notification></my-notification>
   </span>

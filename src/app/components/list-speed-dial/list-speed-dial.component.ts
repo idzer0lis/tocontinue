@@ -13,7 +13,6 @@ import { Tenant } from '../../models/tenant';
 import { MdDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { ListComponent } from '../company-listing/company-listing.component';
-import { TenantService } from '../../services/tenant/tenant.service';
 
 
 @Component({
@@ -26,7 +25,6 @@ export class ListSpeedDialComponent {
   @Input()tenant: Tenant;
   @Output()selectedCompany = new EventEmitter<Company>();
   @Output() showAddTenant = new EventEmitter<Company>();
-  @Output() showEditTenant = new EventEmitter<Company>();
   // List speed dial options
   public open = false;
   public fixed = false;
@@ -36,8 +34,7 @@ export class ListSpeedDialComponent {
   constructor(
     public dialog: MdDialog,
     @ViewChild(ListComponent)
-    private listComponent: ListComponent,
-    private tenantService: TenantService
+    private listComponent: ListComponent
   ) {}
 
   public editCompany(company: Company): void {
@@ -47,7 +44,6 @@ export class ListSpeedDialComponent {
     this.showAddTenant.emit(company);
   }
   public editTenant(company: Company): void {
-    console.log(company);
     this.selectedCompany.emit(company);
   }
   openDialog(data) {

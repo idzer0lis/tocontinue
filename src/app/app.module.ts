@@ -63,6 +63,7 @@ import { ValidationService } from './services/validation/validation.service';
 import { NotificationService } from './services/notification/notification.service';
 import { SearchService } from './services/search/search.service';
 import { TenantService } from './services/tenant/tenant.service';
+import { HttpHelperService } from './services/http-utils/http-helper.service';
 
 // Routing
 import { routing } from './app.routing';
@@ -74,7 +75,7 @@ import { BackendData }  from './services/in-memory-data.service';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
-let IMPORTS = [
+const IMPORTS = [
   BrowserModule,
   HttpModule,
   FormsModule,
@@ -91,7 +92,7 @@ let IMPORTS = [
   CovalentPagingModule,
   CovalentSearchModule
 ];
-let COMPONENTS = [
+const COMPONENTS = [
   AppComponent,
   HomeComponent,
   LoginComponent,
@@ -118,7 +119,7 @@ let COMPONENTS = [
   TenantAddComponent,
   TenantEditComponent
 ];
-let PROVIDERS = [
+const PROVIDERS = [
   UserService,
   RoleService,
   CompanyService,
@@ -129,7 +130,8 @@ let PROVIDERS = [
   NotificationService,
   SearchService,
   TdDataTableService,
-  TenantService
+  TenantService,
+  HttpHelperService
 ];
 
 @NgModule({

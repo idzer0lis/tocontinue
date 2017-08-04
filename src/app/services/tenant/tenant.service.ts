@@ -11,7 +11,6 @@ import { Injectable } from '@angular/core';
 import { Company } from '../../models/company';
 import { Tenant } from '../../models/tenant';
 import { Http , Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CompanyService } from '../company/company.service';
 

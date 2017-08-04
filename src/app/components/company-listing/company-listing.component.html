@@ -16,7 +16,7 @@
              id="company-search">
     </md-input-container>
     <button md-mini-fab>
-      <i class="material-icons" (click)="showAddCompany = !showAddCompany; AddTenant= false; EditTenant = false;" id="add-company">playlist_add</i>
+      <i class="material-icons" (click)="showAddCompanyComponent = !showAddCompanyComponent; showAddTenantComponent= false; showEditTenantComponent = false;" id="add-company">playlist_add</i>
     </button>
   </div>
   <h4 i18n>Companies and tenants </h4>
@@ -38,7 +38,9 @@
               <ng-template td-expansion-panel-header>
                 <div md-line class="tenant-header">
                   <my-list-speed-dial [tenant]="tenant"
-                                      (selectedCompany)="showEditTenant($event)"></my-list-speed-dial>
+                                      (selectedCompany)="showEditTenant($event)">
+
+                  </my-list-speed-dial>
                 </div>
               </ng-template>
             </td-expansion-panel>
@@ -80,7 +82,10 @@
         <td-expansion-panel [@initAnimation]>
           <ng-template td-expansion-panel-header>
             <div md-line class="tenant-header">
-              <my-list-speed-dial [tenant]="tenant"></my-list-speed-dial>
+              <my-list-speed-dial [tenant]="tenant"
+                                  (selectedCompany)="showEditTenant($event)">
+
+              </my-list-speed-dial>
             </div>
           </ng-template>
         </td-expansion-panel>
@@ -88,7 +93,7 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<my-company-add *ngIf="showAddCompany && !AddTenant" [newUsers]="newUsers"></my-company-add>
-<my-company-edit *ngIf="currentCompany && !showAddCompany && !AddTenant && !EditTenant" [company]="currentCompany"></my-company-edit>
-<my-tenant-add *ngIf="AddTenant" [company]="currentCompany"></my-tenant-add>
-<my-tenant-edit *ngIf="EditTenant" [company]="currentCompany"></my-tenant-edit>
+<my-company-add *ngIf="showAddCompanyComponent && !showAddTenantComponent" [newUsers]="newUsers"></my-company-add>
+<my-company-edit *ngIf="currentCompany && !showAddCompanyComponent && !showAddTenantComponent && !showEditTenantComponent" [company]="currentCompany"></my-company-edit>
+<my-tenant-add *ngIf="showAddTenantComponent" [company]="currentCompany"></my-tenant-add>
+<my-tenant-edit *ngIf="showEditTenantComponent" [company]="currentCompany"></my-tenant-edit>
