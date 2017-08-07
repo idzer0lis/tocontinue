@@ -103,7 +103,7 @@ export class CompanyAddComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
         console.log('adding company');
-        return this.companyService.addCompany(this.newCompany);
+        return this.companyService.createCompany(this.newCompany);
       }
     });
   }

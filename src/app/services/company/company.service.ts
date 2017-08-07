@@ -9,103 +9,104 @@
  */
 import { Injectable } from '@angular/core';
 import { Company } from '../../models/company';
-import { Http , Response } from '@angular/http';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpHelperService } from '../http-utils/http-helper.service';
+import { Store } from '@ngrx/store';
+import { AppStore } from '../../models/appstore.model';
 
 @Injectable()
 export class CompanyService {
-  private companiesURI = '/company';
-  private companies = new BehaviorSubject<Company[]>([]);
+
+  private COMPANIES_URI = '/company';
+  public companies: Observable<Company[]>;
   private lastId = 0;
-  constructor ( private http: Http ) {
-    this.http.get(this.companiesURI)
-      .map( (response: Response) => response.json().data )
+
+  constructor ( private http: Http, private store: Store<AppStore> ) {
+    this.companies = store.select('companies');
+  }
+  /**
+   * Get all companies
+   * Action dispaches companies payload to the store
+   * returns void
+   */
+  public getAllCompanies(): void {
+    this.http.get(this.COMPANIES_URI)
+      .map(res => res.json())
+      .map((company: Company) => {
+        if (company.id > this.lastId) { this.lastId = company.id; }
+      })
+      .map(payload => ({ type: 'GET_COMPANIES', payload }))
       .subscribe(
-        (data: any) => {
-          data.forEach(company => {
-            this.companies.next([...this.companies.value, company]);
-            if (company.id > this.lastId) { this.lastId = company.id; }
-          });
-        },
-        (err: HttpErrorResponse) => {
-          HttpHelperService.handleError(err);
-        }
+        action => this.store.dispatch(action),
+        err => HttpHelperService.handleError(err)
       );
+  }
+  /**
+   * Get a company by UUID
+   * @param id id of the company to be retrived
+   * @returns the company object
+   */
+  public getCompanyById(id: number): void {
+    this.http.get(`${this.COMPANIES_URI}/${id}`)
+      .subscribe(
+        action => this.store.dispatch({type: 'GET_COMPANY_BY_ID', payload: id}),
+        err => HttpHelperService.handleError(err)
+      );
+  }
+  /**
+   * Get last company id
+   * @param last company id from company table
+   * @returns last company id table
+   */
+  public getLastCompanyId(): number {
+    return this.lastId;
+  }
+  /**
+   * Wrapper for create/update company
+   * @param company  company object
+   * @returns void
+   */
+  saveCompany(company: Company): void {
+    (company.id) ? this.updateCompanyById(company) : this.createCompany(company);
   }
   /**
    * Add a company
    * @param company  company object
-   * @returns BehaviorSubject with the all the companies plus the new one
+   * @returns companies observable with the new company
    */
-  public addCompany(company: Company): CompanyService {
-    if (!company.id) {
-      company.id = ++this.lastId;
-    }
-    this.http
-      .post(this.companiesURI, company)
+  public createCompany(company: Company): void {
+    this.http.post(`${this.COMPANIES_URI}`, company)
+      .map(res => res.json())
+      .map(payload => ({ type: 'CREATE_COMPANY', payload }))
       .subscribe(
-      (data?: any) => {
-        this.companies.next([...this.companies.value, company]);
-       },
-      (err: HttpErrorResponse) => {
-        HttpHelperService.handleError(err);
-      }
+        action => this.store.dispatch(action),
+        err => HttpHelperService.handleError(err)
       );
-    return this;
   }
   /**
-   * Delete a company by id
-   * @param id id of the company to be removed
-   * @returns BehaviorSubject with the all the companies minus the new one
+   * Update a company by UUID
+   * @param company to be updated
+   * @returns void
+   *
    */
-  // Simulate DELETE /companies/:id
-  public deleteCompanyById(id: number): CompanyService {
-    this.companies.next(this.companies.value
-      .filter(company => company.id !== id));
-    return this;
+  public updateCompanyById(company: Company): void {
+    this.http.put(`${this.COMPANIES_URI}${company.id}`, company)
+      .subscribe(
+        action => this.store.dispatch({type: 'UPDATE_COMPANY', payload: company}),
+        err => HttpHelperService.handleError(err)
+      );
   }
   /**
-   * Update a company by id
-   * @param id id of the company to be updated
-   * @param object with the new values
-   * @returns the updated object
+   * Delete a company by UUID
+   * @param company object to be removed
+   * @returns void
    */
-  // Simulate PUT /companies/:id
-  public updateCompanyById(id: number, values: Object = {}): Company {
-    let company = this.getCompanyById(id);
-    if (!company) {
-      return null;
-    }
-    Object.assign(company, values);
-    return company;
-  }
-  /**
-   * Get all companies
-   * @returns BehaviorSubject with the all the companies
-   */
-  // Simulate GET /companies
-  public getAllcompanies(): Observable<Company[]> {
-    return this.companies;
-  }
-  /**
-   * Get a company by id
-   * @param id id of the company to be retrived
-   * @returns the company object
-   */
-  // Simulate GET /companies/:id
-  public getCompanyById(id: number): Company {
-    return this.companies.value
-      .filter(company => company.id === id)
-      .pop();
-  }
-  /**
-   * Method to get the last 'table' id
-   * @returns the last id found in company table
-   */
-  public getLastCompanyId(): number {
-    return this.lastId;
+  public deleteCompany(company: Company): void {
+    this.http.delete(`${this.COMPANIES_URI}${company.id}`)
+      .subscribe(
+        action => this.store.dispatch({ type: 'DELETE_COMPANY', payload: company }),
+        err => HttpHelperService.handleError(err)
+      );
   }
 }

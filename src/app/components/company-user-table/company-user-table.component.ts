@@ -22,7 +22,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 import { CompanyUserService } from '../../services/company-user/company-user.service';
 import { Company } from '../../models/company';
-import { CompanyUserRoleTable } from '../../models/company-user-role-table';
+import { CompanyUserRole } from '../../models/company-user-role';
 
 @Component({
   selector: 'my-company-user-table',
@@ -33,8 +33,8 @@ import { CompanyUserRoleTable } from '../../models/company-user-role-table';
 
 export class CompanyUserTableComponent implements OnChanges {
   @Input() company: Company;
-  @Input() newUsers: Observable<CompanyUserRoleTable[]>;
-  public tableData: CompanyUserRoleTable[] = [];
+  @Input() newUsers: Observable<CompanyUserRole[]>;
+  public tableData: CompanyUserRole[] = [];
   public columns: ITdDataTableColumn[] = [
     {name: 'username', label: 'Username'},
     {name: 'role', label: 'User role'},
@@ -54,10 +54,10 @@ export class CompanyUserTableComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.company) {
-      this.companyUserService.getUsersByCompany(this.company.id).subscribe( (users: CompanyUserRoleTable[]) => this.tableData = users);
+      this.companyUserService.getUsersByCompany(this.company.id).subscribe( (users: CompanyUserRole[]) => this.tableData = users);
     } else {
       if (this.newUsers !== undefined) {
-        this.newUsers.subscribe((users: CompanyUserRoleTable[]) => {
+        this.newUsers.subscribe((users: CompanyUserRole[]) => {
           this.tableData = users;
         });
       }

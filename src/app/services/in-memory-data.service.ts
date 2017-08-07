@@ -50,18 +50,21 @@ export class BackendData implements InMemoryDbService {
       {
         id: 1,
         userId: 1,
+        username: 'admin',
         companyId: 1,
         companyRole: [1],
       },
       {
         id: 2,
         userId: 2,
+        username: 'user',
         companyId: 2,
         companyRole: [2],
       },
       {
         id: 3,
         userId: 2,
+        username: 'user',
         companyId: 1,
         companyRole: [1],
       },
@@ -79,8 +82,8 @@ export class BackendData implements InMemoryDbService {
             id: 2,
             title: 'Second Tenant from Company 1'
           }],
-        voiceLicences: 2,
-        digitalLicences: 4,
+        current_voice_licences: 2,
+        digital_licences_per_day: 4,
       },
       {
         id: 2,
@@ -90,8 +93,8 @@ export class BackendData implements InMemoryDbService {
           id: 3,
           title: 'First Tenant from Company 2'
         }],
-        voiceLicences: 3,
-        digitalLicences: 1,
+        current_voice_licences: 3,
+        digital_licences_per_day: 1,
       }
     ];
     return { users, companies, roles, companyRoles, companyUserRoles };

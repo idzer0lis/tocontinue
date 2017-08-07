@@ -39,7 +39,7 @@
           <label i18n>Voice licences</label>
           <input mdInput
                  formControlName="voiceLicences"
-                 [(ngModel)]="newCompany.voiceLicences"
+                 [(ngModel)]="newCompany.current_voice_licences"
                  id="company-voice-licences-add">
         </md-input-container>
         <my-validation [control]="editForm.controls.voiceLicences" id="company-voice-licences-validation"></my-validation>
@@ -50,7 +50,7 @@
           <label i18n>Digital licences</label>
           <input mdInput
                  formControlName="digitalLicences"
-                 [(ngModel)]="newCompany.digitalLicences"
+                 [(ngModel)]="newCompany.digital_licences_per_day"
                  id="company-digital-licences-add">
         </md-input-container>
         <my-validation [control]="editForm.controls.digitalLicences" id="company-digital-licences-validation"></my-validation>

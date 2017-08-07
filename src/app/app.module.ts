@@ -7,6 +7,7 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
+// Modules
 import { NgModule, ApplicationRef, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -14,6 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { StoreModule } from '@ngrx/store';
+import { companies } from './reducers/company.reducer';
+import { companiesUserRole } from './reducers/company-user-role.reducer';
 
 // Components
 import { AppComponent } from './app.component';
@@ -90,7 +94,8 @@ const IMPORTS = [
   MdDialogModule,
   CovalentDataTableModule,
   CovalentPagingModule,
-  CovalentSearchModule
+  CovalentSearchModule,
+  StoreModule.provideStore(companies, companiesUserRole)
 ];
 const COMPONENTS = [
   AppComponent,

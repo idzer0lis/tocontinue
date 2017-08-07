@@ -31,15 +31,15 @@ describe('CompanyService', () => {
   describe('#getAllCompanies()', () => {
 
     it('should return an empty array by default', inject([CompanyService], (service: CompanyService) => {
-      expect(service.getAllcompanies()).toEqual([]);
+      expect(service.getAllCompanies()).toEqual([]);
     }));
 
     it('should return all companies', inject([CompanyService], (service: CompanyService) => {
       let company1 = new Company({id: 1, title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
       let company2 = new Company({id: 2, title: 'Company 2', tenants: {}});
-      service.addCompany(company1);
-      service.addCompany(company2);
-      expect(service.getAllcompanies()).toEqual([company1, company2]);
+      service.createCompany(company1);
+      service.createCompany(company2);
+      expect(service.getAllCompanies()).toEqual([company1, company2]);
     }));
 
   });
@@ -49,36 +49,36 @@ describe('CompanyService', () => {
     it('should automatically assign an incrementing id', inject([CompanyService], (service: CompanyService) => {
       let company1 = new Company({title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
       let company2 = new Company({title: 'Company 2', tenants: {}});
-      service.addCompany(company1);
-      service.addCompany(company2);
+      service.createCompany(company1);
+      service.createCompany(company2);
       expect(service.getCompanyById(1)).toEqual(company1);
       expect(service.getCompanyById(2)).toEqual(company2);
     }));
 
   });
 
-  describe('#deleteCompanyById(id)', () => {
+  describe('#deleteCompany(id)', () => {
 
     it('should remove company with the corresponding id', inject([CompanyService], (service: CompanyService) => {
       let company1 = new Company({id: 1, title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
       let company2 = new Company({id: 2, title: 'Company 2', tenants: {}});
-      service.addCompany(company1);
-      service.addCompany(company2);
-      expect(service.getAllcompanies()).toEqual([company1, company2]);
-      service.deleteCompanyById(1);
-      expect(service.getAllcompanies()).toEqual([company2]);
-      service.deleteCompanyById(2);
-      expect(service.getAllcompanies()).toEqual([]);
+      service.createCompany(company1);
+      service.createCompany(company2);
+      expect(service.getAllCompanies()).toEqual([company1, company2]);
+      service.deleteCompany(1);
+      expect(service.getAllCompanies()).toEqual([company2]);
+      service.deleteCompany(2);
+      expect(service.getAllCompanies()).toEqual([]);
     }));
 
     it('should not removing anything if company with corresponding id is not found', inject([CompanyService], (service: CompanyService) => {
       let company1 = new Company({id: 1, title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
       let company2 = new Company({id: 2, title: 'Company 2', tenants: {}});
-      service.addCompany(company1);
-      service.addCompany(company2);
-      expect(service.getAllcompanies()).toEqual([company1, company2]);
-      service.deleteCompanyById(3);
-      expect(service.getAllcompanies()).toEqual([company1, company2]);
+      service.createCompany(company1);
+      service.createCompany(company2);
+      expect(service.getAllCompanies()).toEqual([company1, company2]);
+      service.deleteCompany(3);
+      expect(service.getAllCompanies()).toEqual([company1, company2]);
     }));
 
   });
@@ -87,7 +87,7 @@ describe('CompanyService', () => {
 
     it('should return company with the corresponding id and updated data', inject([CompanyService], (service: CompanyService) => {
       let company = new Company({id: 1, title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
-      service.addCompany(company);
+      service.createCompany(company);
       let updatedCompany = service.updateCompanyById(1, {
         title: 'new title'
       });
@@ -96,7 +96,7 @@ describe('CompanyService', () => {
 
     it('should return null if company is not found', inject([CompanyService], (service: CompanyService) => {
       let company = new Company({id: 1, title: 'Company 1', tenants: {id: 1, title: 'First Tenant'}});
-      service.addCompany(company);
+      service.createCompany(company);
       let updatedCompany = service.updateCompanyById(2, {
         title: 'new title'
       });

@@ -7,10 +7,17 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
-// Model used in Company Roles Table( company-user-roles component)
-export class CompanyUserRoleTable {
-  id: number;
-  username: string;
-  roleId: number;
-  role: string;
+import { User } from './user';
+import { Company } from './company';
+import { CompanyUserRole } from './company-user-role';
+import { Tenant } from './tenant';
+
+export interface AppStore {
+  user: User;
+  users: User[];
+  company: Company;
+  companies: Company[];
+  companyUsers: CompanyUserRole[];
+  tenant: Tenant;
+  tenants: Tenant[];
 }

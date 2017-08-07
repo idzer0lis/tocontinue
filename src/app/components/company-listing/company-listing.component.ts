@@ -11,6 +11,9 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Company } from '../../models/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
+import { Store } from '@ngrx/store';
+import { AppStore } from '../../models/appstore.model';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'my-list',
@@ -20,25 +23,29 @@ import { slideInDownAnimation } from '../../animations/animations';
   animations: [slideInDownAnimation]
 })
 export class ListComponent implements OnInit, OnChanges {
-  private companies: Company[];
+  private companies: Observable<Company[]>;
   private currentCompany: Company;
   public showAddCompanyComponent = false;
   public showAddTenantComponent = false;
   public showEditTenantComponent = false;
   public filterText = '';
 
-  constructor(private companyService: CompanyService) {}
+  constructor(private companyService: CompanyService, private store: Store<AppStore>) {
+    this.companies = store.select('companies');
+    companyService.getAllCompanies();
+  }
   ngOnInit() {
-    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
+    this.companies = this.store.select('companies');
   }
   ngOnChanges() {
-    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
+    this.companies = this.store.select('companies');
   }
   removeCompany(company: Company): void {
-    this.companyService.deleteCompanyById(company.id);
+    this.companyService.deleteCompany(company);
   }
   selectedCompany(company: Company) {
     this.currentCompany = company;
+    // TODO: there must be a better way
     this.showAddCompanyComponent = false;
     this.showAddTenantComponent = false;
     this.showEditTenantComponent = false;

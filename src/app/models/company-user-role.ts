@@ -13,4 +13,6 @@ export class CompanyUserRole {
   company: number;
   user: string;
   role: string;
+  userId: number;
+  companyRole: Array<number>;
 }

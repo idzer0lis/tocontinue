@@ -49,16 +49,16 @@ export class CompanyEditComponent implements OnInit, OnChanges {
   }
   buildForm(): void {
     this.editForm = this.fb.group({
-      'companyName': [this.company.title, [
+      'companyName': [this.company.name, [
         Validators.required,
         Validators.minLength(4),
       ]],
-      'voiceLicences': [this.company.voiceLicences, [
+      'voiceLicences': [this.company.current_voice_licences, [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
       ]],
-      'digitalLicences': [this.company.digitalLicences, [
+      'digitalLicences': [this.company.digital_licences_per_day, [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
