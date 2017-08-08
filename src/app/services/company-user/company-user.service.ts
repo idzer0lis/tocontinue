@@ -18,7 +18,7 @@ import { CompanyRoleService } from '../companyUserRole-role/companyUserRole-role
 import { CompanyUserRole } from '../../models/company-user-role';
 
 import { Store } from '@ngrx/store';
-import { AppStore } from '../../models/appstore.model';
+import { AppState } from '../../models/appstore.model';
 import { HttpHelperService } from '../http-utils/http-helper.service';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class CompanyUserService {
   public companyUsers: Observable<CompanyUserRole[]>;
   private lastId = 0;
 
-  constructor ( private http: Http, private store: Store<AppStore> ) {
+  constructor ( private http: Http, private store: Store<AppState> ) {
     this.companyUsers = store.select('companiesUserRole');
   }
   /**

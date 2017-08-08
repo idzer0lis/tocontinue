@@ -8,35 +8,47 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 import { Action } from '@ngrx/store';
+import { CompanyUserRoleActions } from '../actions/company-user-action';
+import { CompanyUserRole } from '../models/company-user-role';
 
-export function companiesUserRole (state: any = [], action: Action) {
+export type CompanyUserRoleState = CompanyUserRole[];
+
+export function companiesUserRole (state: any = [], action: Action): CompanyUserRoleState {
   switch (action.type) {
-    case 'GET_COMPANY_USER_ROLES':
+
+    case CompanyUserRoleActions.GET_COMPANIES_USER_ROLES_SUCCESS:
       return action.payload;
-    case 'GET_COMPANY_USER_ROLE_BY_COMPANY_ID':
+
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ID_SUCCESS:
+      return state.filter(companyUserRole => {
+        return companyUserRole.id === action.payload.id;
+      });
+
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_COMPANY_ID_SUCCESS:
       return state.filter(companyUserRole => {
         return companyUserRole.companyId !== action.payload.companyId;
       });
-    case 'GET_COMPANY_USER_ROLE_BY_ID':
-      return state.filter(companyUserRole => {
-      return companyUserRole.id === action.payload.id;
-    });
+
       // company user-role-table does not have userId and roleIds but I keep the app backwards-compatible for now
-    case 'GET_COMPANY_USER_ROLE_BY_IDS':
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS:
       return state.filter(companyUserRole => {
         return companyUserRole.userId === action.payload.userId &&
           companyUserRole.roleId === action.payload.roleId;
       });
-    case 'GET_COMPANY_USER_ROLE_BY_ROLE_ID':
+
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS:
       return state.filter(companyUserRole => {
         return companyUserRole.id === action.payload.id;
       });
-    case 'SET_USERS_IN_COMPANY':
+
+    case CompanyUserRoleActions.CREATE_COMPANY_COMPANY_USER_ROLES_SUCCESS:
       return [...state, action.payload];
-    case 'DELETE_COMPANY_USER_ROLE':
+
+    case CompanyUserRoleActions.DELETE_COMPANY_USER_ROLE_SUCCESS:
       return state.filter(company => {
         return company.id !== action.payload.id;
       });
+
     default:
       return state;
   }

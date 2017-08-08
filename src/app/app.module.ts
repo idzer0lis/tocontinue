@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { CompanyActions } from './actions/company.actions';
+import { CompanyEffects } from './effects/company.effects';
 import { companies } from './reducers/company.reducer';
 import { companiesUserRole } from './reducers/company-user-role.reducer';
 
@@ -95,7 +98,8 @@ const IMPORTS = [
   CovalentDataTableModule,
   CovalentPagingModule,
   CovalentSearchModule,
-  StoreModule.provideStore(companies, companiesUserRole)
+  StoreModule.provideStore({companies: companies, companiesUserRole: companiesUserRole}),
+  EffectsModule.run(CompanyEffects)
 ];
 const COMPONENTS = [
   AppComponent,
@@ -136,7 +140,8 @@ const PROVIDERS = [
   SearchService,
   TdDataTableService,
   TenantService,
-  HttpHelperService
+  HttpHelperService,
+  CompanyActions
 ];
 
 @NgModule({

@@ -8,28 +8,38 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 import { Action } from '@ngrx/store';
+import { Company } from '../models/company';
+import { CompanyActions } from '../actions/company.actions';
 
-export function companies (state: any = [], action: Action) {
+export type CompanyState = Company[];
+
+export function companies (state: any = [], action: Action): CompanyState {
   switch (action.type) {
-    case 'GET_COMPANIES':
+
+    case CompanyActions.GET_COMPANIES_SUCCESS:
       return action.payload;
-    case 'GET_COMPANY_BY_ID':
+
+    case CompanyActions.GET_COMPANY_BY_ID_SUCCESS:
       return state.filter(company => {
         return company.id === action.payload.id;
       });
-    case 'CREATE_COMPANY':
+
+    case CompanyActions.CREATE_COMPANY_SUCCESS:
       return [...state, action.payload];
-    case 'UPDATE_COMPANY':
+
+    case CompanyActions.UPDATE_COMPANY_SUCCESS:
       return state.map(company => {
         return company.id === action.payload.id ?
           Object.assign({}, company, action.payload) :
           company;
       });
-    case 'DELETE_COMPANY':
+
+    case CompanyActions.DELETE_COMPANY_SUCCESS:
       return state.filter(company => {
         return company.id !== action.payload.id;
       });
+
     default:
       return state;
   }
-};
+}

@@ -22,7 +22,7 @@
   <h4 i18n>Companies and tenants </h4>
   <ng-container *ngIf="filterText.length < 1">
 
-    <td-expansion-panel-group *ngFor="let company of companies;">
+    <td-expansion-panel-group *ngFor="let company of companies | async">
       <td-expansion-panel [@initAnimation] [expand]="false">
         <ng-template td-expansion-panel-header>
           <div md-line class="company-header">
@@ -34,7 +34,7 @@
         </ng-template>
         <div class="company-content">
           <td-expansion-panel-group>
-            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
+            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants">
               <ng-template td-expansion-panel-header>
                 <div md-line class="tenant-header">
                   <my-list-speed-dial [tenant]="tenant"
@@ -66,7 +66,7 @@
 
         <div class="company-content">
           <td-expansion-panel-group>
-            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants;">
+            <td-expansion-panel [@initAnimation] *ngFor="let tenant of company.tenants">
               <ng-template td-expansion-panel-header>
                 <h4 md-line >{{tenant.title}}</h4>
               </ng-template>
@@ -76,7 +76,7 @@
       </td-expansion-panel>
     </td-expansion-panel-group>
 
-    <div *ngFor="let company of companies">
+    <div *ngFor="let company of companies | async">
       <td-expansion-panel-group *ngFor="let tenant of company.tenants | myTenantFilter:filterText">
 
         <td-expansion-panel [@initAnimation]>
@@ -93,7 +93,9 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
+<!--
 <my-company-add *ngIf="showAddCompanyComponent && !showAddTenantComponent" [newUsers]="newUsers"></my-company-add>
 <my-company-edit *ngIf="currentCompany && !showAddCompanyComponent && !showAddTenantComponent && !showEditTenantComponent" [company]="currentCompany"></my-company-edit>
 <my-tenant-add *ngIf="showAddTenantComponent" [company]="currentCompany"></my-tenant-add>
 <my-tenant-edit *ngIf="showEditTenantComponent" [company]="currentCompany"></my-tenant-edit>
+-->

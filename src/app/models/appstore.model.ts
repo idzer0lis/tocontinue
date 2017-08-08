@@ -12,9 +12,8 @@ import { Company } from './company';
 import { CompanyUserRole } from './company-user-role';
 import { Tenant } from './tenant';
 
-export interface AppStore {
+export interface AppState {
   user: User;
-  users: User[];
   company: Company;
   companies: Company[];
   companyUsers: CompanyUserRole[];

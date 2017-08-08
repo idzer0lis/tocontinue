@@ -23,6 +23,9 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { CompanyUserService } from '../../services/company-user/company-user.service';
 import { Company } from '../../models/company';
 import { CompanyUserRole } from '../../models/company-user-role';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../models/appstore.model';
+import { CompanyUserRoleActions } from '../../actions/company-user-role.actions';
 
 @Component({
   selector: 'my-company-user-table',
@@ -48,8 +51,12 @@ export class CompanyUserTableComponent implements OnChanges {
   constructor(
     private companyUserService: CompanyUserService,
     public dialog: MdDialog,
-    private _dataTableService: TdDataTableService) {
+    private _dataTableService: TdDataTableService,
+    private store: Store<AppState>,
+    private companyUserRoleActions: CompanyUserRoleActions
+  ) {
     this.filter();
+    this.tableData = this.store.select('company');
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -69,7 +69,7 @@ export class BackendData implements InMemoryDbService {
         companyRole: [1],
       },
     ];
-    let companies = [
+    let company = [
       {
         id: 1,
         title: 'First Company',
@@ -97,6 +97,6 @@ export class BackendData implements InMemoryDbService {
         digital_licences_per_day: 1,
       }
     ];
-    return { users, companies, roles, companyRoles, companyUserRoles };
+    return { users, company, roles, companyRoles, companyUserRoles };
   }
 }
