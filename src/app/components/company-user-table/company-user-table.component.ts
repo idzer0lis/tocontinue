@@ -8,7 +8,7 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import {
   ITdDataTableColumn,
@@ -23,9 +23,10 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { CompanyUserService } from '../../services/company-user/company-user.service';
 import { Company } from '../../models/company';
 import { CompanyUserRole } from '../../models/company-user-role';
+import { CompanyUserRoleTable } from '../../models/company-user-role-table';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../models/appstore.model';
-import { CompanyUserRoleActions } from '../../actions/company-user-role.actions';
+import { AppState } from '../../reducers/app-state';
+import { CompanyUserRoleActions } from '../../actions/company-user-actions';
 
 @Component({
   selector: 'my-company-user-table',
@@ -34,12 +35,12 @@ import { CompanyUserRoleActions } from '../../actions/company-user-role.actions'
   providers: [CompanyUserService]
 })
 
-export class CompanyUserTableComponent implements OnChanges {
+export class CompanyUserTableComponent implements OnChanges, OnInit {
   @Input() company: Company;
   @Input() newUsers: Observable<CompanyUserRole[]>;
-  public tableData: CompanyUserRole[] = [];
+  public tableData: Observable<CompanyUserRoleTable[]>;
   public columns: ITdDataTableColumn[] = [
-    {name: 'username', label: 'Username'},
+    {name: 'id', label: 'id'},
     {name: 'role', label: 'User role'},
     {name: 'actions', label: 'Actions'}
   ];
@@ -48,26 +49,34 @@ export class CompanyUserTableComponent implements OnChanges {
   public pageSize = 5;
   public sortBy = 'username';
   public sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Ascending;
+  dataLength = 0;
   constructor(
-    private companyUserService: CompanyUserService,
     public dialog: MdDialog,
     private _dataTableService: TdDataTableService,
     private store: Store<AppState>,
     private companyUserRoleActions: CompanyUserRoleActions
   ) {
-    this.filter();
-    this.tableData = this.store.select('company');
-  }
+     this.tableData = this.store.select('companyUserRoles');
 
+
+
+    // this.filter();
+  }
+  ngOnInit() {
+    console.log(this.company);
+    if (this.company) {
+      this.store.dispatch(this.companyUserRoleActions.CompanyUserRoleByCompanyId(this.company.id));
+    }
+    this.tableData.subscribe(x => console.log(x));
+  }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.company) {
-      this.companyUserService.getUsersByCompany(this.company.id).subscribe( (users: CompanyUserRole[]) => this.tableData = users);
+      this.store.dispatch(this.companyUserRoleActions.CompanyUserRoleByCompanyId(this.company.id));
     } else {
-      if (this.newUsers !== undefined) {
-        this.newUsers.subscribe((users: CompanyUserRole[]) => {
-          this.tableData = users;
-        });
-      }
+      console.log('set new users');
+      /*if (this.newUsers !== undefined) {
+        this.tableData = this.newUsers;
+      }*/
     }
   }
   openDialog(data) {
@@ -77,9 +86,8 @@ export class CompanyUserTableComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       // console.log(data);
       if ( parseInt (result, 10) ) {
-        this.companyUserService
-          .removeUserRoleInCompany(data.userId, data.roleId)
-          .subscribe(newUsers => this.tableData = newUsers);
+        this.store.dispatch(this.companyUserRoleActions.deleteCompanyUserRole(data));
+
       }
     });
   }
@@ -92,8 +100,14 @@ export class CompanyUserTableComponent implements OnChanges {
     this.currentPage = pagingEvent.page;
     this.pageSize = pagingEvent.pageSize;
   }
-  filter(): void {
-    let newData: any[] = this.tableData;
-    newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-  }
+  /*filter(): void {
+    if (this.tableData) {
+      let newData: any[];
+      this.tableData.subscribe(data => {
+        newData = data;
+      });
+      this.dataLength = newData.length;
+      newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
+    }
+  }*/
 }

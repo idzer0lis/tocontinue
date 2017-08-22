@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 import { Company } from '../../models/company';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { HttpHelperService } from '../http-utils/http-helper.service';
 
 @Injectable()
 export class CompanyService {
@@ -72,7 +73,7 @@ export class CompanyService {
    *
    */
   public updateCompanyById(company: Company): Observable<Company> {
-    return this.http.put(`${this.COMPANIES_URI}${company.id}`, company)
+    return this.http.put(`${this.COMPANIES_URI}/${company.id}`, company)
       .map(res => res.json().data);
   }
   /**
@@ -80,8 +81,7 @@ export class CompanyService {
    * @param company object to be removed
    * @returns void
    */
-  public deleteCompany(company: Company): Observable<Company> {
-    return this.http.delete(`${this.COMPANIES_URI}${company.id}`)
-      .map(res => res.json().data);
+  public deleteCompany(company: Company): any {
+    return this.http.delete(`${this.COMPANIES_URI}/${company.id}`);
   }
 }

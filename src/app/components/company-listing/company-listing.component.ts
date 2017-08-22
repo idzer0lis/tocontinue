@@ -7,12 +7,12 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Company } from '../../models/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../models/appstore.model';
+import { AppState } from '../../reducers/app-state';
 import { Observable } from 'rxjs/Observable';
 import { CompanyActions } from '../../actions/company.actions';
 
@@ -32,17 +32,16 @@ export class ListComponent implements OnInit {
   public filterText = '';
 
   constructor(
-    private companyService: CompanyService,
     private store: Store<AppState>,
     private companyActions: CompanyActions
-  ) {
-    this.companies = this.store.select('companies');
-  }
+  ) {}
   ngOnInit() {
+    this.companies = this.store.select('companies');
     this.store.dispatch(this.companyActions.getCompanies());
+    this.companies.subscribe(x => console.log(x));
   }
-  removeCompany(company: Company): void {
-    this.companyService.deleteCompany(company);
+  removeCompany(company: Company): any {
+    this.store.dispatch(this.companyActions.deleteCompany(company));
   }
   selectedCompany(company: Company) {
     this.currentCompany = company;

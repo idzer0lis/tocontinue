@@ -53,6 +53,7 @@ export class BackendData implements InMemoryDbService {
         username: 'admin',
         companyId: 1,
         companyRole: [1],
+        rolename: '' // to be removed
       },
       {
         id: 2,
@@ -60,6 +61,7 @@ export class BackendData implements InMemoryDbService {
         username: 'user',
         companyId: 2,
         companyRole: [2],
+        rolename: '' // to be removed
       },
       {
         id: 3,
@@ -67,6 +69,7 @@ export class BackendData implements InMemoryDbService {
         username: 'user',
         companyId: 1,
         companyRole: [1],
+        rolename: '' // to be removed
       },
     ];
     let company = [

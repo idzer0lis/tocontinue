@@ -37,7 +37,7 @@ export class CompanyEffects {
     .switchMap(company => this.companyService.createCompany(company))
     .map(company => this.companyActions.createCompanySuccess(company));
 
-  @Effect() updateHero$ = this.update$
+  @Effect() updateCompany$ = this.update$
     .ofType(CompanyActions.UPDATE_COMPANY)
     .map(action => action.payload)
     .switchMap(company => this.companyService.updateCompanyById(company))

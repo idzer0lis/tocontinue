@@ -9,44 +9,46 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
-import { CompanyActions } from '../actions/company.actions';
+import { Effect, Actions, toPayload } from '@ngrx/effects';
+import { CompanyUserRoleActions } from '../actions/company-user-actions';
 import { CompanyUserService } from '../services/company-user/company-user.service';
 
 @Injectable()
-export class CompanyEffects {
+export class CompanyUserRoleEffects {
   constructor (
     private update$: Actions,
-    private companyActions: CompanyActions,
+    private companyUserRoleActions: CompanyUserRoleActions,
     private companyUserService: CompanyUserService,
   ) {}
 
+  @Effect() getCompanies$ = this.update$
+    .ofType(CompanyUserRoleActions.GET_COMPANIES_USER_ROLES)
+    .map(action => action.payload)
+    .switchMap(() => this.companyUserService.getAllCompaniesUserRoles())
+    .map(companies => this.companyUserRoleActions.getCompanyUserRoleSuccess(companies));
+
   @Effect() getCompanyUserRole$ = this.update$
-    .ofType(CompanyActions.GET_COMPANIES)
-    .switchMap(() => this.companyUserService.)
-    .map(companies => this.companyActions.getCompaniesSuccess(companies));
-
-  @Effect() getCompany$ = this.update$
-    .ofType(CompanyActions.GET_COMPANY_BY_ID)
+    .ofType(CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ID)
     .map(action => action.payload)
-    .switchMap(id => this.companyUserService.getCompanyById(id))
-    .map(company => this.companyActions.getCompanySuccess(company));
+    .switchMap(id => this.companyUserService.getCompanyUserRoleById(id))
+    .map(company => this.companyUserRoleActions.CompanyUserRoleSuccess(company));
 
-  @Effect() createCompany$ = this.update$
-    .ofType(CompanyActions.CREATE_COMPANY)
-    .map(action => action.payload)
-    .switchMap(company => this.companyUserService.createCompany(company))
-    .map(company => this.companyActions.createCompanySuccess(company));
+  @Effect() getCompanyUserRoleByCompanyId$ = this.update$
+    .ofType(CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_COMPANY_ID)
+    .map(action => action.payload.id)
+    .exhaustMap(id => this.companyUserService.getUsersByCompany(id))
+    .map(payload => this.companyUserRoleActions.CompanyUserRoleByCompanyIdSuccess(payload));
 
-  @Effect() updateHero$ = this.update$
-    .ofType(CompanyActions.UPDATE_COMPANY)
-    .map(action => action.payload)
-    .switchMap(company => this.companyUserService.updateCompanyById(company))
-    .map(company => this.companyActions.updateCompanySuccess(company));
 
-  @Effect() deleteCompany$ = this.update$
-    .ofType(CompanyActions.DELETE_COMPANY)
+  @Effect() createCompanyUserRole$ = this.update$
+    .ofType(CompanyUserRoleActions.CREATE_COMPANY_COMPANY_USER_ROLES)
     .map(action => action.payload)
-    .switchMap(company => this.companyUserService.deleteCompany(company))
-    .map(company => this.companyActions.deleteCompanySuccess(company));
+    .switchMap(company => this.companyUserService.setUsersInCompany(company))
+    .map(company => this.companyUserRoleActions.createCompanyUserRoleSuccess(company));
+
+  @Effect() deleteCompanyUserRole$ = this.update$
+    .ofType(CompanyUserRoleActions.DELETE_COMPANY_USER_ROLE)
+    .map(action => action.payload)
+    .switchMap(company => this.companyUserService.removeUserRoleInCompany(company))
+    .map(company => this.companyUserRoleActions.deleteCompanyUserRoleSuccess(company));
 }

@@ -13,14 +13,24 @@ import { Action } from '@ngrx/store';
 
 @Injectable()
 export class CompanyActions {
+
   static GET_COMPANIES = '[Company] Load Companies';
+  static GET_COMPANIES_SUCCESS = '[Company] Load Companies Success';
+  static GET_COMPANY_BY_ID = '[Company] Load Company';
+  static GET_COMPANY_BY_ID_SUCCESS = '[Company] Load Company Success';
+  static CREATE_COMPANY = '[Company] Save Company';
+  static CREATE_COMPANY_SUCCESS = '[Company] Save Company Success';
+  static UPDATE_COMPANY = '[Company] Update Company';
+  static UPDATE_COMPANY_SUCCESS = '[Company] Update Company Success';
+  static DELETE_COMPANY = '[Company] Delete Company';
+  static DELETE_COMPANY_SUCCESS = '[Company] Delete Company Success';
+
   getCompanies(): Action {
     return {
       type: CompanyActions.GET_COMPANIES
     };
   }
 
-  static GET_COMPANIES_SUCCESS = '[Company] Load Company Success';
   getCompaniesSuccess(companies): Action {
     return {
       type: CompanyActions.GET_COMPANIES_SUCCESS,
@@ -28,7 +38,6 @@ export class CompanyActions {
     };
   }
 
-  static GET_COMPANY_BY_ID = '[Company] Get Company';
   getCompany(id): Action {
     return {
       type: CompanyActions.GET_COMPANY_BY_ID,
@@ -36,7 +45,6 @@ export class CompanyActions {
     };
   }
 
-  static GET_COMPANY_BY_ID_SUCCESS = '[Company] Get Company Success';
   getCompanySuccess(company): Action {
     return {
       type: CompanyActions.GET_COMPANY_BY_ID_SUCCESS,
@@ -44,7 +52,6 @@ export class CompanyActions {
     };
   }
 
-  static CREATE_COMPANY = '[Company] Save Company';
   createCompany(company): Action {
     return {
       type: CompanyActions.CREATE_COMPANY,
@@ -52,7 +59,6 @@ export class CompanyActions {
     };
   }
 
-  static CREATE_COMPANY_SUCCESS = '[Company] Save Company Success';
   createCompanySuccess(company): Action {
     return {
       type: CompanyActions.CREATE_COMPANY_SUCCESS,
@@ -60,7 +66,6 @@ export class CompanyActions {
     };
   }
 
-  static UPDATE_COMPANY = '[Company] Add Company';
   updateCompany(company): Action {
     return {
       type: CompanyActions.UPDATE_COMPANY,
@@ -68,7 +73,6 @@ export class CompanyActions {
     };
   }
 
-  static UPDATE_COMPANY_SUCCESS = '[Company] Add Company Success';
   updateCompanySuccess(company): Action {
     return {
       type: CompanyActions.UPDATE_COMPANY_SUCCESS,
@@ -76,7 +80,6 @@ export class CompanyActions {
     };
   }
 
-  static DELETE_COMPANY = '[Company] Delete Company';
   deleteCompany(company): Action {
     return {
       type: CompanyActions.DELETE_COMPANY,
@@ -84,7 +87,6 @@ export class CompanyActions {
     };
   }
 
-  static DELETE_COMPANY_SUCCESS = '[Company] Delete Company Success';
   deleteCompanySuccess(company): Action {
     return {
       type: CompanyActions.DELETE_COMPANY_SUCCESS,
@@ -92,3 +94,4 @@ export class CompanyActions {
     };
   }
 }
+

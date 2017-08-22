@@ -93,9 +93,10 @@
     </div>
   </div> <!--END OF FILTERING SECTION-->
 </md-card>
-<!--
 <my-company-add *ngIf="showAddCompanyComponent && !showAddTenantComponent" [newUsers]="newUsers"></my-company-add>
-<my-company-edit *ngIf="currentCompany && !showAddCompanyComponent && !showAddTenantComponent && !showEditTenantComponent" [company]="currentCompany"></my-company-edit>
-<my-tenant-add *ngIf="showAddTenantComponent" [company]="currentCompany"></my-tenant-add>
-<my-tenant-edit *ngIf="showEditTenantComponent" [company]="currentCompany"></my-tenant-edit>
--->
+<my-company-edit *ngIf="currentCompany && !showAddCompanyComponent && !showAddTenantComponent && !showEditTenantComponent"
+                 [company]="currentCompany">
+
+</my-company-edit>
+<!--<my-tenant-add *ngIf="showAddTenantComponent" [company]="currentCompany"></my-tenant-add>
+<my-tenant-edit *ngIf="showEditTenantComponent" [company]="currentCompany"></my-tenant-edit>-->

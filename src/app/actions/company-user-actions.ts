@@ -9,17 +9,33 @@
  */
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
+import { CompanyUserRole } from '../models/company-user-role';
 
 @Injectable()
 export class CompanyUserRoleActions {
+
   static GET_COMPANIES_USER_ROLES = '[CompanyUserRole] Load CompaniesUserRole';
+  static GET_COMPANIES_USER_ROLES_SUCCESS = '[CompanyUserRole] Load CompanyUserRole Success';
+  static GET_COMPANY_USER_ROLES_BY_ID = '[CompanyUserRole] Get CompanyUserRole';
+  static GET_COMPANY_USER_ROLES_BY_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole Success';
+  static GET_COMPANY_USER_ROLES_BY_COMPANY_ID = '[CompanyUserRole] Get CompanyUserRole by Company Id';
+  static GET_COMPANY_USER_ROLES_BY_COMPANY_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Company Id';
+  static CREATE_COMPANY_COMPANY_USER_ROLES = '[CompanyUserRole] Save CompanyUserRole';
+  static CREATE_COMPANY_COMPANY_USER_ROLES_SUCCESS = '[CompanyUserRole] Save CompanyUserRole Success';
+  static DELETE_COMPANY_USER_ROLE = '[CompanyUserRole] Delete CompanyUserRole';
+  static DELETE_COMPANY_USER_ROLE_SUCCESS = '[CompanyUserRole] Delete CompanyUserRole Success';
+  // Kept for backwards compatibility with in-memory-api ( you can disable it from app.module.ts )
+  static GET_COMPANY_USER_ROLES_BY_ROLE_ID = '[CompanyUserRole] Get CompanyUserRole by Role Id';
+  static GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Role Id';
+  static GET_COMPANY_USER_ROLES_BY_IDS = '[CompanyUserRole] Get CompanyUserRole by Ids';
+  static GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Ids';
+
   getCompanyUserRoles(): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANIES_USER_ROLES
     };
   }
 
-  static GET_COMPANIES_USER_ROLES_SUCCESS = '[CompanyUserRole] Load CompanyUserRole Success';
   getCompanyUserRoleSuccess(companiesUserRoles): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANIES_USER_ROLES_SUCCESS,
@@ -27,7 +43,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_ID = '[CompanyUserRole] Get CompanyUserRole';
   getCompanyUserRole(id): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ID,
@@ -35,7 +50,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole Success';
   CompanyUserRoleSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ID_SUCCESS,
@@ -43,23 +57,24 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_COMPANY_ID = '[CompanyUserRole] Get CompanyUserRole by Company Id';
   CompanyUserRoleByCompanyId(id): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_COMPANY_ID,
-      payload: id
+      payload: {
+        id: id
+      }
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_COMPANY_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Company Id';
   CompanyUserRoleByCompanyIdSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_COMPANY_ID_SUCCESS,
-      payload: companyUserRole
+      payload: {
+        companyUserRole: companyUserRole
+      }
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_ROLE_ID = '[CompanyUserRole] Get CompanyUserRole by Role Id';
   CompanyUserRoleByRoleId(id): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ROLE_ID,
@@ -67,7 +82,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Company Id';
   CompanyUserRoleByRoleIdSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS,
@@ -75,7 +89,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_IDS = '[CompanyUserRole] Get CompanyUserRole by Ids';
   CompanyUserRoleByIds(userId, roleId): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_IDS,
@@ -83,14 +96,13 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS = '[CompanyUserRole] Get CompanyUserRole by Ids';
   CompanyUserRoleByIdsSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS,
       payload: companyUserRole
     };
   }
-  static CREATE_COMPANY_COMPANY_USER_ROLES = '[CompanyUserRole] Save CompanyUserRole';
+
   createCompanyUserRole(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.CREATE_COMPANY_COMPANY_USER_ROLES,
@@ -98,7 +110,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static CREATE_COMPANY_COMPANY_USER_ROLES_SUCCESS = '[CompanyUserRole] Save CompanyUserRole Success';
   createCompanyUserRoleSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.CREATE_COMPANY_COMPANY_USER_ROLES_SUCCESS,
@@ -106,7 +117,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static DELETE_COMPANY_USER_ROLE = '[CompanyUserRole] Delete CompanyUserRole';
   deleteCompanyUserRole(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.DELETE_COMPANY_USER_ROLE,
@@ -114,7 +124,6 @@ export class CompanyUserRoleActions {
     };
   }
 
-  static DELETE_COMPANY_USER_ROLE_SUCCESS = '[CompanyUserRole] Delete CompanyUserRole Success';
   deleteCompanyUserRoleSuccess(companyUserRole): Action {
     return {
       type: CompanyUserRoleActions.DELETE_COMPANY_USER_ROLE_SUCCESS,

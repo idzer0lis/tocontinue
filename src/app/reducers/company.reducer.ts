@@ -11,9 +11,9 @@ import { Action } from '@ngrx/store';
 import { Company } from '../models/company';
 import { CompanyActions } from '../actions/company.actions';
 
-export type CompanyState = Company[];
+export type CompaniesList = Company[];
 
-export function companies (state: any = [], action: Action): CompanyState {
+export function companies (state: any = [], action: Action): CompaniesList {
   switch (action.type) {
 
     case CompanyActions.GET_COMPANIES_SUCCESS:
@@ -35,9 +35,12 @@ export function companies (state: any = [], action: Action): CompanyState {
       });
 
     case CompanyActions.DELETE_COMPANY_SUCCESS:
-      return state.filter(company => {
-        return company.id !== action.payload.id;
+      console.log(action.payload);
+     /* let t = state.filter(company => {
+        return company.id !== action.payload.company.id;
       });
+      console.log(t);
+      return t;*/
 
     default:
       return state;

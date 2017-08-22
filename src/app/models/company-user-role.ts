@@ -10,9 +10,9 @@
 
 export class CompanyUserRole {
   id: number;
-  company: number;
-  user: string;
-  role: string;
+  companyId: number;
+  username: string;
+  rolename: string;
   userId: number;
   companyRole: Array<number>;
 }

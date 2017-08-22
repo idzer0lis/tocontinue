@@ -19,20 +19,18 @@ The copyright notice above does not evidence any actual or intended publication 
 <h4> Existing company users and roles </h4>
 <table td-data-table #dataTable id="company-user-table">
   <th td-data-table-column
-      [sortable]="false"
-      [numeric]="false"
       *ngFor="let column of columns">
     {{column.label}}
   </th>
-  <tr td-data-table-row *ngFor="let data of tableData">
-    <td td-data-table-cell [numeric]="false">{{data.username}}</td>
-    <td td-data-table-cell [numeric]="false">{{data.role}}</td>
-    <td td-data-table-cell [numeric]="false">
+  <tr td-data-table-row *ngFor="let data of tableData | async">
+    <td td-data-table-cell>{{data.username}}</td>
+    <td td-data-table-cell>{{data.role}}</td>
+    <td td-data-table-cell>
       <button md-mini-fab id="company-user-remove" (click)="openDialog({action: 'delete', text: 'to remove this user?', userId: data.id, roleId: data.roleId})"><i class="material-icons">delete_forever</i></button>
     </td>
   </tr>
 </table>
-<td-paging-bar #pagingBar [pageSizes]="[5, 10, 15, 20]" [total]="tableData.length" (change)="page($event)">
+<td-paging-bar #pagingBar [pageSizes]="[5, 10, 15, 20]" [total]="tableData.length " (change)="page($event)">
   <span td-paging-bar-label  i18n>Row per page:</span>
   {{pagingBar.range}} <span i18n>of {{pagingBar.total}}</span>
 </td-paging-bar>

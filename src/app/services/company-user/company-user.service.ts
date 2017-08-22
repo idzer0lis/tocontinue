@@ -10,80 +10,87 @@
 
 import { Injectable } from '@angular/core';
 import { Http , Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { UserService } from '../user/user.service';
-import { CompanyRoleService } from '../companyUserRole-role/companyUserRole-role.service';
 import { CompanyUserRole } from '../../models/company-user-role';
+import { Observable } from 'rxjs/Observable';
+// TODO import { HttpHelperService } from '../http-utils/http-helper.service';
 
-import { Store } from '@ngrx/store';
-import { AppState } from '../../models/appstore.model';
-import { HttpHelperService } from '../http-utils/http-helper.service';
 
 @Injectable()
 export class CompanyUserService {
   private companyUserRolesURI = 'api/companyUserRoles';
-  public companyUsers: Observable<CompanyUserRole[]>;
   private lastId = 0;
 
-  constructor ( private http: Http, private store: Store<AppState> ) {
-    this.companyUsers = store.select('companiesUserRole');
+  constructor ( private http: Http ) {
   }
   /**
-   * Get a company user role by companyId
-   * @param companyId id of the company to be queried
-   * @returns void
+   * Get all company user roles
+   * @returns Observable with all company user roles
    */
-  public getUsersByCompany(companyId: number): void {
-    this.http.get(`${this.companyUserRolesURI}companyId=?${companyId}`)
-      .map(res => res.json())
-      .subscribe(
-        action => this.store.dispatch({type: 'GET_COMPANY_USER_ROLE_BY_COMPANY_ID', payload: companyId}),
-        err => HttpHelperService.handleError(err)
-      );
+  getAllCompaniesUserRoles(): Observable<CompanyUserRole[]> {
+    return this.http.get(`${this.companyUserRolesURI}`)
+      .map((res: Response) => res.json().data || [] )
+      .do((companyUserRole: CompanyUserRole) => {
+        if (companyUserRole.id > this.lastId) { this.lastId = companyUserRole.id; }
+      });
   }
   /**
    * Get a companyUserRole by UUID
    * @param id id of the company user role to be queried
-   * @returns void
+   * @returns Observable
    */
-  public getCompanyById(id: number): void {
-    this.http.get(`${this.companyUserRolesURI}/${id}`)
-      .map(res => res.json())
-      .subscribe(
-        action => this.store.dispatch({type: 'GET_COMPANY_USER_ROLE_BY_ID', payload: id}),
-        err => HttpHelperService.handleError(err)
-      );
+  public getCompanyUserRoleById(id: number): Observable<CompanyUserRole> {
+    return this.http.get(`${this.companyUserRolesURI}/?id=${id}`)
+      .map((res: Response) => res.json().data || [] );
   }
   /**
-   * TO BE REMOVED; Kept only for backwards compatibility
-   * Get company role Id by UUID
-   * @param id UUID
-   * returns void
+   * Get a company user role by companyId
+   * @param companyId id of the company to be queried
+   * @returns any, because we dont know if its a collection or single item coming from the request
    */
-  getCompanyRoleIdById(id: number): void {
-    this.http.get(`${this.companyUserRolesURI}`)
-      .map(res => res.json())
-      .subscribe(
-        action => this.store.dispatch({type: 'GET_COMPANY_USER_ROLE_BY_ROLE_ID', payload: id}),
-        err => HttpHelperService.handleError(err)
-      );
+  public getUsersByCompany(companyId: number): Observable<CompanyUserRole[]> {
+    return this.http.get(`${this.companyUserRolesURI}?companyId=${companyId}`)
+      .map((res: Response) => res.json().data);
+  }
+  /**
+   * Sets new user-roles inside a company
+   * @param companyId id of the company for which new user-role are added
+   * @param companyUserRole object
+   * @returns Observable
+   */
+  public setUsersInCompany(companyUserRole: CompanyUserRole): Observable<CompanyUserRole[]> {
+    return this.http.post(`${this.companyUserRolesURI}`, companyUserRole)
+      .map((res: Response) => res.json().data || [] );
+  }
+  /**
+   * Delete a companyUserRole by UUID
+   * @param companyUserRole object to be removed
+   * @returns Observable
+   */
+  public removeUserRoleInCompany(companyUserRole: CompanyUserRole): Observable<CompanyUserRole> {
+    return this.http.delete(`${this.companyUserRolesURI}/?id=${companyUserRole.id}`)
+      .map((res: Response) => res.json().data || [] );
+  }
+  /**
+   * Update a companyUserRole by UUID
+   * Dont know if its needed for now as we insert/delete new user company roles
+   * @param companyUserRole to be updated
+   * @returns Observable
+   *
+   */
+  public updateCompanyById(companyUserRole: CompanyUserRole): Observable<CompanyUserRole> {
+    return this.http.put(`${this.companyUserRolesURI}/?id=${companyUserRole.id}`, companyUserRole)
+      .map((res: Response) => res.json().data || [] );
   }
   /**
    * TO BE REMOVED; Kept only for backwards compatibility
    * Get a companyUserRole by user id and role id
    * @param userId user id of the companyUserRole to be queried
    * @param companyId company id of the companyUserRole to be queried
-   * @returns void
+   * @returns Observable
    */
-  public getCompanyUserRoleByIds(userId: number, companyId: number): void {
-    this.http.get(`${this.companyUserRolesURI}/?userId=${userId}&companyId=$\{companyId}`)
-      .map(res => res.json())
-      .subscribe(
-        action => this.store.dispatch({type: 'GET_COMPANY_USER_ROLE_BY_IDS', payload: {userId, companyId}}),
-        err => HttpHelperService.handleError(err)
-      );
+  public getCompanyUserRoleByIds(userId: number, companyId: number): Observable<CompanyUserRole> {
+    return this.http.get(`${this.companyUserRolesURI}/?userId=${userId}&companyId=$\{companyId}`)
+      .map((res: Response) => res.json().data || [] );
   }
   /**
    * Get last companyUserRole id
@@ -91,45 +98,5 @@ export class CompanyUserService {
    */
   public getlastId(): number {
     return this.lastId;
-  }
-  /**
-   * Sets new user-roles inside a company
-   * @param companyId id of the company for which new user-role are added
-   * @param companyUserRole object
-   * @returns void
-   */
-  public setUsersInCompany(companyId: number, companyUserRole: CompanyUserRole): void {
-    this.http.post(`${this.companyUserRolesURI}`, companyUserRole)
-      .map(res => res.json())
-      .map(payload => ({ type: 'SET_USERS_IN_COMPANY', payload }))
-      .subscribe(
-        action => this.store.dispatch(action),
-        err => HttpHelperService.handleError(err)
-        );
-  }
-  /**
-   * Delete a companyUserRole by UUID
-   * @param companyUserRole object to be removed
-   * @returns void
-   */
-  public removeUserRoleInCompany(companyUserRole: CompanyUserRole): void {
-    this.http.delete(`${this.companyUserRolesURI}${companyUserRole.id}`)
-      .subscribe(
-        action => this.store.dispatch({ type: 'DELETE_COMPANY_USER_ROLE', payload: companyUserRole }),
-        err => HttpHelperService.handleError(err)
-      );
-  }
-  /**
-   * Update a companyUserRole by UUID
-   * @param companyUserRole to be updated
-   * @returns void
-   *
-   */
-  public updateCompanyById(companyUserRole: CompanyUserRole): void {
-    this.http.put(`${this.companyUserRolesURI}${companyUserRole.id}`, JSON.stringify(companyUserRole))
-      .subscribe(
-        action => this.store.dispatch({type: 'UPDATE_ITEM', payload: companyUserRole}),
-        err => HttpHelperService.handleError(err)
-      );
   }
 }

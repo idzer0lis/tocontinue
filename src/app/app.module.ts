@@ -19,8 +19,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CompanyActions } from './actions/company.actions';
 import { CompanyEffects } from './effects/company.effects';
-import { companies } from './reducers/company.reducer';
-import { companiesUserRole } from './reducers/company-user-role.reducer';
+import { CompanyUserRoleActions } from './actions/company-user-actions';
+import { CompanyUserRoleEffects } from './effects/company-user-role.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import reducer from './reducers/app-state';
 
 // Components
 import { AppComponent } from './app.component';
@@ -82,6 +84,11 @@ import { BackendData }  from './services/in-memory-data.service';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
+const appEffectsRun = [
+  EffectsModule.run(CompanyEffects),
+  EffectsModule.run(CompanyUserRoleEffects)
+];
+
 const IMPORTS = [
   BrowserModule,
   HttpModule,
@@ -98,8 +105,11 @@ const IMPORTS = [
   CovalentDataTableModule,
   CovalentPagingModule,
   CovalentSearchModule,
-  StoreModule.provideStore({companies: companies, companiesUserRole: companiesUserRole}),
-  EffectsModule.run(CompanyEffects)
+  StoreModule.provideStore(reducer),
+  appEffectsRun,
+  StoreDevtoolsModule.instrumentOnlyWithExtension({
+    maxAge: 5
+  })
 ];
 const COMPONENTS = [
   AppComponent,
@@ -141,7 +151,8 @@ const PROVIDERS = [
   TdDataTableService,
   TenantService,
   HttpHelperService,
-  CompanyActions
+  CompanyActions,
+  CompanyUserRoleActions
 ];
 
 @NgModule({

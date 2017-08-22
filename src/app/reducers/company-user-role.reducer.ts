@@ -8,12 +8,13 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 import { Action } from '@ngrx/store';
-import { CompanyUserRoleActions } from '../actions/company-user-action';
+import { CompanyUserRoleActions } from '../actions/company-user-actions';
 import { CompanyUserRole } from '../models/company-user-role';
 
-export type CompanyUserRoleState = CompanyUserRole[];
+export type CompanyUserRoleList = CompanyUserRole[];
 
-export function companiesUserRole (state: any = [], action: Action): CompanyUserRoleState {
+export function companiesUserRoleReducer (state: any = [], action: Action): CompanyUserRoleList {
+
   switch (action.type) {
 
     case CompanyUserRoleActions.GET_COMPANIES_USER_ROLES_SUCCESS:
@@ -25,21 +26,7 @@ export function companiesUserRole (state: any = [], action: Action): CompanyUser
       });
 
     case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_COMPANY_ID_SUCCESS:
-      return state.filter(companyUserRole => {
-        return companyUserRole.companyId !== action.payload.companyId;
-      });
-
-      // company user-role-table does not have userId and roleIds but I keep the app backwards-compatible for now
-    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS:
-      return state.filter(companyUserRole => {
-        return companyUserRole.userId === action.payload.userId &&
-          companyUserRole.roleId === action.payload.roleId;
-      });
-
-    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS:
-      return state.filter(companyUserRole => {
-        return companyUserRole.id === action.payload.id;
-      });
+      return action.payload.companyUserRole;
 
     case CompanyUserRoleActions.CREATE_COMPANY_COMPANY_USER_ROLES_SUCCESS:
       return [...state, action.payload];
@@ -49,7 +36,18 @@ export function companiesUserRole (state: any = [], action: Action): CompanyUser
         return company.id !== action.payload.id;
       });
 
+    // company user-role-table does not have userId and roleIds but I keep the app backwards-compatible for now
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_IDS_SUCCESS:
+      return state.filter(companyUserRole => {
+        return companyUserRole.userId === action.payload.userId && companyUserRole.roleId === action.payload.roleId;
+      });
+    case CompanyUserRoleActions.GET_COMPANY_USER_ROLES_BY_ROLE_ID_SUCCESS:
+      return state.filter(companyUserRole => {
+        return companyUserRole.id === action.payload.id;
+      });
+
     default:
       return state;
   }
 }
+
