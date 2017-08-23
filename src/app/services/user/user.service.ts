@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class UserService {
@@ -59,10 +60,11 @@ export class UserService {
       }).catch(this.handleError);
   }
 
-  public logout(): void {
+  public logout(): Observable<boolean> {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
+    return of(true);
   }
   private handleError (error: Response | any) {
     let errMsg: string;

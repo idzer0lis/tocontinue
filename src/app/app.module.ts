@@ -21,8 +21,12 @@ import { CompanyActions } from './actions/company.actions';
 import { CompanyEffects } from './effects/company.effects';
 import { CompanyUserRoleActions } from './actions/company-user-actions';
 import { CompanyUserRoleEffects } from './effects/company-user-role.effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import reducer from './reducers/app-state';
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer,
+} from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // Components
 import { AppComponent } from './app.component';
@@ -77,6 +81,7 @@ import { HttpHelperService } from './services/http-utils/http-helper.service';
 // Routing
 import { routing } from './app.routing';
 import { AuthGuard } from './services/auth.guard/auth.guard.service';
+import { CustomRouterStateSerializer } from './services/routes/route';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -107,9 +112,24 @@ const IMPORTS = [
   CovalentSearchModule,
   StoreModule.provideStore(reducer),
   appEffectsRun,
+  /**
+   * Store devtools instrument the store retaining past versions of state
+   * and recalculating new states. This enables powerful time-travel
+   * debugging.
+   *
+   * To use the debugger, install the Redux Devtools extension for either
+   * Chrome or Firefox
+   *
+   * See: https://github.com/zalmoxisus/redux-devtools-extension
+   */
   StoreDevtoolsModule.instrumentOnlyWithExtension({
     maxAge: 5
-  })
+  }),
+  /**
+   * @ngrx/router-store keeps router state up-to-date in the store.
+   */
+  StoreRouterConnectingModule,
+
 ];
 const COMPONENTS = [
   AppComponent,
@@ -152,7 +172,12 @@ const PROVIDERS = [
   TenantService,
   HttpHelperService,
   CompanyActions,
-  CompanyUserRoleActions
+  CompanyUserRoleActions,
+  /**
+   * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
+   * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
+   */
+  { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
 ];
 
 @NgModule({
