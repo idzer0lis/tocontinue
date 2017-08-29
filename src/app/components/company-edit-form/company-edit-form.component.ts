@@ -21,12 +21,6 @@ import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { ValidationService } from '../../services/validation/validation.service';
 import { slideInDownAnimation } from '../../animations/animations';
-import { CompanyActions } from '../../actions/company.actions';
-import { CompanyUserRoleActions } from '../../actions/company-user-actions';
-import { Observable } from 'rxjs/Observable';
-
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers/app-state';
 
 @Component({
   selector: 'my-company-edit',
@@ -38,37 +32,33 @@ import { AppState } from '../../reducers/app-state';
 export class CompanyEditComponent implements OnInit, OnChanges {
   private editForm: FormGroup;
   @Input()company: Company;
-  public newUsers: Observable<CompanyUserRole[]>;
+  public newUsers: Object;
+  private companyUsers: CompanyUserRoleTable[];
   public selectedRoles: Array<number> = [];
   public selectedUsers: Array<number> = [];
   public showAddCompanyButton = false;
   constructor(
     public dialog: MdDialog,
     private fb: FormBuilder,
-    private companyAction: CompanyActions,
+    private companyService: CompanyService,
     private companyUserService: CompanyUserService,
     private notificationService: NotificationService,
-    private companyUserRoleActions: CompanyUserRoleActions,
-    private store: Store<AppState>
-  ) {
-
-    this.newUsers = this.store.select('companyUserRoles');
-  }
+  ) {}
   ngOnInit(): void {
     this.buildForm();
   }
   buildForm(): void {
     this.editForm = this.fb.group({
-      'companyName': [this.company.name, [
+      'companyName': [this.company.title, [
         Validators.required,
         Validators.minLength(4),
       ]],
-      'voiceLicences': [this.company.current_voice_licences, [
+      'voiceLicences': [this.company.voiceLicences, [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
       ]],
-      'digitalLicences': [this.company.digital_licences_per_day, [
+      'digitalLicences': [this.company.digitalLicences, [
         Validators.required,
         Validators.min(0),
         ValidationService.isInteger
@@ -77,14 +67,17 @@ export class CompanyEditComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     this.buildForm();
+    this.companyUserService
+      .getUsersByCompany(this.company.id)
+      .subscribe(((data: CompanyUserRoleTable[]) =>  this.companyUsers = data));
     this.notificationService.error(null);
   }
   addToCompany(): void {
-   /* let userIds: Array<number> = [];
+    let userIds: Array<number> = [];
     let newUserIds: Array<number>;
 
     this.selectedUsers.forEach((newUser: number) => {
-      this.newUsers.forEach((user: CompanyUserRole) => {
+      this.companyUsers.forEach((user: CompanyUserRoleTable) => {
         if (userIds.indexOf(user.id) === -1) { userIds.push(user.id); }
         if (this.selectedUsers.indexOf(user.id) > -1) { // found from table in the selection
           if (this.selectedRoles.indexOf(user.roleId) > -1) { // found both in table and the selection
@@ -94,12 +87,10 @@ export class CompanyEditComponent implements OnInit, OnChanges {
               id: user.id,
               userId: newUser,
               companyId: this.company.id,
-              companyRole: this.selectedRoles.concat(user.roleId), // To be removed
-              username: '',
-              rolename: ''
+              companyRole: this.selectedRoles.concat(user.roleId)
             };
-
-            this.store.dispatch(this.companyUserRoleActions.createCompanyUserRole(newValue));
+            this.newUsers = this.companyUserService
+              .setUsersInCompany(this.company.id, newValue);
           }
         }
        });
@@ -108,18 +99,16 @@ export class CompanyEditComponent implements OnInit, OnChanges {
     this.selectedUsers.sort();
     newUserIds = this.selectedUsers.filter(id => userIds.indexOf(id) === -1);
     newUserIds.forEach(newId => {
-      let newTableId = this.companyUserService.getlastId() + 1;
+      let newTableId = this.companyUserService.getLastUserCompanyId() + 1;
       let newValue: CompanyUserRole = {
         id: newTableId,
         userId: newId,
         companyId: this.company.id,
-        companyRole: this.selectedRoles, // To be removed
-        username: '',
-        rolename: ''
+        companyRole: this.selectedRoles
       };
-
-      this.store.dispatch(this.companyUserRoleActions.createCompanyUserRole(newValue));
-    });*/
+      this.newUsers = this.companyUserService
+        .setUsersInCompany(this.company.id, newValue);
+    });
   }
   getSelectedUsers(users: User[]) {
      users.forEach((user: User) => {
@@ -141,14 +130,11 @@ export class CompanyEditComponent implements OnInit, OnChanges {
     let dialogRef = this.dialog.open(DialogComponent, {
       data: data.text
     });
+    let nrVoiceLicences = this.editForm.controls.voiceLicences.value;
+    let nrDigitalLicences = this.editForm.controls.digitalLicences.value;
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
-        let nrVoiceLicences = this.editForm.controls.voiceLicences.value;
-        let nrDigitalLicences = this.editForm.controls.digitalLicences.value;
-        this.company.current_voice_licences = nrVoiceLicences;
-        this.company.digital_licences_per_day = nrDigitalLicences;
-
-        this.store.dispatch(this.companyAction.updateCompany(this.company));
+        this.companyService.updateCompanyById(this.company.id, {voiceLicences: nrVoiceLicences, digitalLicences: nrDigitalLicences});
       }
     });
   }

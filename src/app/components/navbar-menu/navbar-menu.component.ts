@@ -8,17 +8,19 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
+import { Store } from '@ngrx/store';
+import * as Auth from '../../actions/auth';
+import * as fromAuth from '../../reducers';
 
 @Component({
   selector: 'my-navbar-menu',
   templateUrl: 'navbar-menu.component.html',
-  styleUrls: ['./navbar-menu.component.scss'],
-  providers: [UserService]
+  styleUrls: ['./navbar-menu.component.scss']
 })
 export class NavbarMenuComponent {
-  constructor(private userService: UserService) {}
+  constructor(private store: Store<fromAuth.State>) {}
+
   doLogout() {
-    this.userService.logout();
+    this.store.dispatch(new Auth.Logout());
   }
 }

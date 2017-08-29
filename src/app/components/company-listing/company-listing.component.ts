@@ -7,14 +7,10 @@
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Avaya Inc.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Company } from '../../models/company';
 import { CompanyService } from '../../services/company/company.service';
 import { slideInDownAnimation } from '../../animations/animations';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers/app-state';
-import { Observable } from 'rxjs/Observable';
-import { CompanyActions } from '../../actions/company.actions';
 
 @Component({
   selector: 'my-list',
@@ -23,29 +19,26 @@ import { CompanyActions } from '../../actions/company.actions';
   providers: [CompanyService],
   animations: [slideInDownAnimation]
 })
-export class ListComponent implements OnInit {
-  private companies: Observable<Company[]>;
+export class ListComponent implements OnInit, OnChanges {
+  private companies: Company[];
   private currentCompany: Company;
   public showAddCompanyComponent = false;
   public showAddTenantComponent = false;
   public showEditTenantComponent = false;
   public filterText = '';
 
-  constructor(
-    private store: Store<AppState>,
-    private companyActions: CompanyActions
-  ) {}
+  constructor(private companyService: CompanyService) {}
   ngOnInit() {
-    this.companies = this.store.select('companies');
-    this.store.dispatch(this.companyActions.getCompanies());
-    this.companies.subscribe(x => console.log(x));
+    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
   }
-  removeCompany(company: Company): any {
-    this.store.dispatch(this.companyActions.deleteCompany(company));
+  ngOnChanges() {
+    this.companyService.getAllcompanies().subscribe(companies => this.companies = companies );
+  }
+  removeCompany(company: Company): void {
+    this.companyService.deleteCompanyById(company.id);
   }
   selectedCompany(company: Company) {
     this.currentCompany = company;
-    // TODO: there must be a better way for hiding/showing components
     this.showAddCompanyComponent = false;
     this.showAddTenantComponent = false;
     this.showEditTenantComponent = false;

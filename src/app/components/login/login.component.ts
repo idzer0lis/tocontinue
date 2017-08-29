@@ -8,10 +8,12 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 import { NotificationService } from '../../services/notification/notification.service';
+import { Store } from '@ngrx/store';
+import * as fromAuth from '../../reducers';
+import * as Auth from '../../actions/auth';
 
 @Component({
   selector: 'my-login',
@@ -22,12 +24,13 @@ import { NotificationService } from '../../services/notification/notification.se
 export class LoginComponent implements OnInit {
   showForm = true;
   loginForm: FormGroup;
+  error$ = this.store.select(fromAuth.getLoginPageError);
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private store: Store<fromAuth.State>
   ) {}
   ngOnInit(): void {
     this.buildForm();
@@ -46,16 +49,10 @@ export class LoginComponent implements OnInit {
   }
   doLogin() {
     if (!this.loginForm) { return; }
-    const formData = this.loginForm;
-    this.userService.login(formData.value.username, formData.value.password)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.router.navigate(['']);
-        },
-        error => {
-          console.log(error);
-          return this.notification.error(error);
-        });
+    // return this.userService.checkSession();
+    this.store.dispatch(new Auth.Login(this.loginForm.value));
+    this.error$.subscribe(err => {
+      this.notification.error(err);
+    });
   }
 }

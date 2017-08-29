@@ -105,7 +105,7 @@ export class TenantEditComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
         console.log('adding company');
-        return this.companyService.createCompany(this.company);
+        return this.companyService.addCompany(this.company);
       }
     });
   }

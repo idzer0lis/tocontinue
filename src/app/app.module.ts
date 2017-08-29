@@ -16,26 +16,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
+import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
-import { CompanyActions } from './actions/company.actions';
-import { CompanyEffects } from './effects/company.effects';
-import { CompanyUserRoleActions } from './actions/company-user-actions';
-import { CompanyUserRoleEffects } from './effects/company-user-role.effects';
+import { AuthModule } from './modules/auth.module';
+
+import { reducers } from './reducers/';
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer,
+} from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import reducer from './reducers/app-state';
 
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ListComponent } from './components/company-listing/company-listing.component';
 import { SearchComponent } from './components/search/search.component';
-import { ValidationComponent } from './components/validation/validation.component';
 import { NavbarMenuComponent } from './components/navbar-menu/navbar-menu.component';
-import { NotificationComponent } from './components/notification/notification.component';
 import {
   CovalentExpansionPanelModule,
   CovalentDataTableModule,
@@ -72,30 +72,21 @@ import { ValidationService } from './services/validation/validation.service';
 import { NotificationService } from './services/notification/notification.service';
 import { SearchService } from './services/search/search.service';
 import { TenantService } from './services/tenant/tenant.service';
-import { HttpHelperService } from './services/http-utils/http-helper.service';
 
 // Routing
-import { routing } from './app.routing';
+import { routes } from './app.routing';
 import { AuthGuard } from './services/auth.guard/auth.guard.service';
+import { CustomRouterStateSerializer } from './services/routes/route';
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { BackendData }  from './services/in-memory-data.service';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-
-const appEffectsRun = [
-  EffectsModule.run(CompanyEffects),
-  EffectsModule.run(CompanyUserRoleEffects)
-];
 
 const IMPORTS = [
   BrowserModule,
   HttpModule,
   FormsModule,
   ReactiveFormsModule,
-  routing,
-  InMemoryWebApiModule.forRoot(BackendData),
   BrowserAnimationsModule,
   MaterialModule,
   FlexLayoutModule,
@@ -105,24 +96,36 @@ const IMPORTS = [
   CovalentDataTableModule,
   CovalentPagingModule,
   CovalentSearchModule,
-  StoreModule.provideStore(reducer),
-  appEffectsRun,
-  StoreDevtoolsModule.instrumentOnlyWithExtension({
-    maxAge: 5
-  })
+  StoreModule.forRoot(reducers),
+  EffectsModule.forRoot([]),
+  RouterModule.forRoot(routes, { useHash: true }),
+  /**
+   * Store devtools instrument the store retaining past versions of state
+   * and recalculating new states. This enables powerful time-travel
+   * debugging.
+   *
+   * To use the debugger, install the Redux Devtools extension for either
+   * Chrome or Firefox
+   *
+   * See: https://github.com/zalmoxisus/redux-devtools-extension
+   */
+  StoreDevtoolsModule.instrument(),
+  /**
+   * @ngrx/router-store keeps router state up-to-date in the store.
+   */
+  StoreRouterConnectingModule,
+  AuthModule.forRoot(),
+
 ];
 const COMPONENTS = [
   AppComponent,
   HomeComponent,
-  LoginComponent,
-  ValidationComponent,
   NavbarComponent,
   TabsComponent,
   SidenavComponent,
   ListComponent,
   SearchComponent,
   NavbarMenuComponent,
-  NotificationComponent,
   CompanyFilter,
   TenantFilter,
   FabSpeedDialActionsComponent,
@@ -150,9 +153,11 @@ const PROVIDERS = [
   SearchService,
   TdDataTableService,
   TenantService,
-  HttpHelperService,
-  CompanyActions,
-  CompanyUserRoleActions
+  /**
+   * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
+   * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
+   */
+  { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
 ];
 
 @NgModule({

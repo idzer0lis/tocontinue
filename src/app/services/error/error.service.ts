@@ -12,29 +12,29 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class HttpHelperService {
+export class ErrorService {
 
   /**
    * Handles HTTP Errors
    * @param HTTP error
    */
   static handleError(err: HttpErrorResponse): void {
-   if (!(err instanceof HttpErrorResponse)) { return; }
-   if (err.error instanceof Error) {
-     // A client-side or network error occurred
-     console.log('An error occurred:', err.error.message);
-   } else {
-     // The backend returned an unsuccessful response code.
-     // The response body may contain clues as to what went wrong,
-     console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-   }
+    if (!(err instanceof HttpErrorResponse)) { return; }
+    if (err.error instanceof Error) {
+      // A client-side or network error occurred
+      console.log('An error occurred:', err.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+    }
   }
 
   /**
    * Set the headers for requests
    */
   static setHeaders(): void {
-   // empty for now
+    // empty for now
   }
 
   /**

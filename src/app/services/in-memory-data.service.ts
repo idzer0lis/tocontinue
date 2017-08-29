@@ -50,29 +50,23 @@ export class BackendData implements InMemoryDbService {
       {
         id: 1,
         userId: 1,
-        username: 'admin',
         companyId: 1,
         companyRole: [1],
-        rolename: '' // to be removed
       },
       {
         id: 2,
         userId: 2,
-        username: 'user',
         companyId: 2,
         companyRole: [2],
-        rolename: '' // to be removed
       },
       {
         id: 3,
         userId: 2,
-        username: 'user',
         companyId: 1,
         companyRole: [1],
-        rolename: '' // to be removed
       },
     ];
-    let company = [
+    let companies = [
       {
         id: 1,
         title: 'First Company',
@@ -85,8 +79,8 @@ export class BackendData implements InMemoryDbService {
             id: 2,
             title: 'Second Tenant from Company 1'
           }],
-        current_voice_licences: 2,
-        digital_licences_per_day: 4,
+        voiceLicences: 2,
+        digitalLicences: 4,
       },
       {
         id: 2,
@@ -96,10 +90,10 @@ export class BackendData implements InMemoryDbService {
           id: 3,
           title: 'First Tenant from Company 2'
         }],
-        current_voice_licences: 3,
-        digital_licences_per_day: 1,
+        voiceLicences: 3,
+        digitalLicences: 1,
       }
     ];
-    return { users, company, roles, companyRoles, companyUserRoles };
+    return { users, companies, roles, companyRoles, companyUserRoles };
   }
 }

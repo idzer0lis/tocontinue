@@ -20,10 +20,6 @@ import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { ValidationService } from '../../services/validation/validation.service';
 import { slideInDownAnimation } from '../../animations/animations';
-import { CompanyActions } from '../../actions/company.actions';
-import { CompanyUserRoleActions } from '../../actions/company-user-actions';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers/app-state';
 
 @Component({
   selector: 'my-company-add',
@@ -44,9 +40,6 @@ export class CompanyAddComponent implements OnInit {
     private fb: FormBuilder,
     private companyUserService: CompanyUserService,
     private companyService: CompanyService,
-    private store: Store<AppState>,
-    private companyActions: CompanyActions,
-    private companyUserRoleActions: CompanyUserRoleActions
   ) {}
   ngOnInit(): void {
     this.buildForm();
@@ -71,19 +64,16 @@ export class CompanyAddComponent implements OnInit {
   }
   addToCompany(): void {
     this.selectedUsers.forEach((newUser: number) => {
-      let newTableId: number = this.companyUserService.getlastId() + 1;
+      let newTableId: number = this.companyUserService.getLastUserCompanyId() + 1;
       let newCompanyId: number = this.companyService.getLastCompanyId() + 1;
       let newValue: CompanyUserRole = {
         id: newTableId,
-        username: '', // To be removed
-        rolename: '',
         userId: newUser,
         companyId: newCompanyId,
         companyRole: this.selectedRoles
       };
-
-      this.store.dispatch(this.companyUserRoleActions.createCompanyUserRole(newValue));
-
+      this.newUsers = this.companyUserService
+        .setUsersInCompany(newCompanyId, newValue);
     });
   }
   getSelectedUsers(users: User[]) {
@@ -113,7 +103,7 @@ export class CompanyAddComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (parseInt(result, 10)) {
         console.log('adding company');
-        this.store.dispatch(this.companyActions.createCompany(this.newCompany));
+        return this.companyService.addCompany(this.newCompany);
       }
     });
   }
